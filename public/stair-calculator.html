@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stair Calculator - Calculate Rise, Run & Stringer</title>
+    <meta name="description" content="Calculate stair rise, run, stringer length, and steps. Check building code compliance for safe and comfortable stairs.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input {
+            font-family: var(--font-code);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+    </style>
+
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Stair Calculator",
+      "description": "Calculate stair rise, run, stringer length, and steps. Check building code compliance for safe and comfortable stairs.",
+      "url": "https://ijustwantto.live/stair-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+    <!-- JSON-LD Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Calculate Stair Dimensions and Stringer Length",
+      "description": "Learn how to calculate stair dimensions, check building code compliance, and determine stringer length for your next stair building project.",
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://gab.ae/logo.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ijustwantto.live/stair-calculator"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Stair Calculator</h1>
+            <p class="subtitle">Design stairs that are comfortable and safe. Calculate total rise, run, stringer length, and check building code compliance.</p>
+        </header>
+
+        <main class="card">
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="total-rise">Total Rise (Height)</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="total-rise" min="0" step="0.1" value="105" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="target-riser">Target Riser Height</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="target-riser" min="0" step="0.1" value="7.5" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="target-tread">Target Tread Depth</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="target-tread" min="0" step="0.1" value="10" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-stringer">0.00"</div>
+                    <div class="result-label">Stringer Length</div>
+                    <div class="result-waste-note" id="code-compliance" style="margin-top: 1rem; font-weight: 600;"></div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Result
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-steps">0</div>
+                        <div class="result-item-label">Number of Steps (Risers)</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-riser">0.00"</div>
+                        <div class="result-item-label">Actual Riser Height</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-run">0.00"</div>
+                        <div class="result-item-label">Total Run (Length)</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <div style="margin-bottom: 2.5rem; text-align: center; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; overflow-x: auto;">
+                <svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; font-family: var(--font-ui);">
+                    <!-- Total Run / Floor -->
+                    <line x1="50" y1="250" x2="350" y2="250" stroke="#1a2a24" stroke-width="4" />
+                    <!-- Total Rise / Wall -->
+                    <line x1="50" y1="50" x2="50" y2="250" stroke="#1a2a24" stroke-width="4" />
+
+                    <!-- Stringer / Stairs -->
+                    <path d="M 50 50 L 125 50 L 125 100 L 200 100 L 200 150 L 275 150 L 275 200 L 350 200 L 350 250" fill="none" stroke="#2DB89A" stroke-width="6" stroke-linejoin="bevel" />
+
+                    <!-- Stringer Backing Line (Hypotenuse) -->
+                    <line x1="50" y1="50" x2="350" y2="250" stroke="#c8e0d8" stroke-width="2" stroke-dasharray="5,5" />
+
+                    <!-- Labels -->
+                    <!-- Total Rise -->
+                    <line x1="30" y1="50" x2="45" y2="50" stroke="#888" stroke-width="1" />
+                    <line x1="30" y1="250" x2="45" y2="250" stroke="#888" stroke-width="1" />
+                    <line x1="37.5" y1="50" x2="37.5" y2="250" stroke="#888" stroke-width="1" />
+                    <text x="25" y="150" fill="#888" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90 25,150)">Total Rise</text>
+
+                    <!-- Total Run -->
+                    <line x1="50" y1="270" x2="50" y2="255" stroke="#888" stroke-width="1" />
+                    <line x1="350" y1="270" x2="350" y2="255" stroke="#888" stroke-width="1" />
+                    <line x1="50" y1="262.5" x2="350" y2="262.5" stroke="#888" stroke-width="1" />
+                    <text x="200" y="280" fill="#888" font-size="12" font-weight="600" text-anchor="middle">Total Run</text>
+
+                    <!-- Target Riser -->
+                    <line x1="130" y1="50" x2="135" y2="50" stroke="#888" stroke-width="1" />
+                    <line x1="130" y1="100" x2="135" y2="100" stroke="#888" stroke-width="1" />
+                    <line x1="132.5" y1="50" x2="132.5" y2="100" stroke="#888" stroke-width="1" />
+                    <text x="140" y="80" fill="#c8e0d8" font-size="10">Riser</text>
+
+                    <!-- Target Tread -->
+                    <line x1="125" y1="40" x2="125" y2="45" stroke="#888" stroke-width="1" />
+                    <line x1="200" y1="40" x2="200" y2="45" stroke="#888" stroke-width="1" />
+                    <line x1="125" y1="42.5" x2="200" y2="42.5" stroke="#888" stroke-width="1" />
+                    <text x="162.5" y="35" fill="#c8e0d8" font-size="10" text-anchor="middle">Tread</text>
+
+                    <!-- Stringer Length -->
+                    <text x="220" y="140" fill="#2DB89A" font-size="12" font-weight="600" transform="rotate(33.69 200,150)">Stringer Length</text>
+                </svg>
+            </div>
+
+            <h2>How to Calculate Stair Dimensions</h2>
+            <p>Building stairs requires precise measurements and careful calculation to ensure safety and comfort. To begin calculating stair dimensions, you first need to determine the <strong>Total Rise</strong>. The total rise is the exact vertical distance from the finished floor of the lower level to the finished floor of the upper level. Do not measure from subfloor to subfloor unless both finished floors will be the exact same thickness.</p>
+            <p>Once you know the total rise, you must divide it by your <strong>Target Riser Height</strong>. A comfortable standard is generally around 7 to 7.5 inches. Dividing the total rise by the target riser height gives you the number of steps (risers) required. Since you cannot have a fraction of a step, round this number to the nearest whole number. Finally, divide the total rise by this whole number to find your true, exact riser height for every step.</p>
+
+            <h2>Building Code Compliance</h2>
+            <p>The International Residential Code (IRC) provides guidelines for stair construction to prevent tripping hazards and ensure safe egress. While local codes can vary and should always be checked, the general IRC guidelines for residential stairs are:</p>
+            <ul>
+                <li><strong>Maximum Riser Height:</strong> 7 3/4 inches (7.75").</li>
+                <li><strong>Minimum Tread Depth:</strong> 10 inches, measured nose-to-nose.</li>
+                <li><strong>Variation:</strong> The greatest riser height shall not exceed the smallest by more than 3/8 of an inch.</li>
+                <li><strong>Minimum Width:</strong> 36 inches clear width at all points above the permitted handrail height and below the required headroom height.</li>
+            </ul>
+            <p>Our calculator automatically checks your calculated riser height and chosen tread depth against the maximum 7.75" rise and minimum 10" run rules. Note that many carpenters prefer the "7-11 rule" (7" rise and 11" run) for the most comfortable stride.</p>
+
+            <h2>Calculating Stringer Length</h2>
+            <p>The stringer is the structural board (usually a 2x12) cut with zig-zag notches that the treads and risers attach to. To determine how long a board you need to buy for your stringers, you must calculate the hypotenuse of the triangle formed by the Total Rise and Total Run.</p>
+            <p>The total run is calculated by multiplying the number of treads by the target tread depth. Remember that the number of treads is always one less than the number of risers, because the top floor or landing acts as the final "tread." Use the Pythagorean theorem (A² + B² = C²) with the total rise and total run to find the minimum stringer length. Always buy lumber that is 1-2 feet longer than your exact calculated stringer length to account for the top and bottom cuts.</p>
+        </section>
+
+    </div>
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+        });
+
+        function calculate() {
+            const totalRise = parseFloat(document.getElementById('total-rise').value) || 0;
+            const targetRiser = parseFloat(document.getElementById('target-riser').value) || 0;
+            const targetTread = parseFloat(document.getElementById('target-tread').value) || 0;
+
+            if (totalRise <= 0 || targetRiser <= 0 || targetTread <= 0) {
+                document.getElementById('res-stringer').textContent = "0.00\"";
+                document.getElementById('res-steps').textContent = "0";
+                document.getElementById('res-riser').textContent = "0.00\"";
+                document.getElementById('res-run').textContent = "0.00\"";
+                document.getElementById('code-compliance').textContent = "";
+                return;
+            }
+
+            // Calculate number of risers
+            let steps = Math.round(totalRise / targetRiser);
+            if (steps < 1) steps = 1;
+
+            // Calculate actual riser height
+            const actualRiser = totalRise / steps;
+
+            // Number of treads is usually one less than number of risers (last step is the landing)
+            const treads = steps - 1;
+
+            // Calculate total run
+            const totalRun = treads * targetTread;
+
+            // Calculate stringer length (hypotenuse of total rise and total run)
+            const stringerLength = Math.sqrt(Math.pow(totalRise, 2) + Math.pow(totalRun, 2));
+
+            // Building code check (general IRC guidelines)
+            // Max riser: 7.75" (some codes say 7")
+            // Min tread: 10" (some say 11")
+            let codeMsg = "✅ Meets general IRC building codes.";
+            let isCompliant = true;
+            let warnings = [];
+
+            if (actualRiser > 7.75) {
+                warnings.push(`Riser height (${actualRiser.toFixed(2)}") exceeds 7.75" max`);
+                isCompliant = false;
+            }
+            if (targetTread < 10) {
+                warnings.push(`Tread depth (${targetTread}") is less than 10" min`);
+                isCompliant = false;
+            }
+
+            const codeEl = document.getElementById('code-compliance');
+            if (isCompliant) {
+                codeEl.textContent = codeMsg;
+                codeEl.style.color = "#2DB89A";
+            } else {
+                codeEl.textContent = "⚠️ Code Warning: " + warnings.join(", ");
+                codeEl.style.color = "#ff6b6b";
+            }
+
+            // Update UI
+            document.getElementById('res-stringer').textContent = stringerLength.toFixed(2) + '"';
+            document.getElementById('res-steps').textContent = steps;
+            document.getElementById('res-riser').textContent = actualRiser.toFixed(2) + '"';
+            document.getElementById('res-run').textContent = totalRun.toFixed(2) + '"';
+        }
+
+        function copyResults() {
+            const stringer = document.getElementById('res-stringer').textContent;
+            const steps = document.getElementById('res-steps').textContent;
+            const riser = document.getElementById('res-riser').textContent;
+            const run = document.getElementById('res-run').textContent;
+            const compliance = document.getElementById('code-compliance').textContent;
+
+            const textToCopy = `Stair Calculation:\n` +
+                               `Stringer Length: ${stringer}\n` +
+                               `Total Steps (Risers): ${steps}\n` +
+                               `Actual Riser Height: ${riser}\n` +
+                               `Total Run: ${run}\n` +
+                               `${compliance}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
