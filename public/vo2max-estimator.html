@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VO2 Max Estimator | ijustwantto.live</title>
+  <meta name="description" content="Estimate your VO2 Max using the Cooper test, 1-Mile Walk (Rockport), or Resting Heart Rate. Find out your fitness percentile based on your age and gender.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "VO2 Max Estimator",
+    "description": "Estimate your VO2 Max using the Cooper test, 1-Mile Walk (Rockport), or Resting Heart Rate. Find out your fitness percentile based on your age and gender.",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0"
+    }
+  }
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #060c0a; color: #c8e0d8; line-height: 1.6; }
+
+    .hero { text-align: center; padding: 80px 24px 60px; background: linear-gradient(180deg, #0a1a15 0%, #060c0a 100%); position: relative; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, rgba(45,184,154,0.08) 0%, transparent 60%); pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; background: linear-gradient(135deg, #fff 0%, #2DB89A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: #888; font-size: 1.05rem; max-width: 540px; margin: 0 auto; }
+
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px 80px; }
+
+    .card { background: #0c1410; border: 2px solid #1a2a24; border-radius: 16px; padding: 32px; margin-bottom: 24px; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: #c8e0d8; margin-bottom: 8px; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-wrapper input, .input-wrapper select { width: 100%; background: #060c0a; border: 1px solid #1a2a24; color: #fff; padding: 14px 16px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; outline: none; transition: border-color 0.2s; appearance: none; }
+    .input-wrapper select { font-family: 'Inter', sans-serif; cursor: pointer; }
+    .input-wrapper input:focus, .input-wrapper select:focus { border-color: #2DB89A; }
+    .input-wrapper .unit { position: absolute; right: 16px; color: #888; font-size: 0.9rem; font-weight: 500; pointer-events: none; }
+
+    .select-arrow { position: absolute; right: 16px; pointer-events: none; color: #888; }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .method-section { display: none; margin-top: 24px; padding-top: 24px; border-top: 1px solid #1a2a24; }
+    .method-section.active { display: block; }
+
+    button.btn { display: block; width: 100%; background: #2DB89A; color: #060c0a; font-weight: 700; font-size: 1rem; border: none; padding: 16px; border-radius: 8px; cursor: pointer; transition: background 0.2s; font-family: 'Inter', sans-serif; margin-top: 24px; }
+    button.btn:hover { background: #24967d; }
+
+    .results-section { display: none; margin-top: 40px; }
+    .results-section.active { display: block; }
+
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+    .result-box { background: #060c0a; border: 1px solid #1a2a24; border-radius: 12px; padding: 20px; text-align: center; position: relative; }
+    .result-box.primary { border-color: #2DB89A; background: rgba(45, 184, 154, 0.05); }
+    .result-title { font-size: 0.8rem; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .result-value { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; font-weight: 700; color: #fff; }
+    .result-box.primary .result-value { color: #2DB89A; }
+
+    .copy-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: #888; cursor: pointer; padding: 4px; border-radius: 4px; transition: all 0.2s; }
+    .copy-btn:hover { color: #fff; background: #1a2a24; }
+    .copy-btn svg { width: 16px; height: 16px; }
+
+    .home-link { display: inline-flex; align-items: center; gap: 6px; color: #888; text-decoration: none; font-size: 0.9rem; font-weight: 500; margin-bottom: 24px; transition: color 0.2s; }
+    .home-link:hover { color: #c8e0d8; }
+    .home-link svg { width: 16px; height: 16px; }
+
+    .seo-content { margin-top: 60px; padding-top: 40px; border-top: 1px solid #1a2a24; }
+    .seo-content h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin: 32px 0 16px; letter-spacing: -0.5px; }
+    .seo-content h2:first-child { margin-top: 0; }
+    .seo-content p { color: #888; margin-bottom: 16px; }
+    .seo-content ul { color: #888; margin-bottom: 16px; padding-left: 20px; }
+    .seo-content li { margin-bottom: 8px; }
+    .seo-content strong { color: #c8e0d8; }
+
+    .footer { text-align: center; padding: 40px 24px; font-size: 0.85rem; color: #666; border-top: 1px solid #1a2a24; margin-top: 40px; }
+    .footer a { color: #2DB89A; text-decoration: none; font-weight: 500; }
+    .footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 60px 20px 40px; }
+      .hero h1 { font-size: 2rem; }
+      .row { grid-template-columns: 1fr; gap: 20px; }
+      .result-grid { grid-template-columns: 1fr; }
+      .card { padding: 24px; }
+      .result-value { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>VO2 Max Estimator</h1>
+    <p>Estimate your cardiorespiratory fitness using the Cooper test, a 1-mile walk, or your resting heart rate. Find out how you compare to others.</p>
+  </div>
+</div>
+
+<div class="container">
+  <a href="/" class="home-link">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Back to Home
+  </a>
+
+  <div class="card">
+    <form id="calculator-form">
+      <div class="row">
+        <div class="form-group">
+          <label for="age">Age</label>
+          <div class="input-wrapper">
+            <input type="number" id="age" inputmode="numeric" min="18" max="100" required placeholder="e.g. 30">
+            <span class="unit">years</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <div class="input-wrapper">
+            <select id="gender" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <div class="select-arrow">▼</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="method">Estimation Method</label>
+        <div class="input-wrapper">
+          <select id="method" required>
+            <option value="cooper">12-Minute Run (Cooper Test)</option>
+            <option value="rockport">1-Mile Walk (Rockport Test)</option>
+            <option value="resting">Resting Heart Rate</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+      </div>
+
+      <div id="cooper-inputs" class="method-section active">
+        <div class="form-group">
+          <label for="distance-miles">Distance Covered in 12 Minutes</label>
+          <div class="input-wrapper">
+            <input type="number" id="distance-miles" inputmode="decimal" step="0.01" min="0" placeholder="e.g. 1.5">
+            <span class="unit">miles</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="rockport-inputs" class="method-section">
+        <div class="row">
+          <div class="form-group">
+            <label for="weight">Body Weight</label>
+            <div class="input-wrapper">
+              <input type="number" id="weight" inputmode="decimal" step="any" min="0" placeholder="e.g. 170">
+              <span class="unit">lbs</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="time">Time to Complete 1 Mile</label>
+            <div class="input-wrapper">
+              <input type="number" id="time" inputmode="decimal" step="0.01" min="0" placeholder="e.g. 15.5">
+              <span class="unit">minutes</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="heart-rate-end">Heart Rate at End of Walk</label>
+          <div class="input-wrapper">
+            <input type="number" id="heart-rate-end" inputmode="numeric" min="30" max="220" placeholder="e.g. 120">
+            <span class="unit">bpm</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="resting-inputs" class="method-section">
+        <div class="form-group">
+          <label for="resting-hr">Resting Heart Rate</label>
+          <div class="input-wrapper">
+            <input type="number" id="resting-hr" inputmode="numeric" min="30" max="150" placeholder="e.g. 60">
+            <span class="unit">bpm</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Calculate VO2 Max</button>
+    </form>
+
+    <div class="results-section" id="results">
+      <div class="result-grid">
+        <div class="result-box primary">
+          <button class="copy-btn" title="Copy value" data-target="vo2max-val">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          </button>
+          <div class="result-title">Estimated VO2 Max</div>
+          <div class="result-value"><span id="vo2max-val">0</span> <span style="font-size: 0.8rem; color: #888;">mL/kg/min</span></div>
+        </div>
+        <div class="result-box">
+          <button class="copy-btn" title="Copy value" data-target="fitness-val">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          </button>
+          <div class="result-title">Fitness Rating</div>
+          <div class="result-value" id="fitness-val">--</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="seo-content">
+    <h2>What is VO2 Max?</h2>
+    <p>VO2 max, or maximal oxygen consumption, refers to the maximum amount of oxygen that an individual can utilize during intense or maximal exercise. It is measured in milliliters of oxygen used in one minute per kilogram of body weight (mL/kg/min). It is widely considered the best indicator of cardiovascular fitness and aerobic endurance.</p>
+    <p>A higher VO2 max means your body can take in more oxygen and deliver it to your muscles, enabling you to run faster, cycle longer, and generally perform aerobic activities more efficiently without fatiguing.</p>
+
+    <h2>How the Estimations Work</h2>
+    <p>Testing your true VO2 max requires a specialized laboratory setup with a treadmill or cycle ergometer and a mask to measure your oxygen consumption directly. Because this is expensive and inaccessible for most people, several reliable field tests have been developed to estimate VO2 max:</p>
+    <ul>
+      <li><strong>Cooper Test (12-Minute Run):</strong> Developed by Dr. Kenneth Cooper in 1968 for the US military. The goal is to cover as much distance as possible in 12 minutes. The test has a high correlation with lab-tested VO2 max.</li>
+      <li><strong>Rockport 1-Mile Walk Test:</strong> Ideal for individuals who are not runners. It estimates your cardiovascular fitness based on how fast you can walk a mile and what your heart rate is immediately upon finishing.</li>
+      <li><strong>Resting Heart Rate Method:</strong> A quick estimation based on the ratio of your maximum heart rate to your resting heart rate. While convenient, it is generally less precise than performance-based field tests.</li>
+    </ul>
+
+    <h2>Improving Your VO2 Max</h2>
+    <p>To improve your cardiorespiratory fitness, you should incorporate both steady-state aerobic training (Zone 2) and High-Intensity Interval Training (HIIT). Zone 2 training builds your aerobic base, while HIIT pushes your cardiovascular system near its limit to increase your maximum capacity.</p>
+  </div>
+</div>
+
+<div class="footer">
+  © 2025 <a href="/">ijustwantto.live</a> · A <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">GAB Ventures</a> property
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('calculator-form');
+    const methodSelect = document.getElementById('method');
+    const resultsSection = document.getElementById('results');
+
+    // Method Sections
+    const methodSections = {
+      cooper: document.getElementById('cooper-inputs'),
+      rockport: document.getElementById('rockport-inputs'),
+      resting: document.getElementById('resting-inputs')
+    };
+
+    // Inputs
+    const ageInput = document.getElementById('age');
+    const genderSelect = document.getElementById('gender');
+
+    // Cooper
+    const distanceMilesInput = document.getElementById('distance-miles');
+    // Rockport
+    const weightInput = document.getElementById('weight');
+    const timeInput = document.getElementById('time');
+    const hrEndInput = document.getElementById('heart-rate-end');
+    // Resting
+    const restingHrInput = document.getElementById('resting-hr');
+
+    // Required toggling
+    function updateRequiredFields() {
+      const activeMethod = methodSelect.value;
+
+      distanceMilesInput.required = activeMethod === 'cooper';
+
+      weightInput.required = activeMethod === 'rockport';
+      timeInput.required = activeMethod === 'rockport';
+      hrEndInput.required = activeMethod === 'rockport';
+
+      restingHrInput.required = activeMethod === 'resting';
+    }
+
+    methodSelect.addEventListener('change', (e) => {
+      Object.values(methodSections).forEach(section => section.classList.remove('active'));
+      methodSections[e.target.value].classList.add('active');
+      updateRequiredFields();
+    });
+
+    updateRequiredFields();
+
+    // Setup copy buttons
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = btn.getAttribute('data-target');
+        const textToCopy = document.getElementById(targetId).innerText;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const originalHTML = btn.innerHTML;
+          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#2DB89A"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+          }, 1500);
+        });
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const age = parseInt(ageInput.value, 10);
+      const gender = genderSelect.value;
+      const method = methodSelect.value;
+
+      if (isNaN(age) || age < 18) return;
+
+      let vo2max = 0;
+
+      if (method === 'cooper') {
+        const distanceMiles = parseFloat(distanceMilesInput.value);
+        if (isNaN(distanceMiles)) return;
+        // Formula: (35.97 * d_miles) - 11.29
+        vo2max = (35.97 * distanceMiles) - 11.29;
+      }
+      else if (method === 'rockport') {
+        const weight = parseFloat(weightInput.value);
+        const time = parseFloat(timeInput.value);
+        const hr = parseFloat(hrEndInput.value);
+        if (isNaN(weight) || isNaN(time) || isNaN(hr)) return;
+
+        const x = gender === 'male' ? 6.3150 : 0;
+        // Formula: 132.853 - (0.0769 * weight) - (0.3877 * age) - (3.2649 * time) - (0.1565 * hr) + x
+        vo2max = 132.853 - (0.0769 * weight) - (0.3877 * age) - (3.2649 * time) - (0.1565 * hr) + x;
+      }
+      else if (method === 'resting') {
+        const restingHr = parseInt(restingHrInput.value, 10);
+        if (isNaN(restingHr)) return;
+
+        // Max HR Formula: 208 - (0.7 * age)
+        const hrMax = 208 - (0.7 * age);
+        // Formula: (HR_max / HR_rest) * 15.3
+        vo2max = (hrMax / restingHr) * 15.3;
+      }
+
+      if (vo2max <= 0) vo2max = 0;
+
+      document.getElementById('vo2max-val').innerText = vo2max.toFixed(1);
+      document.getElementById('fitness-val').innerText = calculateFitnessRating(vo2max, age, gender);
+
+      resultsSection.classList.add('active');
+    });
+
+    function calculateFitnessRating(vo2max, age, gender) {
+      // Data derived from Kaminsky 2022 (Treadmill percentiles)
+      // Percentiles: 90, 80, 70, 60, 50, 40, 30, 20, 10
+      const maleTreadmillData = {
+        20: [58.6, 54.5, 51.9, 49.0, 46.5, 43.6, 40.0, 35.2, 28.6],
+        30: [55.5, 50.0, 46.4, 43.4, 39.7, 37.0, 33.5, 29.8, 24.9],
+        40: [50.8, 45.2, 40.9, 37.9, 35.3, 32.4, 29.7, 26.7, 22.1],
+        50: [43.4, 38.3, 34.3, 31.8, 29.2, 26.9, 24.5, 22.2, 18.6],
+        60: [37.1, 32.0, 28.7, 26.5, 24.6, 22.8, 20.7, 18.5, 15.8],
+        70: [29.4, 25.9, 23.8, 22.2, 20.6, 19.1, 17.3, 15.9, 13.6],
+        80: [22.8, 21.4, 20.0, 18.4, 17.6, 16.6, 16.1, 14.8, 12.9]
+      };
+
+      const femaleTreadmillData = {
+        20: [49.0, 44.8, 41.8, 39.0, 36.6, 34.0, 30.8, 27.2, 22.5],
+        30: [42.1, 37.0, 33.6, 31.0, 28.3, 26.4, 24.2, 21.9, 18.6],
+        40: [37.8, 33.0, 30.0, 27.7, 25.7, 23.9, 21.8, 19.7, 17.2],
+        50: [32.4, 28.4, 26.3, 24.6, 22.9, 21.5, 20.1, 18.5, 16.5],
+        60: [27.3, 24.3, 22.4, 20.9, 19.6, 18.3, 17.0, 15.4, 13.4],
+        70: [22.8, 20.8, 19.6, 18.3, 17.2, 16.2, 15.2, 14.0, 12.3],
+        80: [20.8, 18.4, 17.3, 16.0, 15.4, 14.7, 13.7, 12.6, 11.4]
+      };
+
+      let ageDecade = Math.floor(age / 10) * 10;
+      if (ageDecade < 20) ageDecade = 20;
+      if (ageDecade > 80) ageDecade = 80;
+
+      const dataSet = gender === 'male' ? maleTreadmillData[ageDecade] : femaleTreadmillData[ageDecade];
+      const percentiles = [90, 80, 70, 60, 50, 40, 30, 20, 10];
+
+      let ptile = "<10th";
+      for (let i = 0; i < dataSet.length; i++) {
+        if (vo2max >= dataSet[i]) {
+          ptile = "Top " + (100 - percentiles[i]) + "%";
+          if (percentiles[i] === 90) ptile = "Top 10%";
+          break;
+        }
+      }
+
+      let textRating = "";
+      if (ptile === "Top 10%" || ptile === "Top 20%") textRating = "Excellent";
+      else if (ptile === "Top 30%" || ptile === "Top 40%") textRating = "Good";
+      else if (ptile === "Top 50%" || ptile === "Top 60%") textRating = "Average";
+      else if (ptile === "Top 70%" || ptile === "Top 80%") textRating = "Below Avg";
+      else textRating = "Poor";
+
+      return `${textRating} (${ptile})`;
+    }
+  });
+</script>
+
+</body>
+</html>
