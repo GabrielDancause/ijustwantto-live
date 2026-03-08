@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roof Pitch Calculator - Ratio, Degrees & Area</title>
+    <meta name="description" content="Calculate roof pitch (rise over run), convert to degrees and percentages, and estimate total roof area from the flat footprint area.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Roof Pitch Calculator",
+      "description": "Calculate roof pitch (rise over run), convert to degrees and percentages, and estimate total roof area from the flat footprint area.",
+      "url": "https://ijustwantto.live/roof-pitch",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input {
+            font-family: var(--font-code);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-waste-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Roof Pitch Calculator</h1>
+            <p class="subtitle">Quickly calculate roof pitch, angle, and convert flat footprint area to actual roof area.</p>
+        </header>
+
+        <main class="card">
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="rise-input">Rise</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="rise-input" min="0" step="0.5" value="4" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="run-input">Run</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="run-input" min="0.1" step="0.5" value="12" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 1rem;">
+                <label for="area-input">Flat Footprint Area (Optional)</label>
+                <div class="unit-label" data-unit="sq ft">
+                    <input type="number" id="area-input" min="0" step="10" value="1000" oninput="calculate()">
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-pitch">4:12</div>
+                    <div class="result-label">Roof Pitch</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Result
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-degrees">18.43°</div>
+                        <div class="result-item-label">Angle in Degrees</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-percent">33.3%</div>
+                        <div class="result-item-label">Grade Percentage</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-area">1054</div>
+                        <div class="result-item-label">Actual Roof Area (sq ft)</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>Understanding Roof Pitch</h2>
+            <p>Roof pitch is a measure of the steepness or slope of a roof. It is commonly expressed as a ratio of <strong>rise over run</strong>. For example, a 4:12 pitch means that for every 12 inches of horizontal distance (the run), the roof rises 4 inches vertically. This notation is widely used in the construction and roofing industries across North America.</p>
+            <p>Knowing your roof's pitch is crucial when planning a roofing project, estimating materials, or determining if certain roofing systems (like asphalt shingles versus flat roof membranes) are suitable for your home. Steeper roofs tend to shed water and snow more effectively, while lower slope roofs require specialized underlayment to prevent water intrusion.</p>
+
+            <h2>Converting Pitch to Degrees and Percentage</h2>
+            <p>While the standard ratio (e.g., 6:12) is most common among contractors, you may sometimes need the roof angle in degrees or as a grade percentage.</p>
+            <ul>
+                <li><strong>Degrees:</strong> This is the literal angle of the roof surface relative to the flat horizontal ceiling joists. It's often needed for solar panel installations or architectural modeling. The math uses trigonometry: calculating the inverse tangent (arctangent) of the rise divided by the run.</li>
+                <li><strong>Grade Percentage:</strong> Commonly used in road construction, it simply expresses the slope as a fraction of 100. A 12:12 roof (a 45-degree angle) has a 100% grade.</li>
+            </ul>
+
+            <h2>Estimating Actual Roof Area</h2>
+            <p>One of the biggest mistakes DIY roofers make is using their home's flat footprint (the square footage of the rooms below) as the total roof area. Because the roof is angled, its actual surface area is always larger than the flat footprint underneath it.</p>
+            <p>Our calculator determines an <strong>area multiplier</strong> based on your specific pitch. For a flat roof, the multiplier is 1.0. For a steep 12:12 roof, the multiplier is approximately 1.41. By entering your home's footprint area, the calculator automatically applies this multiplier to give you a more accurate estimate of the total square footage of roofing material you'll need.</p>
+        </section>
+    </div>
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+        });
+
+        function calculate() {
+            const rise = parseFloat(document.getElementById('rise-input').value) || 0;
+            const run = parseFloat(document.getElementById('run-input').value) || 0;
+            const footprintArea = parseFloat(document.getElementById('area-input').value) || 0;
+
+            if (run === 0) {
+                // Prevent division by zero
+                document.getElementById('res-pitch').textContent = "Invalid";
+                document.getElementById('res-degrees').textContent = "0.00°";
+                document.getElementById('res-percent').textContent = "0.0%";
+                document.getElementById('res-area').textContent = footprintArea > 0 ? footprintArea.toFixed(0) : "0";
+                return;
+            }
+
+            // Standardize pitch to a base of 12 (e.g. x:12)
+            const standardRise = (rise / run) * 12;
+            let pitchDisplay = '';
+
+            // Format pitch neatly. If it's an integer, show it as X:12. Otherwise, 1 decimal place.
+            if (Number.isInteger(standardRise)) {
+                pitchDisplay = `${standardRise}:12`;
+            } else {
+                pitchDisplay = `${standardRise.toFixed(1)}:12`;
+            }
+
+            // Calculate Angle (Degrees)
+            // Tan(angle) = rise / run -> angle = atan(rise/run)
+            const angleRad = Math.atan(rise / run);
+            const angleDeg = angleRad * (180 / Math.PI);
+
+            // Calculate Grade Percentage
+            const gradePercent = (rise / run) * 100;
+
+            // Calculate Area Multiplier
+            // Multiplier = sqrt((rise^2) + (run^2)) / run
+            // Alternatively, Multiplier = 1 / cos(angleRad)
+            const multiplier = Math.sqrt(Math.pow(rise, 2) + Math.pow(run, 2)) / run;
+            const actualArea = footprintArea * multiplier;
+
+            // Update UI
+            document.getElementById('res-pitch').textContent = pitchDisplay;
+            document.getElementById('res-degrees').textContent = angleDeg.toFixed(2) + '°';
+            document.getElementById('res-percent').textContent = gradePercent.toFixed(1) + '%';
+
+            if (footprintArea > 0) {
+                document.getElementById('res-area').textContent = Math.ceil(actualArea);
+            } else {
+                document.getElementById('res-area').textContent = "0";
+            }
+        }
+
+        function copyResults() {
+            const pitch = document.getElementById('res-pitch').textContent;
+            const degrees = document.getElementById('res-degrees').textContent;
+            const percent = document.getElementById('res-percent').textContent;
+            const area = document.getElementById('res-area').textContent;
+
+            let textToCopy = `Roof Pitch Details:\n` +
+                             `Pitch: ${pitch}\n` +
+                             `Angle: ${degrees}\n` +
+                             `Grade: ${percent}`;
+
+            const footprintInput = parseFloat(document.getElementById('area-input').value);
+            if (footprintInput > 0) {
+                textToCopy += `\nEstimated Roof Area: ${area} sq ft`;
+            }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
