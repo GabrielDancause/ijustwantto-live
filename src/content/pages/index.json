@@ -1,0 +1,23 @@
+{
+  "slug": "",
+  "title": "ijustwantto.live — Health calculators, macro trackers & home DIY guides",
+  "description": "Health calculators, macro trackers & home DIY guides",
+  "ogTitle": "ijustwantto.live",
+  "ogDescription": "Health calculators, macro trackers & home DIY guides",
+  "heroGradient": "linear-gradient(135deg, #1A7A6D 0%, #2DB89A 100%)",
+  "accentColor": "#1A7A6D",
+  "heroLocation": null,
+  "h1": "ijustwantto 🚀",
+  "tagline": "Health calculators, macro trackers & home DIY guides",
+  "backLink": null,
+  "pageType": "guide",
+  "quickFacts": [],
+  "sections": [
+    {
+      "title": "Coming Soon",
+      "paragraphs": ["We're building something useful. Check back soon."]
+    }
+  ],
+  "ctaBanner": null,
+  "footer": "© 2025 ijustwantto.live"
+}
