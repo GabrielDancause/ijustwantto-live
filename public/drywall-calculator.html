@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drywall Calculator - Estimate Sheets, Tape, Mud & Screws</title>
+    <meta name="description" content="Calculate drywall materials needed for your project including 4x8 and 4x12 sheets, joint tape, joint compound, and drywall screws. Includes a standard 10% waste factor.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .input-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .results-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .main-result {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-waste-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: rgba(6, 12, 10, 0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .seo-content strong {
+            color: var(--text-primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+
+        /* Shape-specific input sections */
+        .calc-inputs {
+            display: none;
+        }
+
+        .calc-inputs.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .checkbox-container input {
+            width: auto;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-container label {
+            margin: 0;
+            cursor: pointer;
+        }
+    </style>
+
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Drywall Calculator",
+      "description": "Calculate drywall materials needed for your project including 4x8 and 4x12 sheets, joint tape, joint compound, and drywall screws. Includes a standard 10% waste factor.",
+      "url": "https://ijustwantto.live/drywall-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Drywall Calculator</h1>
+            <p class="subtitle">Estimate sheets, tape, compound, and screws needed for your project</p>
+        </header>
+
+        <main class="card">
+            <div class="form-group">
+                <label for="calc-mode">Calculation Mode</label>
+                <select id="calc-mode" onchange="changeMode()">
+                    <option value="room">Room Dimensions (Length/Width/Height)</option>
+                    <option value="sqft">Total Square Footage</option>
+                </select>
+            </div>
+
+            <div id="inputs-room" class="calc-inputs active">
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="room-length">Length (ft)</label>
+                        <input type="number" id="room-length" min="0" step="0.1" value="12" oninput="calculate()">
+                    </div>
+                    <div class="form-group">
+                        <label for="room-width">Width (ft)</label>
+                        <input type="number" id="room-width" min="0" step="0.1" value="10" oninput="calculate()">
+                    </div>
+                    <div class="form-group">
+                        <label for="room-height">Height (ft)</label>
+                        <input type="number" id="room-height" min="0" step="0.1" value="8" oninput="calculate()">
+                    </div>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="include-ceiling" checked onchange="calculate()">
+                    <label for="include-ceiling">Include Ceiling</label>
+                </div>
+
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="doors-count">Doors (Subtracts 15 sq ft each)</label>
+                        <input type="number" id="doors-count" min="0" step="1" value="1" oninput="calculate()">
+                    </div>
+                    <div class="form-group">
+                        <label for="windows-count">Windows (Subtracts 12 sq ft each)</label>
+                        <input type="number" id="windows-count" min="0" step="1" value="1" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <div id="inputs-sqft" class="calc-inputs">
+                <div class="form-group">
+                    <label for="total-sqft">Total Surface Area (Square Feet)</label>
+                    <input type="number" id="total-sqft" min="0" step="1" value="500" oninput="calculate()">
+                    <div class="result-waste-note" style="margin-top: 0.25rem;">Enter the exact square footage. We will add 10% waste.</div>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div class="main-result">
+                    <div class="result-value" id="res-sqft">0</div>
+                    <div class="result-label">Total Sq Ft Needed</div>
+                    <div class="result-waste-note">*Includes 10% waste factor</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Estimate
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-4x8">0</div>
+                        <div class="result-item-label">4x8 Sheets</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-4x12">0</div>
+                        <div class="result-item-label">4x12 Sheets</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-screws">0</div>
+                        <div class="result-item-label">Screws (approx)</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-tape">0</div>
+                        <div class="result-item-label">Tape (linear ft)</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-mud">0.0</div>
+                        <div class="result-item-label">Compound (gallons)</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-mud-boxes">0</div>
+                        <div class="result-item-label">4.5-Gal Mud Boxes</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>How to Calculate Drywall</h2>
+            <p>Estimating drywall for a room requires calculating the total surface area of all walls and the ceiling (if applicable), then adding a waste factor to account for cutoffs, mistakes, and awkward corners. The simplest way to calculate wall area is to measure the total perimeter of the room and multiply it by the ceiling height. The formula is: <strong>(Length + Length + Width + Width) × Height = Total Wall Sq Ft</strong>. If you are drywalling the ceiling, multiply the length by the width to find the ceiling area and add it to the total.</p>
+
+            <h2>Why Add a 10% Waste Factor?</h2>
+            <p>Our drywall calculator automatically includes a standard 10% waste factor in the final square footage and sheet counts. Unless your wall dimensions are perfect multiples of 4 feet, you will have leftover cut pieces that cannot easily be reused without creating weak points or requiring excessive finishing work. Complex rooms with angles, multiple windows, or vaulted ceilings may even require a 15% to 20% waste factor.</p>
+
+            <h2>Estimating Tape, Mud, and Screws</h2>
+            <p>Having the right amount of finishing materials is just as important as having enough drywall sheets. As a general rule of thumb:</p>
+            <ul>
+                <li><strong>Screws:</strong> You will need approximately 1.2 to 1.5 screws per square foot of drywall depending on framing spacing (16" vs 24" on center). A standard 4x8 sheet typically requires around 32 to 40 screws.</li>
+                <li><strong>Joint Tape:</strong> You will need about 0.37 linear feet of joint tape per square foot of drywall. A standard roll is usually 250 feet long.</li>
+                <li><strong>Joint Compound (Mud):</strong> You will need roughly 0.05 gallons of joint compound per square foot of drywall to complete taping and three coats of finishing. This equates to about one 4.5-gallon box for every 90 to 100 square feet.</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+        });
+
+        function changeMode() {
+            // Hide all inputs
+            document.querySelectorAll('.calc-inputs').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Show selected inputs
+            const mode = document.getElementById('calc-mode').value;
+            document.getElementById('inputs-' + mode).classList.add('active');
+
+            calculate();
+        }
+
+        function calculate() {
+            const mode = document.getElementById('calc-mode').value;
+            let netSqFt = 0;
+
+            if (mode === 'room') {
+                const length = parseFloat(document.getElementById('room-length').value) || 0;
+                const width = parseFloat(document.getElementById('room-width').value) || 0;
+                const height = parseFloat(document.getElementById('room-height').value) || 0;
+                const includeCeiling = document.getElementById('include-ceiling').checked;
+
+                const doors = parseFloat(document.getElementById('doors-count').value) || 0;
+                const windows = parseFloat(document.getElementById('windows-count').value) || 0;
+
+                // Wall Area: Perimeter * Height
+                const perimeter = (length * 2) + (width * 2);
+                let wallArea = perimeter * height;
+
+                // Ceiling Area
+                let ceilingArea = 0;
+                if (includeCeiling) {
+                    ceilingArea = length * width;
+                }
+
+                // Deductions (approximate standard sizes)
+                // Door: ~15 sq ft (e.g. 2.5' x 6.5')
+                // Window: ~12 sq ft (e.g. 3' x 4')
+                const deductions = (doors * 15) + (windows * 12);
+
+                netSqFt = (wallArea + ceilingArea) - deductions;
+                if (netSqFt < 0) netSqFt = 0;
+            } else {
+                netSqFt = parseFloat(document.getElementById('total-sqft').value) || 0;
+            }
+
+            // Apply 10% waste factor
+            const totalSqFt = netSqFt * 1.10;
+
+            // Sheet Calculations
+            const sheet4x8Area = 32; // sq ft
+            const sheet4x12Area = 48; // sq ft
+
+            const sheets4x8 = Math.ceil(totalSqFt / sheet4x8Area);
+            const sheets4x12 = Math.ceil(totalSqFt / sheet4x12Area);
+
+            // Accessories Calculation rules of thumb
+            // Screws: ~1.2 screws per sq ft
+            const screws = Math.ceil(totalSqFt * 1.2);
+
+            // Tape: ~0.37 linear feet per sq ft
+            const tapeFt = Math.ceil(totalSqFt * 0.37);
+
+            // Mud: ~0.05 gallons per sq ft (taping + 3 coats)
+            const mudGallons = totalSqFt * 0.05;
+            // Standard pro mud box is 4.5 gallons (or 5-gal bucket)
+            const mudBoxes = Math.ceil(mudGallons / 4.5);
+
+            // Update UI
+            document.getElementById('res-sqft').textContent = Math.ceil(totalSqFt).toLocaleString();
+            document.getElementById('res-4x8').textContent = sheets4x8;
+            document.getElementById('res-4x12').textContent = sheets4x12;
+            document.getElementById('res-screws').textContent = screws.toLocaleString();
+            document.getElementById('res-tape').textContent = tapeFt.toLocaleString() + "'";
+            document.getElementById('res-mud').textContent = mudGallons.toFixed(1);
+            document.getElementById('res-mud-boxes').textContent = mudBoxes;
+        }
+
+        function copyResults() {
+            const sqft = document.getElementById('res-sqft').textContent;
+            const s4x8 = document.getElementById('res-4x8').textContent;
+            const s4x12 = document.getElementById('res-4x12').textContent;
+            const screws = document.getElementById('res-screws').textContent;
+            const tape = document.getElementById('res-tape').textContent;
+            const mud = document.getElementById('res-mud').textContent;
+            const mudBoxes = document.getElementById('res-mud-boxes').textContent;
+
+            const textToCopy = `Drywall Estimate:\n` +
+                               `${sqft} Sq Ft (Includes 10% waste)\n` +
+                               `Sheets: ${s4x8}x (4x8) OR ${s4x12}x (4x12)\n` +
+                               `Screws: ~${screws}\n` +
+                               `Tape: ${tape} linear ft\n` +
+                               `Compound: ${mud} gallons (${mudBoxes}x 4.5-gal boxes)`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
