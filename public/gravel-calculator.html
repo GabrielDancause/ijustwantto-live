@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravel & Mulch Calculator - Estimate Yards, Tons & Bags</title>
+    <meta name="description" content="Calculate cubic yards, tons, and bags needed for gravel, mulch, and soil projects. Easy calculator for landscaping coverage area and depth.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input {
+            font-family: var(--font-code);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+
+        .shape-inputs {
+            display: none;
+        }
+
+        .shape-inputs.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Gravel & Mulch Calculator",
+      "description": "Calculate cubic yards, tons, and bags needed for gravel, mulch, and soil projects.",
+      "url": "https://ijustwantto.live/gravel-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Gravel & Mulch Calculator</h1>
+            <p class="subtitle">Calculate exactly how much gravel, mulch, or soil you need for your landscaping project. Get estimates in cubic yards, tons, and bags.</p>
+        </header>
+
+        <main class="card">
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="material-type">Material</label>
+                    <select id="material-type" onchange="updateLabels(); calculate();">
+                        <option value="gravel">Gravel / Crushed Stone</option>
+                        <option value="mulch">Wood Mulch</option>
+                        <option value="soil">Topsoil / Dirt</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="calc-shape">Area Shape</label>
+                    <select id="calc-shape" onchange="changeShape()">
+                        <option value="rectangle">Rectangle</option>
+                        <option value="circle">Circle</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Rectangle Inputs -->
+            <div id="inputs-rectangle" class="shape-inputs active">
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="rect-length">Length</label>
+                        <div class="unit-label" data-unit="ft">
+                            <input type="number" id="rect-length" min="0" step="0.1" value="10" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rect-width">Width</label>
+                        <div class="unit-label" data-unit="ft">
+                            <input type="number" id="rect-width" min="0" step="0.1" value="10" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Circle Inputs -->
+            <div id="inputs-circle" class="shape-inputs">
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="circle-diameter">Diameter</label>
+                        <div class="unit-label" data-unit="ft">
+                            <input type="number" id="circle-diameter" min="0" step="0.1" value="10" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-grid" style="margin-top: 1rem;">
+                <div class="form-group">
+                    <label for="depth">Depth / Thickness</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="depth" min="0" step="0.5" value="2" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-yards">0.00</div>
+                    <div class="result-label">Cubic Yards Needed</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Result
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-area">0.0</div>
+                        <div class="result-item-label">Square Feet</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-tons">0.0</div>
+                        <div class="result-item-label">Estimated Tons</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-bags">0</div>
+                        <div class="result-item-label" id="label-bags">0.5 cu ft Bags</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>How to Calculate Landscaping Materials</h2>
+            <p>Whether you're laying down gravel for a driveway, spreading mulch in garden beds, or adding topsoil to your lawn, calculating the right amount of material is essential. Over-ordering wastes money, and under-ordering means multiple trips to the supply yard.</p>
+            <p>To determine how much material you need, you first calculate the total area in square feet. For a rectangular space, multiply the length by the width. Then, you multiply that area by your desired depth (converted into feet). Since bulk landscaping materials are sold in cubic yards, you divide the total cubic feet by 27 to find your required yardage.</p>
+
+            <h2>Estimating Tons vs. Cubic Yards</h2>
+            <p>While mulch and soil are almost exclusively sold by the cubic yard or in bags, gravel and crushed stone are often sold by the ton. The exact conversion depends on the type of stone and its moisture content, but general rules of thumb apply:</p>
+            <ul>
+                <li><strong>Gravel & Crushed Stone:</strong> 1 cubic yard typically weighs about 1.4 tons (2,800 lbs).</li>
+                <li><strong>Topsoil & Dirt:</strong> 1 cubic yard weighs roughly 1.0 to 1.2 tons depending on moisture and composition.</li>
+                <li><strong>Wood Mulch:</strong> 1 cubic yard is very light, usually weighing between 600 and 800 lbs (0.3 to 0.4 tons).</li>
+            </ul>
+
+            <h2>Buying Bulk vs. Bags</h2>
+            <p>For small touch-up jobs or tiny garden beds, buying material in bags from a big-box store is convenient. Standard gravel and soil bags usually contain 0.5 cubic feet of material, while standard mulch bags contain 2 cubic feet. If your project requires more than 1 or 2 cubic yards of material, ordering a bulk delivery from a local landscape supply yard is almost always significantly cheaper.</p>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+            updateLabels();
+        });
+
+        function changeShape() {
+            document.querySelectorAll('.shape-inputs').forEach(el => {
+                el.classList.remove('active');
+            });
+            const shape = document.getElementById('calc-shape').value;
+            document.getElementById('inputs-' + shape).classList.add('active');
+            calculate();
+        }
+
+        function updateLabels() {
+            const material = document.getElementById('material-type').value;
+            const bagsLabel = document.getElementById('label-bags');
+
+            if (material === 'mulch') {
+                bagsLabel.textContent = '2.0 cu ft Bags';
+            } else {
+                bagsLabel.textContent = '0.5 cu ft Bags';
+            }
+        }
+
+        function calculate() {
+            const shape = document.getElementById('calc-shape').value;
+            const material = document.getElementById('material-type').value;
+            const depthIn = parseFloat(document.getElementById('depth').value) || 0;
+
+            let areaSqFt = 0;
+
+            if (shape === 'rectangle') {
+                const length = parseFloat(document.getElementById('rect-length').value) || 0;
+                const width = parseFloat(document.getElementById('rect-width').value) || 0;
+                areaSqFt = length * width;
+            } else if (shape === 'circle') {
+                const diameter = parseFloat(document.getElementById('circle-diameter').value) || 0;
+                const radius = diameter / 2;
+                areaSqFt = Math.PI * Math.pow(radius, 2);
+            }
+
+            const depthFt = depthIn / 12;
+            const cubicFeet = areaSqFt * depthFt;
+            const cubicYards = cubicFeet / 27;
+
+            let tons = 0;
+            let bagSize = 0.5; // default for gravel/soil
+
+            if (material === 'gravel') {
+                tons = cubicYards * 1.4;
+                bagSize = 0.5;
+            } else if (material === 'soil') {
+                tons = cubicYards * 1.2;
+                bagSize = 0.5;
+            } else if (material === 'mulch') {
+                tons = cubicYards * 0.35;
+                bagSize = 2.0;
+            }
+
+            const bags = Math.ceil(cubicFeet / bagSize);
+
+            document.getElementById('res-yards').textContent = cubicYards.toFixed(2);
+            document.getElementById('res-area').textContent = areaSqFt.toFixed(1);
+            document.getElementById('res-tons').textContent = tons.toFixed(1);
+            document.getElementById('res-bags').textContent = bags;
+        }
+
+        function copyResults() {
+            const yards = document.getElementById('res-yards').textContent;
+            const area = document.getElementById('res-area').textContent;
+            const tons = document.getElementById('res-tons').textContent;
+            const bags = document.getElementById('res-bags').textContent;
+
+            const materialEl = document.getElementById('material-type');
+            const material = materialEl.options[materialEl.selectedIndex].text;
+            const bagLabel = document.getElementById('label-bags').textContent;
+
+            const textToCopy = `${material} Estimate:\n` +
+                               `${yards} Cubic Yards\n` +
+                               `${area} Sq Ft Area\n` +
+                               `~${tons} Tons\n` +
+                               `Or ${bags}x ${bagLabel}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
