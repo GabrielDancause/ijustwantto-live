@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideal Weight Calculator | ijustwantto.live</title>
+    <meta name="description" content="Calculate your ideal weight using the BMI, Devine, Robinson, and Hamwi formulas. Find your healthy weight range quickly and easily.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Ideal Weight Calculator",
+      "url": "https://ijustwantto.live/ideal-weight.html",
+      "description": "Calculate your ideal weight range based on BMI, Hamwi, Devine, and Robinson formulas.",
+      "applicationCategory": "HealthAndFitnessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            appearance: none;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 400;
+            cursor: pointer;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            flex: 1;
+            justify-content: center;
+            background-color: var(--bg-color);
+            transition: all 0.2s;
+        }
+
+        .radio-label:has(input:checked) {
+            border-color: var(--accent-color);
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        button.calculate-btn {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            font-family: var(--font-ui);
+        }
+
+        button.calculate-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .results {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-title {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .result-title strong {
+            color: var(--text-primary);
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Ideal Weight Calculator</h1>
+            <p class="subtitle">Calculate your ideal weight based on popular clinical formulas</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <form id="idealWeightForm">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="male" checked>
+                                Male
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="female">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" name="height" required min="1" step="0.1" placeholder="e.g. 175">
+                    </div>
+
+                    <button type="submit" class="calculate-btn">Calculate Ideal Weight</button>
+                </form>
+
+                <div id="results" class="results">
+                    <div class="result-box">
+                        <div class="result-title"><strong>Healthy BMI Range</strong><br>(18.5 - 24.9)</div>
+                        <div class="result-value">
+                            <span id="bmiValue">0</span> kg
+                            <button class="copy-btn" onclick="copyToClipboard('bmiValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="result-title"><strong>Robinson Formula (1983)</strong><br>Often used for general medical guidelines</div>
+                        <div class="result-value">
+                            <span id="robinsonValue">0</span> kg
+                            <button class="copy-btn" onclick="copyToClipboard('robinsonValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="result-title"><strong>Devine Formula (1974)</strong><br>Widely used for medication dosing</div>
+                        <div class="result-value">
+                            <span id="devineValue">0</span> kg
+                            <button class="copy-btn" onclick="copyToClipboard('devineValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="result-title"><strong>Hamwi Formula (1964)</strong><br>Original clinical baseline</div>
+                        <div class="result-value">
+                            <span id="hamwiValue">0</span> kg
+                            <button class="copy-btn" onclick="copyToClipboard('hamwiValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>What is the Ideal Weight Calculator?</h2>
+                <p>An ideal weight calculator estimates a healthy body weight based on your height and gender. Different clinical formulas have been developed over the years to determine these numbers, largely for medical dosing and general health guidelines. Because people have different body frames and muscle mass, most calculators provide a range rather than a single perfect number.</p>
+
+                <h2>Understanding the Formulas</h2>
+                <p>Medical professionals use several formulas to calculate ideal body weight (IBW). Here are the most common ones:</p>
+                <ul>
+                    <li><strong>BMI Range:</strong> The World Health Organization defines a healthy Body Mass Index (BMI) as 18.5 to 24.9. The BMI range gives you the lowest and highest weights that fall within this healthy threshold for your height.</li>
+                    <li><strong>Robinson Formula (1983):</strong> A modification of the Devine formula, this equation is widely used in medical settings to determine a baseline ideal weight for adults.</li>
+                    <li><strong>Devine Formula (1974):</strong> Originally created to calculate the appropriate dosage of certain medications, this formula is still extensively used in clinical pharmacology.</li>
+                    <li><strong>Hamwi Formula (1964):</strong> One of the earliest formulas, the Hamwi method was introduced to determine general ideal weight for health purposes.</li>
+                </ul>
+
+                <h2>Limitations of Ideal Weight Calculators</h2>
+                <p>While ideal weight formulas are useful clinical tools, they have distinct limitations. These equations do not account for muscle mass, bone density, or body composition. For example, athletes with significant muscle mass might be classified as overweight by these formulas despite having low body fat. It's best to view these results as a general guideline rather than a strict goal, and consult with a healthcare provider for personalized advice.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('idealWeightForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const heightCm = parseFloat(document.getElementById('height').value);
+
+            if (isNaN(heightCm) || heightCm <= 0) {
+                return;
+            }
+
+            // Convert height to inches and meters
+            const heightInches = heightCm / 2.54;
+            const heightMeters = heightCm / 100;
+
+            let robinson, devine, hamwi;
+
+            // Base height is 60 inches (5 feet)
+            // If height is under 60 inches, formulas generally just use the base weight
+            const overBase = Math.max(0, heightInches - 60);
+
+            if (gender === 'male') {
+                robinson = 52 + (1.9 * overBase);
+                devine = 50 + (2.3 * overBase);
+                hamwi = 48 + (2.7 * overBase);
+            } else {
+                robinson = 49 + (1.7 * overBase);
+                devine = 45.5 + (2.3 * overBase);
+                hamwi = 45.5 + (2.2 * overBase);
+            }
+
+            // BMI Range (18.5 - 24.9)
+            const bmiMin = 18.5 * (heightMeters * heightMeters);
+            const bmiMax = 24.9 * (heightMeters * heightMeters);
+
+            document.getElementById('bmiValue').textContent = `${bmiMin.toFixed(1)} - ${bmiMax.toFixed(1)}`;
+            document.getElementById('robinsonValue').textContent = robinson.toFixed(1);
+            document.getElementById('devineValue').textContent = devine.toFixed(1);
+            document.getElementById('hamwiValue').textContent = hamwi.toFixed(1);
+
+            document.getElementById('results').classList.add('active');
+        });
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+                if (!btn) return;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
