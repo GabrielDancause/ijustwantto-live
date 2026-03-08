@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room BTU Calculator (Heating & Cooling) | ijustwantto.live</title>
+    <meta name="description" content="Calculate the required heating and cooling BTUs for your room based on dimensions, insulation, sun exposure, and climate. Accurate AC and heater sizing.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Room BTU Calculator (Heating & Cooling)",
+      "url": "https://ijustwantto.live/btu-calculator.html",
+      "description": "Calculate the required heating and cooling BTUs for your room based on dimensions, insulation, sun exposure, and climate.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button.calculate-btn {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            font-family: var(--font-ui);
+        }
+
+        button.calculate-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .results {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-title {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .macros-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .macro-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .macro-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .macro-card .value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .macro-card .desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .macro-card .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 640px) {
+            .macros-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Room BTU Calculator</h1>
+            <p class="subtitle">Calculate required heating and cooling capacity for your room</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <form id="btuForm">
+                    <div class="form-row">
+                        <div class="form-group form-col">
+                            <label for="length">Room Length (ft)</label>
+                            <input type="number" id="length" name="length" required min="1" step="0.1" placeholder="e.g. 15">
+                        </div>
+                        <div class="form-group form-col">
+                            <label for="width">Room Width (ft)</label>
+                            <input type="number" id="width" name="width" required min="1" step="0.1" placeholder="e.g. 12">
+                        </div>
+                        <div class="form-group form-col">
+                            <label for="height">Ceiling Height (ft)</label>
+                            <input type="number" id="height" name="height" required min="1" step="0.1" placeholder="e.g. 8" value="8">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="insulation">Insulation Level</label>
+                        <select id="insulation" name="insulation">
+                            <option value="good">Good (Well insulated, newer home)</option>
+                            <option value="average" selected>Average (Standard insulation)</option>
+                            <option value="poor">Poor (Drafty, older home)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sun">Sun Exposure</label>
+                        <select id="sun" name="sun">
+                            <option value="heavily_shaded">Heavily Shaded (Mostly shade)</option>
+                            <option value="normal" selected>Normal (Average sun)</option>
+                            <option value="sunny">Sunny (Direct sunlight, large windows)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="climate">Climate</label>
+                        <select id="climate" name="climate">
+                            <option value="hot">Hot (Southern US / Subtropical)</option>
+                            <option value="moderate" selected>Moderate (Central US / Temperate)</option>
+                            <option value="cold">Cold (Northern US / Harsh Winters)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kitchen">Is this a Kitchen?</label>
+                        <select id="kitchen" name="kitchen">
+                            <option value="no" selected>No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="calculate-btn">Calculate BTUs</button>
+                </form>
+
+                <div id="results" class="results">
+                    <div class="result-box">
+                        <div class="result-title">Cooling Required (AC)</div>
+                        <div class="result-value">
+                            <span id="coolingBtuValue">0</span> BTU/hr
+                            <button class="copy-btn" onclick="copyToClipboard('coolingBtuValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="result-title">Heating Required (Furnace/Heater)</div>
+                        <div class="result-value">
+                            <span id="heatingBtuValue">0</span> BTU/hr
+                            <button class="copy-btn" onclick="copyToClipboard('heatingBtuValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="macros-grid">
+                        <div class="macro-card">
+                            <button class="copy-btn" onclick="copyToClipboard('areaValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Room Area</h3>
+                            <div class="value"><span id="areaValue">0</span></div>
+                            <div class="desc">Square Feet (sq ft)</div>
+                        </div>
+                        <div class="macro-card">
+                            <button class="copy-btn" onclick="copyToClipboard('volumeValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Room Volume</h3>
+                            <div class="value"><span id="volumeValue">0</span></div>
+                            <div class="desc">Cubic Feet (cu ft)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>What is a BTU?</h2>
+                <p>BTU stands for British Thermal Unit. It is a traditional unit of heat defined as the amount of heat required to raise the temperature of one pound of water by one degree Fahrenheit. In the context of heating and cooling, BTUs per hour (BTU/hr) are used to measure the power of air conditioners and heaters. The higher the BTU rating, the more heating or cooling power the unit has.</p>
+
+                <h2>Factors Affecting BTU Requirements</h2>
+                <p>While the square footage of a room is the most significant factor in determining BTU needs, several other variables must be considered for an accurate calculation:</p>
+                <ul>
+                    <li><strong>Ceiling Height:</strong> Standard calculations assume an 8-foot ceiling. Rooms with higher ceilings have more volume (air) to heat or cool, requiring more BTUs.</li>
+                    <li><strong>Insulation:</strong> Poorly insulated rooms lose heat quickly in winter and gain heat quickly in summer, increasing the BTU requirement. Well-insulated rooms are more efficient.</li>
+                    <li><strong>Sun Exposure:</strong> Rooms that receive direct, intense sunlight will need more cooling power in the summer but might need less heating in the winter. Heavily shaded rooms are the opposite.</li>
+                    <li><strong>Climate Zone:</strong> Living in a colder climate means you'll need significantly more heating BTUs than someone in a moderate or hot climate.</li>
+                    <li><strong>Room Use:</strong> Kitchens naturally generate heat from appliances like ovens and stoves. Adding roughly 4,000 BTUs of cooling capacity is recommended for kitchens.</li>
+                </ul>
+
+                <h2>Why Accurate BTU Sizing Matters</h2>
+                <p>It might be tempting to buy the biggest unit possible, but improperly sized heating and cooling systems can lead to problems.</p>
+                <ul>
+                    <li><strong>Too small (Undersized):</strong> The unit will run constantly, struggling to reach the desired temperature, leading to high energy bills and premature wear and tear.</li>
+                    <li><strong>Too big (Oversized):</strong> An oversized AC unit will cool the room too quickly (short cycling) without properly removing humidity, leaving the air feeling clammy and cold. An oversized heater can also short cycle, causing uneven temperatures and reducing efficiency.</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('btuForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const length = parseFloat(document.getElementById('length').value);
+            const width = parseFloat(document.getElementById('width').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const insulation = document.getElementById('insulation').value;
+            const sun = document.getElementById('sun').value;
+            const climate = document.getElementById('climate').value;
+            const isKitchen = document.getElementById('kitchen').value === 'yes';
+
+            if (isNaN(length) || isNaN(width) || isNaN(height)) {
+                return;
+            }
+
+            const area = length * width;
+            const volume = area * height;
+
+            // --- Cooling Calculation ---
+            // Base cooling: ~20 BTUs per square foot
+            let coolingBtu = area * 20;
+
+            // Adjust for sun exposure
+            if (sun === 'sunny') {
+                coolingBtu *= 1.10; // Add 10%
+            } else if (sun === 'heavily_shaded') {
+                coolingBtu *= 0.90; // Reduce by 10%
+            }
+
+            // Adjust for ceiling height (add 10% for every 2 feet over 8 feet)
+            if (height > 8) {
+                const extraHeight = height - 8;
+                const heightAdjustment = 1 + (extraHeight / 2) * 0.10;
+                coolingBtu *= heightAdjustment;
+            }
+
+            // Kitchen adjustment
+            if (isKitchen) {
+                coolingBtu += 4000;
+            }
+
+            // Insulation adjustment
+            if (insulation === 'poor') {
+                coolingBtu *= 1.15;
+            } else if (insulation === 'good') {
+                coolingBtu *= 0.90;
+            }
+
+            // --- Heating Calculation ---
+            let heatingMultiplier;
+            if (climate === 'hot') {
+                heatingMultiplier = 30;
+            } else if (climate === 'moderate') {
+                heatingMultiplier = 40;
+            } else { // cold
+                heatingMultiplier = 50;
+            }
+
+            let heatingBtu = area * heatingMultiplier;
+
+            // Insulation adjustment for heating
+            if (insulation === 'poor') {
+                heatingBtu *= 1.25; // Heat escapes easily
+            } else if (insulation === 'good') {
+                heatingBtu *= 0.85; // Holds heat well
+            }
+
+            // Ceiling height adjustment for heating (heat rises)
+            if (height > 8) {
+                const extraHeight = height - 8;
+                const heightAdjustment = 1 + (extraHeight / 2) * 0.10;
+                heatingBtu *= heightAdjustment;
+            }
+
+            document.getElementById('coolingBtuValue').textContent = Math.round(coolingBtu).toLocaleString();
+            document.getElementById('heatingBtuValue').textContent = Math.round(heatingBtu).toLocaleString();
+            document.getElementById('areaValue').textContent = Math.round(area).toLocaleString();
+            document.getElementById('volumeValue').textContent = Math.round(volume).toLocaleString();
+
+            document.getElementById('results').classList.add('active');
+        });
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent.replace(/,/g, '');
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+                if (!btn) return;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
