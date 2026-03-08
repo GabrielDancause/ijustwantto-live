@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Standing Desks | Curated Comparison | ijustwantto.live</title>
+    <meta name="description" content="Compare the best standing desks. We evaluate height range, stability, programmable presets, build quality, and price to help you find your perfect workspace.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Standing Desk Comparison Tool",
+        "url": "https://ijustwantto.live/list-standing-desks.html",
+        "applicationCategory": "Utility",
+        "operatingSystem": "All",
+        "description": "Interactive comparison tool for the best standing desks featuring filterable and sortable data on stability, build quality, and price."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Best Standing Desks: A Comprehensive Comparison",
+        "name": "Best Standing Desks",
+        "url": "https://ijustwantto.live/list-standing-desks.html",
+        "description": "Compare standing desks by height range, stability, programmable presets, build quality, and price.",
+        "author": {
+          "@type": "Organization",
+          "name": "ijustwantto.live"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "GAB Ventures"
+        }
+      }
+    ]
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --star-color: #ffd700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            letter-spacing: -0.025em;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Controls Section */
+        .controls-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex-grow: 1;
+            min-width: 250px;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 8px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(45, 184, 154, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .sort-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .sort-select {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 2rem 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        /* Comparison Cards */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-style: italic;
+            display: none;
+        }
+
+        .desk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .card-title-area {
+            flex-grow: 1;
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
+        }
+
+        .card-score {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .score-badge {
+            background-color: var(--bg-color);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .price-badge {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #ffffff;
+            background: rgba(45, 184, 154, 0.15);
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid rgba(45, 184, 154, 0.3);
+            margin-left: 1rem;
+            white-space: nowrap;
+        }
+
+        .card-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spec-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-value {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .spec-value.highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .card-features {
+            margin-bottom: 1.25rem;
+        }
+
+        .features-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .features-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        .features-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-secondary);
+        }
+
+        .features-list li::before {
+            content: "•";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .card-pros-cons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .pro-con-box {
+            font-size: 0.875rem;
+        }
+
+        .pc-title {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .pro-title {
+            color: #4ade80;
+        }
+
+        .con-title {
+            color: #f87171;
+        }
+
+        .pc-text {
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Metric Bars */
+        .metric-bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: var(--bg-color);
+            border-radius: 3px;
+            margin-top: 0.25rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .metric-bar {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .bar-excellent { background-color: var(--accent-color); }
+        .bar-good { background-color: #60a5fa; }
+        .bar-average { background-color: #fbbf24; }
+
+        /* Tag Label for Editor's Choice etc */
+        .card-tag {
+            position: absolute;
+            top: 0;
+            right: 1.5rem;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.75rem;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* SEO Section */
+        .seo-content {
+            margin-top: 4rem;
+            padding: 2.5rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-secondary);
+        }
+
+        .seo-content h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            margin-top: 2.5rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content h3 {
+            color: #ffffff;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.25rem;
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-wrapper {
+                width: 100%;
+            }
+            .sort-wrapper {
+                justify-content: space-between;
+                width: 100%;
+            }
+            .desk-grid {
+                grid-template-columns: 1fr;
+            }
+            .seo-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Best Standing Desks</h1>
+            <p class="subtitle">A curated comparison based on stability, build quality, height range, and overall value. Find the right foundation for your workspace.</p>
+        </header>
+
+        <main>
+            <!-- Controls: Search and Sort -->
+            <div class="controls-container">
+                <div class="search-wrapper">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search brands, features, or models..." aria-label="Search standing desks">
+                </div>
+
+                <div class="sort-wrapper">
+                    <label for="sortSelect" class="sort-label">Sort By:</label>
+                    <select id="sortSelect" class="sort-select">
+                        <option value="score-desc">Highest Rated</option>
+                        <option value="price-asc">Price (Low to High)</option>
+                        <option value="price-desc">Price (High to Low)</option>
+                        <option value="stability-desc">Most Stable</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="noResults" class="no-results">
+                No desks match your search criteria. Try a different term.
+            </div>
+
+            <!-- Desk Comparison Grid -->
+            <div class="desk-grid" id="deskGrid">
+
+                <!-- Desk 1 -->
+                <article class="card desk-item" data-price="799" data-score="9.5" data-stability="10" data-name="Uplift V2 Commercial">
+                    <div class="card-tag">Editor's Choice</div>
+                    <div class="card-top">
+                        <div class="card-title-area">
+                            <h2>Uplift V2 Commercial</h2>
+                            <div class="card-score">
+                                <span class="score-badge">9.5/10</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Overall Rating</span>
+                            </div>
+                        </div>
+                        <div class="price-badge">$799+</div>
+                    </div>
+
+                    <div class="card-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Height Range</span>
+                            <span class="spec-value">22.6" - 48.7"</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Capacity</span>
+                            <span class="spec-value">355 lbs</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Stability</span>
+                            <span class="spec-value highlight">Rock Solid</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-excellent" style="width: 100%;"></div></div>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Build Quality</span>
+                            <span class="spec-value">Premium</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-excellent" style="width: 95%;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="features-title">Key Specs</div>
+                        <ul class="features-list">
+                            <li>Dual motors with anti-collision</li>
+                            <li>Advanced keypad with 4 memory presets</li>
+                            <li>BIFMA certified for commercial use</li>
+                            <li>Includes crossbar for maximum stability</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-pros-cons">
+                        <div class="pro-con-box">
+                            <div class="pc-title pro-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Pros
+                            </div>
+                            <div class="pc-text">Unmatched stability at max height; massive ecosystem of accessories; 15-year warranty.</div>
+                        </div>
+                        <div class="pro-con-box">
+                            <div class="pc-title con-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                Cons
+                            </div>
+                            <div class="pc-text">Crossbar limits legroom and under-desk storage options; premium price tag.</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Desk 2 -->
+                <article class="card desk-item" data-price="699" data-score="9.2" data-stability="8.5" data-name="Fully Jarvis (Herman Miller)">
+                    <div class="card-top">
+                        <div class="card-title-area">
+                            <h2>Herman Miller Jarvis</h2>
+                            <div class="card-score">
+                                <span class="score-badge">9.2/10</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Overall Rating</span>
+                            </div>
+                        </div>
+                        <div class="price-badge">$699+</div>
+                    </div>
+
+                    <div class="card-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Height Range</span>
+                            <span class="spec-value">25.5" - 51.0"</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Capacity</span>
+                            <span class="spec-value">350 lbs</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Stability</span>
+                            <span class="spec-value">Very Good</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-good" style="width: 85%;"></div></div>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Build Quality</span>
+                            <span class="spec-value">Excellent</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-excellent" style="width: 90%;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="features-title">Key Specs</div>
+                        <ul class="features-list">
+                            <li>OLED programmable handset (4 presets)</li>
+                            <li>Eco-friendly bamboo top options</li>
+                            <li>T-frame or C-frame configurations</li>
+                            <li>Industry-leading aesthetics</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-pros-cons">
+                        <div class="pro-con-box">
+                            <div class="pc-title pro-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Pros
+                            </div>
+                            <div class="pc-text">Beautiful design; sustainable materials; backed by Herman Miller; smooth lifting mechanism.</div>
+                        </div>
+                        <div class="pro-con-box">
+                            <div class="pc-title con-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                Cons
+                            </div>
+                            <div class="pc-text">Noticeable wobble at maximum height (>45"); accessories can be expensive.</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Desk 3 -->
+                <article class="card desk-item" data-price="429" data-score="8.5" data-stability="7.5" data-name="FlexiSpot E7">
+                    <div class="card-tag" style="background-color: #3b82f6;">Best Value</div>
+                    <div class="card-top">
+                        <div class="card-title-area">
+                            <h2>FlexiSpot E7 Pro</h2>
+                            <div class="card-score">
+                                <span class="score-badge">8.5/10</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Overall Rating</span>
+                            </div>
+                        </div>
+                        <div class="price-badge">$429+</div>
+                    </div>
+
+                    <div class="card-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Height Range</span>
+                            <span class="spec-value">22.8" - 48.4"</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Capacity</span>
+                            <span class="spec-value">355 lbs</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Stability</span>
+                            <span class="spec-value">Good</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-good" style="width: 75%;"></div></div>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Build Quality</span>
+                            <span class="spec-value">Solid</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-good" style="width: 80%;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="features-title">Key Specs</div>
+                        <ul class="features-list">
+                            <li>Thick leg columns for reduced wobble</li>
+                            <li>Premium keypad with USB charging port</li>
+                            <li>Cable management tray included</li>
+                            <li>Child-lock feature</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-pros-cons">
+                        <div class="pro-con-box">
+                            <div class="pc-title pro-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Pros
+                            </div>
+                            <div class="pc-text">Exceptional value for heavy lifting capacity; surprisingly stable given the price point; great warranty.</div>
+                        </div>
+                        <div class="pro-con-box">
+                            <div class="pc-title con-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                Cons
+                            </div>
+                            <div class="pc-text">Cheaper desktop materials (laminates) chip easily; customer support can be hit or miss.</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Desk 4 -->
+                <article class="card desk-item" data-price="999" data-score="8.8" data-stability="9.5" data-name="Deskhaus Apex Pro">
+                    <div class="card-top">
+                        <div class="card-title-area">
+                            <h2>Deskhaus Apex Pro</h2>
+                            <div class="card-score">
+                                <span class="score-badge">8.8/10</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Overall Rating</span>
+                            </div>
+                        </div>
+                        <div class="price-badge">$999+</div>
+                    </div>
+
+                    <div class="card-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Height Range</span>
+                            <span class="spec-value">22.5" - 48.5"</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Capacity</span>
+                            <span class="spec-value highlight">600 lbs</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Stability</span>
+                            <span class="spec-value highlight">Rock Solid</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-excellent" style="width: 98%;"></div></div>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Build Quality</span>
+                            <span class="spec-value">Industrial</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-excellent" style="width: 95%;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="features-title">Key Specs</div>
+                        <ul class="features-list">
+                            <li>Four-leg structural design</li>
+                            <li>Massive 600lb lifting capacity</li>
+                            <li>Smart paddle switch with presets</li>
+                            <li>American-made steel frame</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-pros-cons">
+                        <div class="pro-con-box">
+                            <div class="pc-title pro-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Pros
+                            </div>
+                            <div class="pc-text">Virtually zero wobble even at max height; built like a tank; supports massive multi-monitor setups.</div>
+                        </div>
+                        <div class="pro-con-box">
+                            <div class="pc-title con-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                Cons
+                            </div>
+                            <div class="pc-text">Very expensive; bare-bones aesthetic; extreme overkill for a laptop user.</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Desk 5 -->
+                <article class="card desk-item" data-price="299" data-score="7.5" data-stability="6.5" data-name="Vari Essential">
+                    <div class="card-tag" style="background-color: #8b5cf6;">Budget Pick</div>
+                    <div class="card-top">
+                        <div class="card-title-area">
+                            <h2>Vari Essential Desk</h2>
+                            <div class="card-score">
+                                <span class="score-badge">7.5/10</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Overall Rating</span>
+                            </div>
+                        </div>
+                        <div class="price-badge">$299+</div>
+                    </div>
+
+                    <div class="card-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Height Range</span>
+                            <span class="spec-value">27.5" - 47.2"</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Capacity</span>
+                            <span class="spec-value">150 lbs</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Stability</span>
+                            <span class="spec-value">Fair</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-average" style="width: 65%;"></div></div>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Build Quality</span>
+                            <span class="spec-value">Basic</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-average" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="features-title">Key Specs</div>
+                        <ul class="features-list">
+                            <li>Simple up/down keypad (no memory)</li>
+                            <li>Single motor mechanism</li>
+                            <li>T-style leg configuration</li>
+                            <li>Compact sizes for small spaces</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-pros-cons">
+                        <div class="pro-con-box">
+                            <div class="pc-title pro-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Pros
+                            </div>
+                            <div class="pc-text">Highly affordable; very fast and easy assembly; great for students or small home offices.</div>
+                        </div>
+                        <div class="pro-con-box">
+                            <div class="pc-title con-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                Cons
+                            </div>
+                            <div class="pc-text">No memory presets; low weight capacity; minimum height (27.5") is too tall for shorter users.</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Desk 6 -->
+                <article class="card desk-item" data-price="899" data-score="8.9" data-stability="9.0" data-name="Secretlab Magnus Pro">
+                    <div class="card-top">
+                        <div class="card-title-area">
+                            <h2>Secretlab Magnus Pro</h2>
+                            <div class="card-score">
+                                <span class="score-badge">8.9/10</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Overall Rating</span>
+                            </div>
+                        </div>
+                        <div class="price-badge">$899+</div>
+                    </div>
+
+                    <div class="card-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Height Range</span>
+                            <span class="spec-value">25.6" - 49.2"</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Capacity</span>
+                            <span class="spec-value">265 lbs</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Stability</span>
+                            <span class="spec-value">Excellent</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-excellent" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Build Quality</span>
+                            <span class="spec-value">Premium</span>
+                            <div class="metric-bar-container"><div class="metric-bar bar-excellent" style="width: 92%;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="card-features">
+                        <div class="features-title">Key Specs</div>
+                        <ul class="features-list">
+                            <li>Integrated power column (hides main cable)</li>
+                            <li>Magnetic cable management ecosystem</li>
+                            <li>Flush-mounted control panel</li>
+                            <li>Full-coverage magnetic desk mat</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-pros-cons">
+                        <div class="pro-con-box">
+                            <div class="pc-title pro-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Pros
+                            </div>
+                            <div class="pc-text">The best cable management in the industry; incredibly sleek aesthetics; integrated control panel.</div>
+                        </div>
+                        <div class="pro-con-box">
+                            <div class="pc-title con-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                Cons
+                            </div>
+                            <div class="pc-text">Metal top is cold without the mat; requires buying into their proprietary ecosystem for accessories.</div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- SEO Content Section -->
+            <section class="seo-content">
+                <h2>How to Choose the Right Standing Desk</h2>
+                <p>Investing in a standing desk can significantly improve your posture, energy levels, and overall health. However, not all desks are created equal. When selecting a sit-to-stand desk, the most critical factor is the <strong>height range</strong>. The desk must be able to go low enough for ergonomic typing while seated, and high enough so you don't have to hunch while standing.</p>
+                <p>Ensure you check the BIFMA ergonomic guidelines for your height. Most standard desks only lower to about 28 inches, which is actually too high for anyone under 5'10" to type comfortably without a keyboard tray. Look for desks with three-stage columns, which generally offer a broader range (often dropping to 22.5 inches).</p>
+
+                <h2>Understanding Desk Stability and Wobble</h2>
+                <p>A common issue with cheaper standing desks is "wobble," particularly at higher elevations. This can be highly distracting, especially if you use multiple monitors on monitor arms.</p>
+                <ul>
+                    <li><strong>Front-to-back wobble:</strong> Usually caused by loose glides inside the lifting columns or a poorly designed foot.</li>
+                    <li><strong>Side-to-side wobble:</strong> Usually mitigated by adding a traditional crossbar between the legs or by using a thick, wedge-shaped frame design.</li>
+                </ul>
+                <p>If you are taller than 6'0", prioritize desks known for exceptional stability, such as the Uplift V2 Commercial or Deskhaus Apex, as wobble increases exponentially the higher the desk is raised.</p>
+
+                <h2>Key Features to Look For</h2>
+                <h3>Programmable Presets</h3>
+                <p>A simple up/down switch requires you to hold the button and manually find your perfect height every time. A programmable keypad allows you to save your seated and standing heights (usually 4 presets), ensuring perfect ergonomics with a single touch.</p>
+
+                <h3>Lifting Capacity and Motors</h3>
+                <p>Dual-motor desks are the industry standard for anything above $400. They provide smoother, quieter, and faster adjustments than single-motor desks. Ensure the lifting capacity far exceeds the weight of your gear. If you have a heavy hardwood top, multiple monitors, and a heavy PC case mounted under the desk, you should aim for a capacity of 300 lbs or more.</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+            const deskGrid = document.getElementById('deskGrid');
+            const noResults = document.getElementById('noResults');
+
+            // Get all desk items as an array
+            let desks = Array.from(document.querySelectorAll('.desk-item'));
+
+            // Function to filter and sort desks
+            function updateDesks() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const sortValue = sortSelect.value;
+
+                let visibleCount = 0;
+
+                // First, filter desks
+                desks.forEach(desk => {
+                    const searchableText = (desk.getAttribute('data-name') + ' ' + desk.innerText).toLowerCase();
+                    if (searchableText.includes(searchTerm)) {
+                        desk.style.display = 'flex';
+                        desk.classList.add('visible');
+                        visibleCount++;
+                    } else {
+                        desk.style.display = 'none';
+                        desk.classList.remove('visible');
+                    }
+                });
+
+                // Show/hide no results message
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+
+                // Get only visible desks for sorting
+                const visibleDesks = desks.filter(desk => desk.classList.contains('visible'));
+
+                // Sort desks
+                visibleDesks.sort((a, b) => {
+                    if (sortValue === 'price-asc') {
+                        return parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price'));
+                    } else if (sortValue === 'price-desc') {
+                        return parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price'));
+                    } else if (sortValue === 'score-desc') {
+                        return parseFloat(b.getAttribute('data-score')) - parseFloat(a.getAttribute('data-score'));
+                    } else if (sortValue === 'stability-desc') {
+                        return parseFloat(b.getAttribute('data-stability')) - parseFloat(a.getAttribute('data-stability'));
+                    }
+                    return 0;
+                });
+
+                // Re-append sorted desks to grid
+                visibleDesks.forEach(desk => {
+                    deskGrid.appendChild(desk);
+                });
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', updateDesks);
+            sortSelect.addEventListener('change', updateDesks);
+
+            // Initial sort
+            updateDesks();
+        });
+    </script>
+</body>
+</html>
