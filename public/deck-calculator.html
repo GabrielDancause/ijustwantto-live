@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deck Board Calculator - Estimate Decking & Joists</title>
+    <meta name="description" content="Calculate the number of decking boards, linear feet of joists, and deck screws required for your project. Includes a 10% waste factor.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input {
+            font-family: var(--font-code);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-waste-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+    </style>
+
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Deck Board Calculator",
+      "description": "Calculate the number of decking boards, linear feet of joists, and deck screws required for your project. Includes a 10% waste factor.",
+      "url": "https://ijustwantto.live/deck-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Deck Board Calculator</h1>
+            <p class="subtitle">Estimate decking boards, joists, and screws needed for your deck project with a 10% waste factor built-in.</p>
+        </header>
+
+        <main class="card">
+            <h2 class="section-title">Deck Dimensions</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="deck-width">Deck Width (Along House)</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="deck-width" min="1" step="0.5" value="16" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="deck-depth">Deck Depth (Outward)</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="deck-depth" min="1" step="0.5" value="12" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Decking Material</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="board-width">Board Width</label>
+                    <select id="board-width" onchange="calculate()">
+                        <option value="5.5">5.5" (Standard 6" Board)</option>
+                        <option value="3.5">3.5" (Standard 4" Board)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="board-length">Board Length</label>
+                    <select id="board-length" onchange="calculate()">
+                        <option value="8">8 ft</option>
+                        <option value="10">10 ft</option>
+                        <option value="12">12 ft</option>
+                        <option value="14">14 ft</option>
+                        <option value="16" selected>16 ft</option>
+                        <option value="20">20 ft</option>
+                    </select>
+                </div>
+            </div>
+
+            <h2 class="section-title">Substructure</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="joist-spacing">Joist Spacing (On Center)</label>
+                    <select id="joist-spacing" onchange="calculate()">
+                        <option value="12">12 inches</option>
+                        <option value="16" selected>16 inches</option>
+                        <option value="24">24 inches</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-area">0</div>
+                    <div class="result-label">Total Area (Sq Ft)</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Material List
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-boards">0</div>
+                        <div class="result-item-label" id="label-boards">Deck Boards</div>
+                        <div class="result-waste-note">+10% waste</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-joists">0</div>
+                        <div class="result-item-label">Joist Material (Linear Ft)</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-screws">0</div>
+                        <div class="result-item-label">Deck Screws</div>
+                        <div class="result-waste-note">+10% waste</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>How to Calculate Decking Materials</h2>
+            <p>Estimating the right amount of materials for a deck prevents unnecessary trips to the hardware store and ensures you don't overspend. The calculation starts with finding the total square footage of your deck by multiplying the width by the depth.</p>
+            <p>For the decking boards, the calculation depends on the width of the boards you choose. Standard 6-inch decking boards are actually 5.5 inches wide. When calculating the total linear feet of decking required, you must also factor in a standard 1/8-inch gap between boards for drainage and expansion. Our calculator handles this complex math automatically, converting the total linear feet into the exact number of boards you need based on your preferred board length.</p>
+
+            <h2>Understanding Joist Spacing and Deck Span</h2>
+            <p>Joists are the structural support members that run underneath your decking. The spacing between joists (measured "on center" or O.C.) determines how stiff and strong your deck will feel. Common spacing options include 12", 16", and 24".</p>
+            <ul>
+                <li><strong>16" On Center:</strong> This is the most common and standard joist spacing for residential decks. It provides a solid feel and meets most building codes for standard wood and composite decking.</li>
+                <li><strong>12" On Center:</strong> A narrower spacing used for diagonal decking patterns or when installing heavy composite decking that requires extra support to prevent sagging.</li>
+                <li><strong>24" On Center:</strong> Generally only used with thicker 2x6 decking boards. It uses less material but is not recommended for standard 5/4" wood or composite boards.</li>
+            </ul>
+
+            <h2>Why You Need a Waste Factor</h2>
+            <p>When purchasing building materials, it is an industry standard to add a 10% waste factor to your final count. This calculator automatically includes a 10% buffer for your decking boards and screws. You will inevitably make imperfect cuts, find boards with bad knots or warping, or simply drop screws through the cracks of the deck. Buying exactly what the math dictates almost always guarantees you will run short before the project is completed.</p>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+        });
+
+        function calculate() {
+            const widthFt = parseFloat(document.getElementById('deck-width').value) || 0;
+            const depthFt = parseFloat(document.getElementById('deck-depth').value) || 0;
+            const boardWidthIn = parseFloat(document.getElementById('board-width').value) || 0;
+            const boardLengthFt = parseFloat(document.getElementById('board-length').value) || 0;
+            const joistSpacingIn = parseFloat(document.getElementById('joist-spacing').value) || 0;
+
+            if (widthFt <= 0 || depthFt <= 0) {
+                document.getElementById('res-area').textContent = '0';
+                document.getElementById('res-boards').textContent = '0';
+                document.getElementById('res-joists').textContent = '0';
+                document.getElementById('res-screws').textContent = '0';
+                return;
+            }
+
+            // Area calculation
+            const areaSqFt = widthFt * depthFt;
+
+            // Decking Boards
+            const boardGapIn = 0.125; // 1/8 inch gap
+            // How many rows of decking to cover the depth?
+            const rowsOfDecking = Math.ceil((depthFt * 12) / (boardWidthIn + boardGapIn));
+            // Total linear feet of decking needed
+            const deckingLinearFeet = rowsOfDecking * widthFt;
+            // Total boards needed with 10% waste
+            const numBoards = Math.ceil((deckingLinearFeet * 1.10) / boardLengthFt);
+
+            // Substructure (Joists)
+            // Assuming joists run parallel to the depth, spaced along the width
+            const numMainJoists = Math.ceil((widthFt * 12) / joistSpacingIn) + 1;
+            // Calculate linear feet: main joists + 2 rim joists (parallel to width)
+            const joistLinearFeet = Math.ceil((numMainJoists * depthFt) + (2 * widthFt));
+
+            // Fasteners (Screws)
+            // Intersections between decking rows and joists
+            const totalIntersections = rowsOfDecking * numMainJoists;
+            // 2 screws per intersection + 10% waste
+            const totalScrews = Math.ceil(totalIntersections * 2 * 1.10);
+
+            // Update UI
+            document.getElementById('res-area').textContent = Math.round(areaSqFt).toLocaleString();
+            document.getElementById('res-boards').textContent = numBoards.toLocaleString();
+            document.getElementById('label-boards').textContent = boardLengthFt + "' Deck Boards";
+            document.getElementById('res-joists').textContent = joistLinearFeet.toLocaleString();
+            document.getElementById('res-screws').textContent = totalScrews.toLocaleString();
+        }
+
+        function copyResults() {
+            const area = document.getElementById('res-area').textContent;
+            const boards = document.getElementById('res-boards').textContent;
+            const boardLabel = document.getElementById('label-boards').textContent;
+            const joists = document.getElementById('res-joists').textContent;
+            const screws = document.getElementById('res-screws').textContent;
+
+            const textToCopy = `Deck Material Estimate:\n` +
+                               `Total Area: ${area} Sq Ft\n` +
+                               `${boardLabel}: ${boards} (Includes 10% waste)\n` +
+                               `Joist Material: ${joists} Linear Ft\n` +
+                               `Deck Screws: ${screws} (Includes 10% waste)\n`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
