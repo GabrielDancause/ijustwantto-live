@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couch to 5K: Complete Plan | ijustwantto.live</title>
+    <meta name="description" content="8-week running plan for absolute beginners. Training schedule, tips, and injury prevention to get you from the couch to running 5K.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Couch to 5K: Complete Plan",
+      "name": "Couch to 5K Plan",
+      "url": "https://ijustwantto.live/guide-running-plan.html",
+      "description": "A comprehensive 8-week running plan for absolute beginners. Includes training schedule, tips, and injury prevention.",
+      "author": {
+        "@type": "Organization",
+        "name": "ijustwantto.live"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GAB Ventures"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            letter-spacing: -0.025em;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 8px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(45, 184, 154, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .section-icon {
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .card-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .tag {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.2);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .td-mono {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+        }
+
+        .td-highlight {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .accordion {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-ui);
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.2s;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .accordion-icon {
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .accordion.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: var(--bg-color);
+        }
+
+        .accordion-inner {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .routine-block {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .routine-block h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .routine-list {
+            list-style-type: none;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .routine-list li {
+            margin-bottom: 0.25rem;
+            display: flex;
+            justify-content: space-between;
+            padding: 0.25rem 0;
+        }
+
+        .routine-list li span:last-child {
+            color: var(--text-secondary);
+        }
+
+        .routine-list li.bold-row span {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.4rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* SEO Section */
+        .seo-content {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .seo-content h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+        }
+
+        .seo-content ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* Utility classes for filtering */
+        .hidden {
+            display: none !important;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            .section-header h2 { font-size: 1.25rem; }
+            .routine-list li { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Couch to 5K: Complete Plan</h1>
+            <p class="subtitle">8-week running plan for absolute beginners. Training schedule, tips, injury prevention.</p>
+        </header>
+
+        <main>
+            <div class="search-container">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search schedule, workouts, tips, or injuries..." aria-label="Search guide content">
+            </div>
+
+            <div id="noResults" class="no-results">
+                No matching content found. Try a different search term.
+            </div>
+
+            <!-- Schedule Section -->
+            <section class="content-section" data-tags="schedule weeks 1 2 3 4 5 6 7 8 training plan run walk routine">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <h2>The 8-Week Schedule</h2>
+                </div>
+
+                <!-- Week 1 -->
+                <div class="accordion searchable-item" data-search="week 1 run 1 min walk 1.5 min repeat 8x">
+                    <button class="accordion-header">
+                        <span>Week 1</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">Begin with a brisk 5-minute warmup walk. Then, alternate 60 seconds of running, with 90 seconds of walking. Perform 3 times this week.</p>
+                            <div class="routine-block" id="routine-w1">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w1')" title="Copy Routine" aria-label="Copy Week 1 Routine to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Week 1 Routine (Do 3x)</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li><span>Run</span><span>1 min</span></li>
+                                    <li><span>Walk</span><span>1.5 mins</span></li>
+                                    <li class="bold-row"><span>Repeat Run/Walk Cycle</span><span>8 times total</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 2 -->
+                <div class="accordion searchable-item" data-search="week 2 run 1.5 min walk 2 min repeat 6x">
+                    <button class="accordion-header">
+                        <span>Week 2</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">Begin with a brisk 5-minute warmup walk. Then, alternate 90 seconds of running, with 2 minutes of walking. Perform 3 times this week.</p>
+                            <div class="routine-block" id="routine-w2">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w2')" title="Copy Routine" aria-label="Copy Week 2 Routine to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Week 2 Routine (Do 3x)</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li><span>Run</span><span>1.5 mins</span></li>
+                                    <li><span>Walk</span><span>2 mins</span></li>
+                                    <li class="bold-row"><span>Repeat Run/Walk Cycle</span><span>6 times total</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 3 -->
+                <div class="accordion searchable-item" data-search="week 3 run 90s walk 90s run 3m walk 3m">
+                    <button class="accordion-header">
+                        <span>Week 3</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">Things get interesting here with a longer 3-minute run mixed in. Perform 3 times this week.</p>
+                            <div class="routine-block" id="routine-w3">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w3')" title="Copy Routine" aria-label="Copy Week 3 Routine to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Week 3 Routine (Do 3x)</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li><span>Run / Walk</span><span>90s / 90s</span></li>
+                                    <li><span>Run / Walk</span><span>3 mins / 3 mins</span></li>
+                                    <li><span>Run / Walk</span><span>90s / 90s</span></li>
+                                    <li><span>Run / Walk</span><span>3 mins / 3 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 4 -->
+                <div class="accordion searchable-item" data-search="week 4 run 3m walk 90s run 5m walk 2.5m">
+                    <button class="accordion-header">
+                        <span>Week 4</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">Increasing the duration with a 5-minute run segment. Perform 3 times this week.</p>
+                            <div class="routine-block" id="routine-w4">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w4')" title="Copy Routine" aria-label="Copy Week 4 Routine to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Week 4 Routine (Do 3x)</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li><span>Run / Walk</span><span>3 mins / 90s</span></li>
+                                    <li><span>Run / Walk</span><span>5 mins / 2.5 mins</span></li>
+                                    <li><span>Run / Walk</span><span>3 mins / 90s</span></li>
+                                    <li><span>Run</span><span>5 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 5 -->
+                <div class="accordion searchable-item" data-search="week 5 different workouts run 20m 20 mins milestone">
+                    <button class="accordion-header">
+                        <span>Week 5</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">This week has 3 different workouts ending with the infamous 20-minute run. You can do this!</p>
+                            <div class="routine-block" id="routine-w5-d1">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w5-d1')" title="Copy Routine" aria-label="Copy Week 5 Day 1 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 1</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li><span>Run / Walk</span><span>5 mins / 3 mins</span></li>
+                                    <li><span>Run / Walk</span><span>5 mins / 3 mins</span></li>
+                                    <li><span>Run</span><span>5 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                            <div class="routine-block" id="routine-w5-d2">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w5-d2')" title="Copy Routine" aria-label="Copy Week 5 Day 2 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 2</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li><span>Run / Walk</span><span>8 mins / 5 mins</span></li>
+                                    <li><span>Run</span><span>8 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                            <div class="routine-block" id="routine-w5-d3">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w5-d3')" title="Copy Routine" aria-label="Copy Week 5 Day 3 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 3</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li class="bold-row"><span>Run (No walking breaks)</span><span>20 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 6 -->
+                <div class="accordion searchable-item" data-search="week 6 different workouts run 22m 22 mins">
+                    <button class="accordion-header">
+                        <span>Week 6</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">Another week of varying workouts as we transition towards continuous running.</p>
+                            <div class="routine-block" id="routine-w6-d1">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w6-d1')" title="Copy Routine" aria-label="Copy Week 6 Day 1 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 1</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li><span>Run / Walk</span><span>5 mins / 3 mins</span></li>
+                                    <li><span>Run / Walk</span><span>8 mins / 3 mins</span></li>
+                                    <li><span>Run</span><span>5 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                            <div class="routine-block" id="routine-w6-d2">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w6-d2')" title="Copy Routine" aria-label="Copy Week 6 Day 2 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 2</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li><span>Run / Walk</span><span>10 mins / 3 mins</span></li>
+                                    <li><span>Run</span><span>10 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                            <div class="routine-block" id="routine-w6-d3">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w6-d3')" title="Copy Routine" aria-label="Copy Week 6 Day 3 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 3</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li class="bold-row"><span>Run (No walking breaks)</span><span>22 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 7 -->
+                <div class="accordion searchable-item" data-search="week 7 run 25m continuous running">
+                    <button class="accordion-header">
+                        <span>Week 7</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">You are now running continuously. Perform 3 times this week.</p>
+                            <div class="routine-block" id="routine-w7">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w7')" title="Copy Routine" aria-label="Copy Week 7 Routine to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Week 7 Routine (Do 3x)</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li class="bold-row"><span>Run</span><span>25 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 8 -->
+                <div class="accordion searchable-item" data-search="week 8 run 28m 30m the 5k continuous running">
+                    <button class="accordion-header">
+                        <span>Week 8</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">The final week! You will run 3 times, ending with a full 30-minute run (or completing a 5K distance).</p>
+                            <div class="routine-block" id="routine-w8-d1">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w8-d1')" title="Copy Routine" aria-label="Copy Week 8 Day 1 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 1</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li class="bold-row"><span>Run</span><span>28 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                            <div class="routine-block" id="routine-w8-d2">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w8-d2')" title="Copy Routine" aria-label="Copy Week 8 Day 2 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 2</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li class="bold-row"><span>Run</span><span>30 mins</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                            <div class="routine-block" id="routine-w8-d3">
+                                <button class="copy-btn" onclick="copyRoutine('routine-w8-d3')" title="Copy Routine" aria-label="Copy Week 8 Day 3 to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Day 3: The 5K</h4>
+                                <ul class="routine-list">
+                                    <li><span>Warmup Walk</span><span>5 mins</span></li>
+                                    <li class="bold-row"><span>Run</span><span>5 Kilometers (3.1 miles)</span></li>
+                                    <li><span>Cooldown Walk</span><span>5 mins</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Essential Tips Section -->
+            <section class="content-section" data-tags="tips essential beginners pacing shoes hydration rest days">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    </div>
+                    <h2>Essential Tips for Beginners</h2>
+                </div>
+
+                <div class="card-grid">
+                    <div class="card searchable-item" data-search="pacing conversational pace speed slow down">
+                        <div class="card-header">
+                            <h3>Pacing</h3>
+                        </div>
+                        <p class="card-desc">Run at a "conversational pace". If you can't speak a full sentence without gasping for air, you are running too fast. Slow down, even if it feels like a fast shuffle.</p>
+                        <div class="card-meta">
+                            <span class="tag">Form</span>
+                        </div>
+                    </div>
+
+                    <div class="card searchable-item" data-search="rest days recovery breaks overtraining">
+                        <div class="card-header">
+                            <h3>Rest Days</h3>
+                        </div>
+                        <p class="card-desc">Rest is when your body rebuilds and gets stronger. Never skip rest days. Do not run on consecutive days while on this plan.</p>
+                        <div class="card-meta">
+                            <span class="tag">Recovery</span>
+                        </div>
+                    </div>
+
+                    <div class="card searchable-item" data-search="shoes footwear gear running store">
+                        <div class="card-header">
+                            <h3>Running Shoes</h3>
+                        </div>
+                        <p class="card-desc">Go to a dedicated running store and get fitted. Your old sneakers might cause injury. It's the only gear you truly need to invest in.</p>
+                        <div class="card-meta">
+                            <span class="tag">Gear</span>
+                        </div>
+                    </div>
+
+                    <div class="card searchable-item" data-search="hydration water drinking">
+                        <div class="card-header">
+                            <h3>Hydration</h3>
+                        </div>
+                        <p class="card-desc">Drink water throughout the day, not just right before the run. If you run for less than 45 minutes, you likely don't need to carry water with you.</p>
+                        <div class="card-meta">
+                            <span class="tag">Nutrition</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Injury Prevention Section -->
+            <section class="content-section" data-tags="injury prevention pain shin splints runners knee stretching warmup">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                    </div>
+                    <h2>Injury Prevention</h2>
+                </div>
+
+                <div class="table-wrapper searchable-item" data-search="shin splints runners knee plantar fasciitis symptoms prevention">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Common Issue</th>
+                                <th>Symptoms</th>
+                                <th>Prevention & Care</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="td-highlight">Shin Splints</td>
+                                <td>Pain along the inner edge of the shinbone.</td>
+                                <td>Ensure proper shoes. Avoid running on hard surfaces (concrete) daily. Stretch calves. Ice post-run.</td>
+                            </tr>
+                            <tr>
+                                <td class="td-highlight">Runner's Knee</td>
+                                <td>Dull, aching pain around or under the kneecap.</td>
+                                <td>Strengthen quadriceps and glutes. Don't increase mileage too quickly. Ensure proper running form (high cadence).</td>
+                            </tr>
+                            <tr>
+                                <td class="td-highlight">Plantar Fasciitis</td>
+                                <td>Sharp heel pain, especially during the first steps in the morning.</td>
+                                <td>Stretch calves and Achilles. Roll a frozen water bottle under your foot. Avoid flat, unsupportive daily shoes.</td>
+                            </tr>
+                            <tr>
+                                <td class="td-highlight">Side Stitches</td>
+                                <td>Sharp pain just below the rib cage during a run.</td>
+                                <td>Focus on deep belly breathing. Slow down your pace. Avoid heavy meals 2 hours before running.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SEO Content Section -->
+            <div class="seo-content">
+                <h2>Why Start the Couch to 5K Plan?</h2>
+                <p>The Couch to 5K (C25K) plan is one of the most effective and accessible ways to begin a running habit. It is specifically designed for complete beginners who may have never run a day in their lives. By utilizing a run/walk interval method, the plan gently conditions your cardiovascular system, muscles, and joints, preventing the burnout and injuries that often accompany doing "too much, too soon."</p>
+                <p>Running offers numerous health benefits, including improved heart health, increased bone density, stress relief, and enhanced mental clarity. Completing a 5K (3.1 miles) is a significant and rewarding milestone that builds confidence and sets the foundation for lifelong fitness.</p>
+
+                <h2>How the Couch to 5K Plan Works</h2>
+                <p>The core philosophy of this plan is gradual progression. Over 8 weeks, you transition from mostly walking to continuous running.</p>
+                <ul>
+                    <li><strong>Intervals:</strong> You will alternate between running segments and walking recovery segments. Early on, the walking segments are longer.</li>
+                    <li><strong>Frequency:</strong> The plan requires 3 workouts per week. This provides enough stimulus to improve fitness while allowing adequate recovery time between sessions.</li>
+                    <li><strong>Time vs. Distance:</strong> The plan focuses on time spent running rather than distance covered. This removes the pressure of pace and allows you to focus purely on effort.</li>
+                    <li><strong>The Goal:</strong> By the end of Week 8, you will be prepared to run continuously for 30 minutes, which is roughly the time it takes an average beginner to complete a 5K distance.</li>
+                </ul>
+
+                <h2>Overcoming the "Week 5" Hurdle</h2>
+                <p>Many beginners view Week 5, specifically Day 3 (the 20-minute continuous run), as a massive wall. It's important to understand that by the time you reach Week 5, your body is physically prepared for this challenge. The hurdle is almost entirely mental. Trust the training you've accumulated over the past month. Slow your pace down to a comfortable jog, focus on your breathing, and remind yourself that the previous weeks have built the endurance you need.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Accordion Functionality
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordion = button.parentElement;
+                const content = accordion.querySelector('.accordion-content');
+
+                // Toggle active class
+                accordion.classList.toggle('active');
+
+                // Animate height
+                if (accordion.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = "0";
+                }
+            });
+        });
+
+        // Search/Filter Functionality
+        const searchInput = document.getElementById('searchInput');
+        const contentSections = document.querySelectorAll('.content-section');
+        const searchableItems = document.querySelectorAll('.searchable-item');
+        const noResultsMessage = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            let totalVisibleItems = 0;
+
+            if (searchTerm === '') {
+                // Reset everything if search is empty
+                searchableItems.forEach(item => item.classList.remove('hidden'));
+                contentSections.forEach(section => section.classList.remove('hidden'));
+                noResultsMessage.style.display = 'none';
+
+                // Close accordions on reset
+                document.querySelectorAll('.accordion.active').forEach(acc => {
+                    acc.classList.remove('active');
+                    acc.querySelector('.accordion-content').style.maxHeight = '0';
+                });
+                return;
+            }
+
+            // Filter items within sections
+            contentSections.forEach(section => {
+                let sectionHasVisibleItems = false;
+                const sectionItems = section.querySelectorAll('.searchable-item');
+
+                // Check if the section tags themselves match the search
+                const sectionTags = section.getAttribute('data-tags') || '';
+                const sectionMatches = sectionTags.toLowerCase().includes(searchTerm) ||
+                                     section.querySelector('h2').textContent.toLowerCase().includes(searchTerm);
+
+                sectionItems.forEach(item => {
+                    const searchableText = (item.getAttribute('data-search') || '') + ' ' +
+                                         (item.textContent || '').toLowerCase();
+
+                    if (sectionMatches || searchableText.toLowerCase().includes(searchTerm)) {
+                        item.classList.remove('hidden');
+                        sectionHasVisibleItems = true;
+                        totalVisibleItems++;
+
+                        // If it's an accordion, open it automatically when it matches a search
+                        if (item.classList.contains('accordion') && !item.classList.contains('active')) {
+                            item.classList.add('active');
+                            const content = item.querySelector('.accordion-content');
+                            // Use a slight timeout to ensure display:block has taken effect before animating height
+                            setTimeout(() => {
+                                content.style.maxHeight = content.scrollHeight + "px";
+                            }, 10);
+                        }
+                    } else {
+                        item.classList.add('hidden');
+
+                        // Close hidden accordions
+                        if (item.classList.contains('accordion') && item.classList.contains('active')) {
+                            item.classList.remove('active');
+                            item.querySelector('.accordion-content').style.maxHeight = '0';
+                        }
+                    }
+                });
+
+                // Hide the whole section if it has no matching items
+                if (sectionHasVisibleItems || sectionMatches) {
+                    section.classList.remove('hidden');
+                    // If section matches but items don't, show all items in that section
+                    if (sectionMatches && !sectionHasVisibleItems) {
+                        sectionItems.forEach(item => {
+                            item.classList.remove('hidden');
+                            totalVisibleItems++;
+                        });
+                    }
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+
+            // Show 'No Results' message if necessary
+            if (totalVisibleItems === 0) {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+            }
+        });
+
+        // Copy Routine Functionality
+        function copyRoutine(routineId) {
+            const routineBlock = document.getElementById(routineId);
+            const title = routineBlock.querySelector('h4').textContent;
+            const items = routineBlock.querySelectorAll('.routine-list li');
+
+            let textToCopy = `${title}\n${'-'.repeat(title.length)}\n`;
+
+            items.forEach(item => {
+                const exercise = item.querySelector('span:first-child').textContent;
+                const setsReps = item.querySelector('span:last-child').textContent;
+                textToCopy += `• ${exercise} - ${setsReps}\n`;
+            });
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = routineBlock.querySelector('.copy-btn');
+                const originalHTML = btn.innerHTML;
+
+                // Change icon to checkmark
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                btn.style.borderColor = 'var(--accent-color)';
+                btn.style.color = 'var(--accent-color)';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy to clipboard.');
+            });
+        }
+    </script>
+</body>
+</html>
