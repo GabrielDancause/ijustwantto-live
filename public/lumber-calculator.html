@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumber Calculator - Board Feet & Cost</title>
+    <meta name="description" content="Calculate board feet and total cost for your lumber projects. Features a batch mode to estimate multiple pieces of wood, waste factors, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --danger-color: #ff5252;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-code);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: #000;
+            border: none;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #3fe0be;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .batch-list {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .batch-list.active {
+            display: block;
+        }
+
+        .batch-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .batch-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .batch-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .batch-meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-family: var(--font-code);
+        }
+
+        .batch-values {
+            text-align: right;
+            font-family: var(--font-code);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .batch-cost {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .btn-remove {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .btn-remove:hover {
+            opacity: 1;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+    </style>
+
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Lumber Calculator",
+      "description": "Calculate board feet and total cost for your lumber projects. Features a batch mode to estimate multiple pieces of wood, waste factors, and more.",
+      "url": "https://ijustwantto.live/lumber-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Lumber Calculator</h1>
+            <p class="subtitle">Calculate board feet and estimate costs for individual pieces of lumber or use batch mode for entire projects.</p>
+        </header>
+
+        <main class="card">
+            <h2 class="section-title">Board Dimensions</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="lumber-thickness">Thickness</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="lumber-thickness" min="0" step="0.25" value="1" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lumber-width">Width</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="lumber-width" min="0" step="0.5" value="6" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lumber-length">Length</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="lumber-length" min="0" step="0.5" value="8" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lumber-qty">Quantity</label>
+                    <div class="unit-label" data-unit="pcs">
+                        <input type="number" id="lumber-qty" min="1" step="1" value="1" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Cost & Waste</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="lumber-waste">Waste Factor</label>
+                    <div class="unit-label" data-unit="%">
+                        <input type="number" id="lumber-waste" min="0" step="5" value="10" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lumber-cost">Price per Board Foot</label>
+                    <div class="unit-label" data-unit="$">
+                        <input type="number" id="lumber-cost" min="0" step="0.01" value="0.00" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-bf">0.00</div>
+                    <div class="result-label">Total Board Feet</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Estimate
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-bf-raw">0.00</div>
+                        <div class="result-item-label">Net Board Feet (No Waste)</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-cost">$0.00</div>
+                        <div class="result-item-label">Estimated Cost</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button class="btn btn-outline" onclick="addToBatch()">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add to Batch Mode
+                    </button>
+                </div>
+            </div>
+
+            <div id="batch-section" class="batch-list">
+                <h2 class="section-title">
+                    Batch Project List
+                    <button class="btn-remove" onclick="clearBatch()" title="Clear List" style="font-size: 0.875rem; color: var(--text-secondary);">Clear All</button>
+                </h2>
+                <div id="batch-items"></div>
+
+                <div class="result-grid" style="margin-top: 1.5rem; border-color: var(--accent-color);">
+                    <div class="result-item">
+                        <div class="result-item-value" id="batch-total-bf" style="color: var(--accent-color);">0.00</div>
+                        <div class="result-item-label">Grand Total Board Feet</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="batch-total-cost" style="color: var(--accent-color);">$0.00</div>
+                        <div class="result-item-label">Grand Total Cost</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>Understanding Board Feet</h2>
+            <p>Unlike linear feet (which simply measures length), a board foot is a specialized measurement of volume used exclusively for lumber in the United States and Canada. One board foot is defined as a piece of wood that is 12 inches wide, 1 foot long, and 1 inch thick (144 cubic inches of wood).</p>
+            <p>The standard formula to calculate board feet is: <strong>(Thickness in inches × Width in inches × Length in feet) ÷ 12</strong>. Using our calculator makes this volume calculation instant, helping woodworkers, carpenters, and DIYers quickly estimate how much raw material they need.</p>
+
+            <h2>Using Batch Mode for Projects</h2>
+            <p>Complex woodworking and construction projects rarely use just one size of lumber. A single project might require thick stock for legs, wide stock for a tabletop, and thinner material for drawer sides.</p>
+            <p>Our Batch Mode allows you to build a comprehensive cut list. Simply calculate the volume and cost for one specific dimension of lumber, click "Add to Batch Mode," and then repeat for your other sizes. The calculator will maintain a running grand total of both your board footage and estimated material cost.</p>
+
+            <h2>Why You Need a Waste Factor</h2>
+            <p>Raw lumber—especially rough-sawn hardwoods—is rarely perfect. You will encounter knots, checks (cracks at the ends), warp, and sapwood that must be cut away. Additionally, the milling process (jointing and planing) turns some of your purchased volume into sawdust.</p>
+            <p>As a general rule of thumb, most woodworkers add a <strong>15% to 20% waste factor</strong> when purchasing rough lumber. If you are buying premium (S4S) surfaced lumber, you might lower that to 5% to 10%. Entering a waste factor ensures you don't run short on material when you are halfway through your build.</p>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        let batchItems = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+        });
+
+        function calculate() {
+            const thickness = parseFloat(document.getElementById('lumber-thickness').value) || 0;
+            const width = parseFloat(document.getElementById('lumber-width').value) || 0;
+            const length = parseFloat(document.getElementById('lumber-length').value) || 0;
+            const qty = parseInt(document.getElementById('lumber-qty').value) || 0;
+            const waste = parseFloat(document.getElementById('lumber-waste').value) || 0;
+            const costPerBf = parseFloat(document.getElementById('lumber-cost').value) || 0;
+
+            // (Thickness(in) * Width(in) * Length(ft)) / 12 * Qty
+            const rawBf = (thickness * width * length) / 12 * qty;
+
+            // Add waste percentage
+            const totalBf = rawBf * (1 + (waste / 100));
+
+            // Total cost
+            const totalCost = totalBf * costPerBf;
+
+            // Update UI
+            document.getElementById('res-bf').textContent = totalBf.toFixed(2);
+            document.getElementById('res-bf-raw').textContent = rawBf.toFixed(2);
+            document.getElementById('res-cost').textContent = '$' + totalCost.toFixed(2);
+        }
+
+        function addToBatch() {
+            const thickness = parseFloat(document.getElementById('lumber-thickness').value) || 0;
+            const width = parseFloat(document.getElementById('lumber-width').value) || 0;
+            const length = parseFloat(document.getElementById('lumber-length').value) || 0;
+            const qty = parseInt(document.getElementById('lumber-qty').value) || 0;
+            const waste = parseFloat(document.getElementById('lumber-waste').value) || 0;
+
+            const totalBf = parseFloat(document.getElementById('res-bf').textContent);
+            const totalCostStr = document.getElementById('res-cost').textContent;
+            const totalCost = parseFloat(totalCostStr.replace('$', ''));
+
+            if (totalBf <= 0) return;
+
+            const item = {
+                id: Date.now(),
+                title: `${qty}x — ${thickness}" × ${width}" × ${length}'`,
+                meta: `+${waste}% waste`,
+                bf: totalBf,
+                cost: totalCost
+            };
+
+            batchItems.push(item);
+            renderBatch();
+        }
+
+        function removeBatchItem(id) {
+            batchItems = batchItems.filter(item => item.id !== id);
+            renderBatch();
+        }
+
+        function clearBatch() {
+            batchItems = [];
+            renderBatch();
+        }
+
+        function renderBatch() {
+            const batchSection = document.getElementById('batch-section');
+            const itemsContainer = document.getElementById('batch-items');
+
+            if (batchItems.length === 0) {
+                batchSection.classList.remove('active');
+                return;
+            }
+
+            batchSection.classList.add('active');
+            itemsContainer.innerHTML = '';
+
+            let totalBf = 0;
+            let totalCost = 0;
+
+            batchItems.forEach(item => {
+                totalBf += item.bf;
+                totalCost += item.cost;
+
+                const itemEl = document.createElement('div');
+                itemEl.className = 'batch-item';
+                itemEl.innerHTML = `
+                    <div class="batch-details">
+                        <span class="batch-title">${item.title}</span>
+                        <span class="batch-meta">${item.meta}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="batch-values">
+                            <div>${item.bf.toFixed(2)} bf</div>
+                            <div class="batch-cost">$${item.cost.toFixed(2)}</div>
+                        </div>
+                        <button class="btn-remove" onclick="removeBatchItem(${item.id})" title="Remove item">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                itemsContainer.appendChild(itemEl);
+            });
+
+            document.getElementById('batch-total-bf').textContent = totalBf.toFixed(2);
+            document.getElementById('batch-total-cost').textContent = '$' + totalCost.toFixed(2);
+        }
+
+        function copyResults() {
+            let textToCopy = '';
+
+            if (batchItems.length > 0) {
+                let totalBf = 0;
+                let totalCost = 0;
+                textToCopy = `Lumber Estimate (Batch Project):\n\n`;
+
+                batchItems.forEach(item => {
+                    textToCopy += `${item.title} (${item.meta})\n`;
+                    textToCopy += `  ${item.bf.toFixed(2)} board feet | $${item.cost.toFixed(2)}\n\n`;
+                    totalBf += item.bf;
+                    totalCost += item.cost;
+                });
+
+                textToCopy += `------------------------\n`;
+                textToCopy += `Grand Total Volume: ${totalBf.toFixed(2)} bf\n`;
+                textToCopy += `Grand Total Cost: $${totalCost.toFixed(2)}`;
+            } else {
+                const bf = document.getElementById('res-bf').textContent;
+                const cost = document.getElementById('res-cost').textContent;
+                const thickness = document.getElementById('lumber-thickness').value;
+                const width = document.getElementById('lumber-width').value;
+                const length = document.getElementById('lumber-length').value;
+                const qty = document.getElementById('lumber-qty').value;
+                const waste = document.getElementById('lumber-waste').value;
+
+                textToCopy = `Lumber Estimate:\n` +
+                             `Dimensions: ${qty}x - ${thickness}" x ${width}" x ${length}'\n` +
+                             `Total Volume: ${bf} board feet (includes ${waste}% waste)\n` +
+                             `Estimated Cost: ${cost}`;
+            }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
