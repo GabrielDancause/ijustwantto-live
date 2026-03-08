@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Calculator - Estimate Yards & Bags</title>
+    <meta name="description" content="Calculate cubic yards of concrete for slabs, footings, columns, and post holes. Includes a 10% waste factor and estimates for 60lb and 80lb bags.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input {
+            font-family: var(--font-code);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-waste-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+
+        /* Shape-specific input sections */
+        .shape-inputs {
+            display: none;
+        }
+
+        .shape-inputs.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Concrete Calculator",
+      "description": "Calculate cubic yards of concrete for slabs, footings, columns, and post holes. Includes a 10% waste factor and estimates for 60lb and 80lb bags.",
+      "url": "https://ijustwantto.live/concrete-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Concrete Calculator</h1>
+            <p class="subtitle">Quickly estimate how much concrete you need for your next project, including bags and total yardage with a 10% waste factor built-in.</p>
+        </header>
+
+        <main class="card">
+            <div class="form-group">
+                <label for="calc-type">What are you pouring?</label>
+                <select id="calc-type" onchange="changeShape()">
+                    <option value="slab">Slab / Square Footing</option>
+                    <option value="hole">Post Hole / Round Footing</option>
+                    <option value="column">Round Column</option>
+                    <option value="stairs">Stairs</option>
+                </select>
+            </div>
+
+            <!-- Slab Inputs -->
+            <div id="inputs-slab" class="shape-inputs active">
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="slab-length">Length</label>
+                        <div class="unit-label" data-unit="ft">
+                            <input type="number" id="slab-length" min="0" step="0.1" value="10" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="slab-width">Width</label>
+                        <div class="unit-label" data-unit="ft">
+                            <input type="number" id="slab-width" min="0" step="0.1" value="10" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="slab-depth">Thickness / Depth</label>
+                        <div class="unit-label" data-unit="in">
+                            <input type="number" id="slab-depth" min="0" step="0.5" value="4" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Hole Inputs -->
+            <div id="inputs-hole" class="shape-inputs">
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="hole-diameter">Hole Diameter</label>
+                        <div class="unit-label" data-unit="in">
+                            <input type="number" id="hole-diameter" min="0" step="1" value="12" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="hole-depth">Hole Depth</label>
+                        <div class="unit-label" data-unit="in">
+                            <input type="number" id="hole-depth" min="0" step="1" value="36" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="hole-count">Quantity</label>
+                        <div class="unit-label" data-unit="qty">
+                            <input type="number" id="hole-count" min="1" step="1" value="1" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column Inputs -->
+            <div id="inputs-column" class="shape-inputs">
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="column-diameter">Diameter</label>
+                        <div class="unit-label" data-unit="in">
+                            <input type="number" id="column-diameter" min="0" step="1" value="12" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="column-height">Height</label>
+                        <div class="unit-label" data-unit="ft">
+                            <input type="number" id="column-height" min="0" step="0.1" value="10" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="column-count">Quantity</label>
+                        <div class="unit-label" data-unit="qty">
+                            <input type="number" id="column-count" min="1" step="1" value="1" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stairs Inputs -->
+            <div id="inputs-stairs" class="shape-inputs">
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="stairs-width">Stair Width</label>
+                        <div class="unit-label" data-unit="ft">
+                            <input type="number" id="stairs-width" min="0" step="0.1" value="4" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stairs-tread">Tread Depth</label>
+                        <div class="unit-label" data-unit="in">
+                            <input type="number" id="stairs-tread" min="0" step="0.5" value="11" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stairs-rise">Riser Height</label>
+                        <div class="unit-label" data-unit="in">
+                            <input type="number" id="stairs-rise" min="0" step="0.5" value="7" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stairs-count">Number of Steps</label>
+                        <div class="unit-label" data-unit="qty">
+                            <input type="number" id="stairs-count" min="1" step="1" value="3" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stairs-platform">Platform Depth (Optional)</label>
+                        <div class="unit-label" data-unit="in">
+                            <input type="number" id="stairs-platform" min="0" step="1" value="0" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-yards">0.00</div>
+                    <div class="result-label">Cubic Yards Required</div>
+                    <div class="result-waste-note">*Includes 10% waste factor</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Result
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-feet">0.0</div>
+                        <div class="result-item-label">Cubic Feet</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-80lb">0</div>
+                        <div class="result-item-label">80lb Bags</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-60lb">0</div>
+                        <div class="result-item-label">60lb Bags</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>How to Calculate Concrete Volume</h2>
+            <p>Calculating the amount of concrete you need is a straightforward process, but accuracy is crucial to avoid running short during a pour. The formula for estimating concrete volume depends on the shape of your project.</p>
+            <p>For rectangular slabs and square footings, you multiply the length, width, and depth together. Since concrete is ordered in cubic yards, you must convert all measurements to a consistent unit (usually feet) before multiplying. The formula is: <strong>Length (ft) × Width (ft) × Depth (ft) = Cubic Feet</strong>. To get cubic yards, divide the total cubic feet by 27.</p>
+
+            <h2>Why Add a 10% Waste Factor?</h2>
+            <p>Our calculator automatically includes a 10% waste factor in the final results. This is an industry standard practice for several important reasons:</p>
+            <ul>
+                <li><strong>Uneven Subgrades:</strong> The ground underneath your pour is rarely perfectly flat. A low spot of just half an inch over a large slab can significantly increase the volume required.</li>
+                <li><strong>Form Spillage and Waste:</strong> Some concrete is inevitably lost over the edges of forms, left in the wheelbarrow, or stuck in the delivery chute.</li>
+                <li><strong>Spreading and Settling:</strong> Forms can bow slightly outward under the heavy weight of wet concrete, increasing the internal volume.</li>
+            </ul>
+            <p>Running out of concrete halfway through a pour creates a "cold joint," which severely weakens the structural integrity of the slab. Ordering slightly more than the mathematical exact volume is the cheapest insurance you can buy against a ruined project.</p>
+
+            <h2>Concrete Bags vs. Truck Delivery</h2>
+            <p>When you need less than 1 to 1.5 cubic yards of concrete, mixing bags is usually the most economical choice. For larger projects, ordering a ready-mix truck is highly recommended to save time, labor, and ensure a consistent mix.</p>
+            <p>To calculate bags manually, you need to know the yield of each bag size. A standard 80lb bag of concrete mix yields approximately 0.60 cubic feet when mixed with water. A 60lb bag yields approximately 0.45 cubic feet. Divide your total required cubic feet by the bag yield to determine how many bags you need to purchase.</p>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+        });
+
+        function changeShape() {
+            // Hide all inputs
+            document.querySelectorAll('.shape-inputs').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Show selected inputs
+            const type = document.getElementById('calc-type').value;
+            document.getElementById('inputs-' + type).classList.add('active');
+
+            calculate();
+        }
+
+        function calculate() {
+            const type = document.getElementById('calc-type').value;
+            let cubicFeet = 0;
+
+            if (type === 'slab') {
+                const length = parseFloat(document.getElementById('slab-length').value) || 0;
+                const width = parseFloat(document.getElementById('slab-width').value) || 0;
+                const depthIn = parseFloat(document.getElementById('slab-depth').value) || 0;
+
+                const depthFt = depthIn / 12;
+                cubicFeet = length * width * depthFt;
+            }
+            else if (type === 'hole') {
+                const diameterIn = parseFloat(document.getElementById('hole-diameter').value) || 0;
+                const depthIn = parseFloat(document.getElementById('hole-depth').value) || 0;
+                const count = parseFloat(document.getElementById('hole-count').value) || 0;
+
+                const radiusFt = (diameterIn / 2) / 12;
+                const depthFt = depthIn / 12;
+
+                // Volume of cylinder: π * r² * h
+                cubicFeet = Math.PI * Math.pow(radiusFt, 2) * depthFt * count;
+            }
+            else if (type === 'column') {
+                const diameterIn = parseFloat(document.getElementById('column-diameter').value) || 0;
+                const heightFt = parseFloat(document.getElementById('column-height').value) || 0;
+                const count = parseFloat(document.getElementById('column-count').value) || 0;
+
+                const radiusFt = (diameterIn / 2) / 12;
+
+                cubicFeet = Math.PI * Math.pow(radiusFt, 2) * heightFt * count;
+            }
+            else if (type === 'stairs') {
+                const width = parseFloat(document.getElementById('stairs-width').value) || 0;
+                const treadIn = parseFloat(document.getElementById('stairs-tread').value) || 0;
+                const riseIn = parseFloat(document.getElementById('stairs-rise').value) || 0;
+                const count = parseFloat(document.getElementById('stairs-count').value) || 0;
+                const platformIn = parseFloat(document.getElementById('stairs-platform').value) || 0;
+
+                const treadFt = treadIn / 12;
+                const riseFt = riseIn / 12;
+
+                // Basic stair volume approximation (treating stairs as a solid wedge + steps)
+                // For simplicity and safety margin, we calculate the bounding box of each step and sum them
+                // Step 1: 1 rise * 1 tread * width
+                // Step 2: 2 rise * 1 tread * width ...
+
+                let totalStairVol = 0;
+                for(let i = 1; i <= count; i++) {
+                     totalStairVol += (riseFt * i) * treadFt * width;
+                }
+
+                // Add platform if any (width * platform depth * full height)
+                let platformVol = 0;
+                if (platformIn > 0) {
+                    const platformFt = platformIn / 12;
+                    const totalHeightFt = riseFt * count;
+                    platformVol = width * platformFt * totalHeightFt;
+                }
+
+                cubicFeet = totalStairVol + platformVol;
+            }
+
+            // Apply 10% waste factor
+            const cubicFeetWithWaste = cubicFeet * 1.10;
+
+            // Convert to cubic yards (27 cubic feet in a yard)
+            const cubicYards = cubicFeetWithWaste / 27;
+
+            // Calculate bags
+            // 80lb bag yields ~0.60 cu ft
+            // 60lb bag yields ~0.45 cu ft
+            const bags80 = Math.ceil(cubicFeetWithWaste / 0.60);
+            const bags60 = Math.ceil(cubicFeetWithWaste / 0.45);
+
+            // Update UI
+            document.getElementById('res-yards').textContent = cubicYards.toFixed(2);
+            document.getElementById('res-feet').textContent = cubicFeetWithWaste.toFixed(1);
+            document.getElementById('res-80lb').textContent = bags80;
+            document.getElementById('res-60lb').textContent = bags60;
+        }
+
+        function copyResults() {
+            const yards = document.getElementById('res-yards').textContent;
+            const feet = document.getElementById('res-feet').textContent;
+            const b80 = document.getElementById('res-80lb').textContent;
+            const b60 = document.getElementById('res-60lb').textContent;
+            const type = document.getElementById('calc-type').options[document.getElementById('calc-type').selectedIndex].text;
+
+            const textToCopy = `Concrete Estimate (${type}):\n` +
+                               `${yards} Cubic Yards\n` +
+                               `${feet} Cubic Feet\n` +
+                               `Or ${b80}x 80lb bags\n` +
+                               `Or ${b60}x 60lb bags\n` +
+                               `*Includes 10% waste factor.`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
