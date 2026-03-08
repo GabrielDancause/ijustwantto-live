@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Water Intake Calculator | ijustwantto.live</title>
+    <meta name="description" content="Calculate your daily water needs based on your weight, activity level, and climate. Get your recommended intake in glasses, liters, and ounces.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Water Intake Calculator",
+      "url": "https://ijustwantto.live/water-intake.html",
+      "description": "Calculate your daily water needs based on your weight, activity level, and climate. Results provided in glasses, liters, and ounces.",
+      "applicationCategory": "HealthAndFitnessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .input-group {
+            display: flex;
+        }
+
+        .input-group input {
+            flex: 1;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .input-group select {
+            width: auto;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+            padding-right: 2.5rem;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button.calculate-btn {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 0.5rem;
+            font-family: var(--font-ui);
+        }
+
+        button.calculate-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .results {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-title {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .macros-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .macro-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .macro-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .macro-card .value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .macro-card .desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .macro-card .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 640px) {
+            .macros-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Water Intake Calculator</h1>
+            <p class="subtitle">Calculate your daily water needs based on weight, activity, and climate</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <form id="waterForm">
+                    <div class="form-row">
+                        <div class="form-group form-col">
+                            <label for="weight">Weight</label>
+                            <div class="input-group">
+                                <input type="number" id="weight" name="weight" required min="1" step="0.1" placeholder="e.g. 150">
+                                <select id="weightUnit" name="weightUnit">
+                                    <option value="lbs">lbs</option>
+                                    <option value="kg">kg</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-col">
+                            <label for="activity">Daily Exercise (minutes)</label>
+                            <input type="number" id="activity" name="activity" required min="0" step="1" placeholder="e.g. 30" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="climate">Climate / Environment</label>
+                        <select id="climate" name="climate">
+                            <option value="normal">Normal</option>
+                            <option value="hot">Hot or Humid</option>
+                            <option value="very_hot">Very Hot or Dry</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="calculate-btn">Calculate Water Intake</button>
+                </form>
+
+                <div id="results" class="results">
+                    <div class="result-box">
+                        <div class="result-title">Daily Recommendation (Liters)</div>
+                        <div class="result-value">
+                            <span id="litersValue">0</span> L
+                            <button class="copy-btn" onclick="copyToClipboard('litersValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="macros-grid">
+                        <div class="macro-card">
+                            <button class="copy-btn" onclick="copyToClipboard('glassesValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Glasses</h3>
+                            <div class="value"><span id="glassesValue">0</span></div>
+                            <div class="desc">8 oz servings</div>
+                        </div>
+                        <div class="macro-card">
+                            <button class="copy-btn" onclick="copyToClipboard('ouncesValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Ounces</h3>
+                            <div class="value"><span id="ouncesValue">0</span></div>
+                            <div class="desc">fl oz / day</div>
+                        </div>
+                        <div class="macro-card">
+                            <button class="copy-btn" onclick="copyToClipboard('mlValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Milliliters</h3>
+                            <div class="value"><span id="mlValue">0</span></div>
+                            <div class="desc">mL / day</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>How Much Water Should You Drink a Day?</h2>
+                <p>Hydration is essential for nearly every function in the human body. While the classic "8 glasses a day" rule is easy to remember, it isn't accurate for everyone. Your actual water needs vary based on your weight, how active you are, and the climate you live in.</p>
+                <p>This calculator estimates a baseline of 0.5 ounces of water per pound of body weight. So, a person weighing 150 lbs would need about 75 ounces of water daily just resting in a normal climate.</p>
+
+                <h2>Factors Affecting Hydration Needs</h2>
+                <ul>
+                    <li><strong>Exercise:</strong> When you sweat, you lose water quickly. We recommend adding 12 ounces of water to your daily total for every 30 minutes of exercise to replenish lost fluids.</li>
+                    <li><strong>Environment:</strong> Hot, humid, or extremely dry climates increase how much you perspire and how quickly moisture evaporates from your skin. You may need 15% to 30% more water in these conditions.</li>
+                    <li><strong>Health Conditions & Diet:</strong> Illnesses that cause fever, vomiting, or diarrhea increase water loss. Additionally, if you consume high-sodium foods, your body will require more water to process them.</li>
+                </ul>
+
+                <h2>Signs of Proper Hydration</h2>
+                <p>The easiest way to tell if you're drinking enough water is by checking the color of your urine. A pale yellow or clear color typically indicates good hydration, while dark yellow or amber means you need to drink more water. Other signs of dehydration include fatigue, headaches, dry mouth, and dizziness.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('waterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let weight = parseFloat(document.getElementById('weight').value);
+            const weightUnit = document.getElementById('weightUnit').value;
+            const activityMins = parseFloat(document.getElementById('activity').value) || 0;
+            const climate = document.getElementById('climate').value;
+
+            if (isNaN(weight)) {
+                return;
+            }
+
+            // Convert kg to lbs for baseline calculation
+            if (weightUnit === 'kg') {
+                weight = weight * 2.20462;
+            }
+
+            // Base requirement: 0.5 oz per lb of body weight
+            let baseOunces = weight * 0.5;
+
+            // Activity requirement: Add 12 oz per 30 mins of exercise
+            let activityOunces = (activityMins / 30) * 12;
+
+            let totalOunces = baseOunces + activityOunces;
+
+            // Climate adjustment
+            if (climate === 'hot') {
+                totalOunces = totalOunces * 1.15; // Add 15%
+            } else if (climate === 'very_hot') {
+                totalOunces = totalOunces * 1.30; // Add 30%
+            }
+
+            // Calculate conversions
+            const totalLiters = totalOunces * 0.0295735;
+            const totalMl = totalLiters * 1000;
+            const totalGlasses = totalOunces / 8;
+
+            // Update UI
+            document.getElementById('litersValue').textContent = totalLiters.toFixed(2);
+            document.getElementById('ouncesValue').textContent = Math.round(totalOunces).toLocaleString();
+            document.getElementById('glassesValue').textContent = totalGlasses.toFixed(1);
+            document.getElementById('mlValue').textContent = Math.round(totalMl).toLocaleString();
+
+            document.getElementById('results').classList.add('active');
+        });
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+                if (!btn) return;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
