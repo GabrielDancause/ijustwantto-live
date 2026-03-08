@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Footage Calculator - Multiple Shapes & Areas</title>
+    <meta name="description" content="Calculate square footage for rooms and projects. Add multiple areas including rectangular, triangular, and circular shapes. Instant results.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --danger-color: #ff4a4a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input {
+            font-family: var(--font-code);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .area-container {
+            margin-bottom: 2rem;
+        }
+
+        .area-item {
+            background-color: rgba(6, 12, 10, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .area-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .area-title {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .btn-remove {
+            background: transparent;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .btn-remove:hover {
+            background-color: rgba(255, 74, 74, 0.1);
+        }
+
+        .btn-add {
+            background-color: transparent;
+            border: 1px dashed var(--accent-color);
+            color: var(--accent-color);
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-add:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+
+        .shape-inputs {
+            display: none;
+        }
+
+        .shape-inputs.active {
+            display: block;
+        }
+
+        .area-result-wrapper {
+            font-size: 0.875rem;
+            color: var(--accent-color);
+            margin-top: 0.5rem;
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .area-result-val {
+            font-family: var(--font-code);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+    </style>
+
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Square Footage Calculator",
+      "description": "Calculate square footage for rooms and projects. Add multiple areas including rectangular, triangular, and circular shapes.",
+      "url": "https://ijustwantto.live/sqft-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Calculate Square Footage",
+      "description": "Learn how to calculate square footage for rooms and projects, including how to measure different shapes like rectangles, triangles, and circles.",
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ijustwantto.live",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ijustwantto.live/favicon.ico"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ijustwantto.live/sqft-calculator"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Square Footage Calculator</h1>
+            <p class="subtitle">Quickly calculate the total square footage for any project. Add multiple rooms or shapes to find the combined area.</p>
+        </header>
+
+        <main class="card">
+            <h2 class="section-title">Areas</h2>
+
+            <div id="areas-container" class="area-container">
+                <!-- Areas will be injected here by JS -->
+            </div>
+
+            <button class="btn-add" onclick="addArea()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add Another Area
+            </button>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-total">0</div>
+                    <div class="result-label">Total Square Feet</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Result
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>How to Calculate Square Footage</h2>
+            <p>Square footage is a measurement of area, essentially how much two-dimensional space a given surface covers. Whether you're laying new flooring, buying paint, or planning a garden, calculating accurate square footage is a critical first step.</p>
+            <p>To find the square footage of a basic rectangular space, simply measure the length and width of the area in feet and multiply those two numbers together. For example, a room that is 10 feet wide and 12 feet long has an area of 120 square feet (10 x 12 = 120).</p>
+
+            <h2>Measuring Different Shapes</h2>
+            <p>Not every room or project area is a perfect rectangle. You may need to measure circular spaces or triangular sections to get an accurate total.</p>
+            <ul>
+                <li><strong>Rectangles:</strong> Length × Width. The most common shape for rooms and outdoor decks.</li>
+                <li><strong>Triangles:</strong> (Base × Height) ÷ 2. Useful for sloped ceilings, odd-shaped garden beds, or bay windows.</li>
+                <li><strong>Circles:</strong> π × Radius². Used for circular patios, pools, or unique architectural features. Find the center, measure to the edge (the radius), and square that number before multiplying by Pi (3.14159...).</li>
+            </ul>
+
+            <h2>Complex Areas</h2>
+            <p>When dealing with complex spaces, the easiest method is to break the floor plan down into smaller, standard shapes. Calculate the square footage of each individual rectangle, triangle, or circle separately, and then add them all together to find your total area. Our calculator allows you to add multiple sections at once so you can compute the entire project in one place without having to remember individual measurements.</p>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        let areaIdCounter = 0;
+        let areaList = [];
+
+        // Initialize with one area
+        document.addEventListener('DOMContentLoaded', () => {
+            addArea();
+        });
+
+        function getAreaHTML(id, index) {
+            return `
+                <div class="area-item" id="area-box-${id}">
+                    <div class="area-header">
+                        <div class="area-title" id="area-title-${id}">Area ${index + 1}</div>
+                        <button class="btn-remove" onclick="removeArea(${id})" style="display: ${index > 0 ? 'flex' : 'none'};" id="btn-remove-${id}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                            Remove
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shape-select-${id}">Shape</label>
+                        <select id="shape-select-${id}" onchange="toggleShapeInputs(${id}); calculateTotal()">
+                            <option value="rectangle">Rectangle</option>
+                            <option value="triangle">Triangle</option>
+                            <option value="circle">Circle</option>
+                        </select>
+                    </div>
+
+                    <!-- Rectangle Inputs -->
+                    <div id="inputs-rectangle-${id}" class="shape-inputs active">
+                        <div class="input-grid">
+                            <div class="form-group">
+                                <label for="rect-length-${id}">Length</label>
+                                <div class="unit-label" data-unit="ft">
+                                    <input type="number" id="rect-length-${id}" min="0" step="0.1" value="10" oninput="calculateTotal()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rect-width-${id}">Width</label>
+                                <div class="unit-label" data-unit="ft">
+                                    <input type="number" id="rect-width-${id}" min="0" step="0.1" value="10" oninput="calculateTotal()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Triangle Inputs -->
+                    <div id="inputs-triangle-${id}" class="shape-inputs">
+                        <div class="input-grid">
+                            <div class="form-group">
+                                <label for="tri-base-${id}">Base</label>
+                                <div class="unit-label" data-unit="ft">
+                                    <input type="number" id="tri-base-${id}" min="0" step="0.1" value="10" oninput="calculateTotal()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tri-height-${id}">Height</label>
+                                <div class="unit-label" data-unit="ft">
+                                    <input type="number" id="tri-height-${id}" min="0" step="0.1" value="10" oninput="calculateTotal()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Circle Inputs -->
+                    <div id="inputs-circle-${id}" class="shape-inputs">
+                        <div class="input-grid">
+                            <div class="form-group">
+                                <label for="circ-radius-${id}">Radius</label>
+                                <div class="unit-label" data-unit="ft">
+                                    <input type="number" id="circ-radius-${id}" min="0" step="0.1" value="5" oninput="calculateTotal()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="area-result-wrapper">
+                        Subtotal: <span class="area-result-val" id="area-subtotal-${id}">100</span> sq ft
+                    </div>
+                </div>
+            `;
+        }
+
+        function addArea() {
+            areaIdCounter++;
+            areaList.push(areaIdCounter);
+
+            const container = document.getElementById('areas-container');
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = getAreaHTML(areaIdCounter, areaList.length - 1);
+
+            // Append the actual elements from the temp div
+            while (tempDiv.firstChild) {
+                container.appendChild(tempDiv.firstChild);
+            }
+
+            updateAreaHeaders();
+            calculateTotal();
+        }
+
+        function removeArea(id) {
+            const el = document.getElementById(`area-box-${id}`);
+            if (el) {
+                el.remove();
+            }
+
+            areaList = areaList.filter(item => item !== id);
+            updateAreaHeaders();
+            calculateTotal();
+        }
+
+        function updateAreaHeaders() {
+            areaList.forEach((id, index) => {
+                const titleEl = document.getElementById(`area-title-${id}`);
+                const removeBtn = document.getElementById(`btn-remove-${id}`);
+
+                if (titleEl) {
+                    titleEl.textContent = `Area ${index + 1}`;
+                }
+
+                // Only show remove button if there's more than 1 area
+                if (removeBtn) {
+                    removeBtn.style.display = areaList.length > 1 ? 'flex' : 'none';
+                }
+            });
+        }
+
+        function toggleShapeInputs(id) {
+            const shape = document.getElementById(`shape-select-${id}`).value;
+
+            // Hide all inputs for this ID
+            document.getElementById(`inputs-rectangle-${id}`).classList.remove('active');
+            document.getElementById(`inputs-triangle-${id}`).classList.remove('active');
+            document.getElementById(`inputs-circle-${id}`).classList.remove('active');
+
+            // Show selected shape's inputs
+            document.getElementById(`inputs-${shape}-${id}`).classList.add('active');
+        }
+
+        function calculateTotal() {
+            let total = 0;
+
+            areaList.forEach(id => {
+                const shape = document.getElementById(`shape-select-${id}`).value;
+                let subtotal = 0;
+
+                if (shape === 'rectangle') {
+                    const l = parseFloat(document.getElementById(`rect-length-${id}`).value) || 0;
+                    const w = parseFloat(document.getElementById(`rect-width-${id}`).value) || 0;
+                    subtotal = l * w;
+                } else if (shape === 'triangle') {
+                    const b = parseFloat(document.getElementById(`tri-base-${id}`).value) || 0;
+                    const h = parseFloat(document.getElementById(`tri-height-${id}`).value) || 0;
+                    subtotal = (b * h) / 2;
+                } else if (shape === 'circle') {
+                    const r = parseFloat(document.getElementById(`circ-radius-${id}`).value) || 0;
+                    subtotal = Math.PI * (r * r);
+                }
+
+                // Format subtotal nicely (e.g. 100 instead of 100.0 if whole number)
+                let formattedSubtotal = parseFloat(subtotal.toFixed(2));
+                document.getElementById(`area-subtotal-${id}`).textContent = formattedSubtotal;
+
+                total += subtotal;
+            });
+
+            // Update total square feet display
+            let formattedTotal = parseFloat(total.toFixed(2));
+            document.getElementById('res-total').textContent = formattedTotal;
+        }
+
+        function copyResults() {
+            const total = document.getElementById('res-total').textContent;
+            let textToCopy = `Square Footage Estimate:\nTotal Area: ${total} sq ft\n\nBreakdown:\n`;
+
+            areaList.forEach((id, index) => {
+                const shape = document.getElementById(`shape-select-${id}`).value;
+                const subtotal = document.getElementById(`area-subtotal-${id}`).textContent;
+
+                let details = "";
+                if (shape === 'rectangle') {
+                    const l = document.getElementById(`rect-length-${id}`).value || 0;
+                    const w = document.getElementById(`rect-width-${id}`).value || 0;
+                    details = `(${l}ft × ${w}ft)`;
+                } else if (shape === 'triangle') {
+                    const b = document.getElementById(`tri-base-${id}`).value || 0;
+                    const h = document.getElementById(`tri-height-${id}`).value || 0;
+                    details = `(Base: ${b}ft, Height: ${h}ft)`;
+                } else if (shape === 'circle') {
+                    const r = document.getElementById(`circ-radius-${id}`).value || 0;
+                    details = `(Radius: ${r}ft)`;
+                }
+
+                const capitalizedShape = shape.charAt(0).toUpperCase() + shape.slice(1);
+                textToCopy += `Area ${index + 1} - ${capitalizedShape} ${details}: ${subtotal} sq ft\n`;
+            });
+
+            navigator.clipboard.writeText(textToCopy.trim()).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
