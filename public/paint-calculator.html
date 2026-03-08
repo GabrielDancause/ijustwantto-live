@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Calculator - Estimate Gallons & Cost</title>
+    <meta name="description" content="Calculate exactly how much paint you need for your next room makeover. Enter dimensions, subtract doors and windows, and estimate your total cost.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-code);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+    </style>
+
+    <!-- JSON-LD WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Paint Calculator",
+      "description": "Calculate exactly how much paint you need for your next room makeover. Enter dimensions, subtract doors and windows, and estimate your total cost.",
+      "url": "https://ijustwantto.live/paint-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Paint Calculator</h1>
+            <p class="subtitle">Quickly estimate how much paint you need for your room walls, accounting for doors, windows, and number of coats.</p>
+        </header>
+
+        <main class="card">
+            <h2 class="section-title">Room Dimensions</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="room-length">Room Length</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="room-length" min="0" step="0.1" value="12" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="room-width">Room Width</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="room-width" min="0" step="0.1" value="10" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="wall-height">Wall Height</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="wall-height" min="0" step="0.1" value="8" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Subtract Openings</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="door-count">Doors (approx. 21 sq ft each)</label>
+                    <div class="unit-label" data-unit="qty">
+                        <input type="number" id="door-count" min="0" step="1" value="1" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="window-count">Windows (approx. 15 sq ft each)</label>
+                    <div class="unit-label" data-unit="qty">
+                        <input type="number" id="window-count" min="0" step="1" value="2" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Paint Details</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="coat-count">Number of Coats</label>
+                    <div class="unit-label" data-unit="qty">
+                        <input type="number" id="coat-count" min="1" step="1" value="2" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="paint-coverage">Paint Coverage</label>
+                    <div class="unit-label" data-unit="sq ft/gal">
+                        <input type="number" id="paint-coverage" min="1" step="1" value="350" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="paint-cost">Cost per Gallon</label>
+                    <div class="unit-label" data-unit="$">
+                        <input type="number" id="paint-cost" min="0" step="0.01" value="45.00" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-gallons">0</div>
+                    <div class="result-label">Gallons Required</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Result
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-area">0</div>
+                        <div class="result-item-label">Total Paintable Area (sq ft)</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-cost">$0.00</div>
+                        <div class="result-item-label">Estimated Cost</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>How to Calculate Paint Needed for a Room</h2>
+            <p>Estimating how much paint you need is a vital step before heading to the hardware store. Buying too little means an extra trip and struggling to match paint colors from different batches, while buying too much is a waste of money.</p>
+            <p>The standard formula to calculate paint involves determining the total surface area of your walls. Simply add the lengths of all the walls in the room to get the total perimeter, then multiply that number by the height of the room. For example, a 10x12 room with 8-foot ceilings has a perimeter of 44 feet (10+10+12+12). Multiply 44 by 8 to get 352 gross square feet.</p>
+
+            <h2>Accounting for Doors and Windows</h2>
+            <p>You don't need to paint over your doors and windows, so you can subtract their surface area from your total. The industry standard rule of thumb is to subtract <strong>21 square feet for every standard door</strong> and <strong>15 square feet for every standard window</strong>.</p>
+            <p>Using our previous example of 352 gross square feet, if the room has one door (21 sq ft) and two windows (30 sq ft total), your net paintable surface area drops to 301 square feet. Our calculator automatically handles these deductions to provide an accurate estimate.</p>
+
+            <h2>How Many Coats of Paint Do You Need?</h2>
+            <p>A single gallon of high-quality interior paint typically covers about 350 to 400 square feet. However, most painting projects require at least two coats for proper coverage, durability, and true color representation. This is especially true if you are painting a light color over a dark color, or if you are painting fresh drywall (which often requires a primer coat first).</p>
+            <p>Always check the label on your specific paint can for the manufacturer's coverage rate, as it can vary depending on the paint's formulation and finish.</p>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+        });
+
+        function calculate() {
+            const length = parseFloat(document.getElementById('room-length').value) || 0;
+            const width = parseFloat(document.getElementById('room-width').value) || 0;
+            const height = parseFloat(document.getElementById('wall-height').value) || 0;
+            const doors = parseFloat(document.getElementById('door-count').value) || 0;
+            const windows = parseFloat(document.getElementById('window-count').value) || 0;
+            const coats = parseFloat(document.getElementById('coat-count').value) || 0;
+            const coverage = parseFloat(document.getElementById('paint-coverage').value) || 350;
+            const costPerGal = parseFloat(document.getElementById('paint-cost').value) || 0;
+
+            // Math: Perimeter * Height
+            const perimeter = (length + width) * 2;
+            const grossArea = perimeter * height;
+
+            // Deductions
+            const doorArea = doors * 21;
+            const windowArea = windows * 15;
+
+            // Net Area
+            let netArea = grossArea - doorArea - windowArea;
+            if (netArea < 0) netArea = 0;
+
+            // Total Area for all coats
+            const totalAreaToPaint = netArea * coats;
+
+            // Gallons Required
+            let gallons = 0;
+            if (coverage > 0) {
+                // Math.ceil to ensure they have enough paint
+                gallons = Math.ceil(totalAreaToPaint / coverage);
+            }
+
+            // Estimated Cost
+            const totalCost = gallons * costPerGal;
+
+            // Update UI
+            document.getElementById('res-gallons').textContent = gallons;
+            document.getElementById('res-area').textContent = totalAreaToPaint.toFixed(1).replace(/\.0$/, '');
+            document.getElementById('res-cost').textContent = '$' + totalCost.toFixed(2);
+        }
+
+        function copyResults() {
+            const gallons = document.getElementById('res-gallons').textContent;
+            const area = document.getElementById('res-area').textContent;
+            const cost = document.getElementById('res-cost').textContent;
+
+            const textToCopy = `Paint Estimate:\n` +
+                               `${gallons} Gallons Required\n` +
+                               `${area} sq ft Total Paintable Area\n` +
+                               `Estimated Cost: ${cost}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
