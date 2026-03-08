@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Rate Zone Calculator | ijustwantto.live</title>
+    <meta name="description" content="Calculate your personalized heart rate training zones using the Karvonen method. Find your ideal BPM for fat burn, cardio, threshold, and VO2 max training.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Heart Rate Zone Calculator",
+      "url": "https://ijustwantto.live/heart-rate-zones.html",
+      "description": "Calculate your personalized heart rate training zones using the Karvonen method. Find your ideal BPM for fat burn, cardio, threshold, and VO2 max training.",
+      "applicationCategory": "HealthAndFitnessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --zone1: #6b7280;
+            --zone2: #3b82f6;
+            --zone3: #10b981;
+            --zone4: #f59e0b;
+            --zone5: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            appearance: none;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button.calculate-btn {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            font-family: var(--font-ui);
+        }
+
+        button.calculate-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .results {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .stats-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-item .value {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .zones-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .zone-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .zone-card.z1 { border-left-color: var(--zone1); }
+        .zone-card.z2 { border-left-color: var(--zone2); }
+        .zone-card.z3 { border-left-color: var(--zone3); }
+        .zone-card.z4 { border-left-color: var(--zone4); }
+        .zone-card.z5 { border-left-color: var(--zone5); }
+
+        .zone-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .zone-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .zone-badge {
+            font-size: 0.75rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        .zone-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .zone-value-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .zone-value {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Heart Rate Zone Calculator</h1>
+            <p class="subtitle">Calculate your optimal training zones using the Karvonen method</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <form id="hrForm">
+                    <div class="form-row">
+                        <div class="form-group form-col">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age" required min="10" max="100" placeholder="e.g. 30">
+                        </div>
+                        <div class="form-group form-col">
+                            <label for="restingHr">Resting Heart Rate (BPM)</label>
+                            <input type="number" id="restingHr" name="restingHr" required min="30" max="120" placeholder="e.g. 60">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maxHr">Max Heart Rate (BPM) <span style="font-weight: 400; color: var(--text-secondary);">(Optional)</span></label>
+                        <input type="number" id="maxHr" name="maxHr" min="100" max="220" placeholder="Auto-calculated if left blank (220 - age)">
+                    </div>
+
+                    <button type="submit" class="calculate-btn">Calculate Training Zones</button>
+                </form>
+
+                <div id="results" class="results">
+                    <div class="stats-box">
+                        <div class="stat-item">
+                            <h3>Max HR</h3>
+                            <div class="value"><span id="displayMaxHr">0</span> BPM</div>
+                        </div>
+                        <div class="stat-item">
+                            <h3>Resting HR</h3>
+                            <div class="value"><span id="displayRestingHr">0</span> BPM</div>
+                        </div>
+                        <div class="stat-item">
+                            <h3>HR Reserve</h3>
+                            <div class="value"><span id="displayHrr">0</span> BPM</div>
+                        </div>
+                    </div>
+
+                    <div class="zones-grid">
+                        <div class="zone-card z1">
+                            <div class="zone-info">
+                                <div class="zone-name">Zone 1: Warm Up <span class="zone-badge">50-60%</span></div>
+                                <div class="zone-desc">Basic endurance and recovery</div>
+                            </div>
+                            <div class="zone-value-container">
+                                <div class="zone-value"><span id="z1Value">0 - 0</span></div>
+                                <button class="copy-btn" onclick="copyToClipboard('z1Value')" title="Copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="zone-card z2">
+                            <div class="zone-info">
+                                <div class="zone-name">Zone 2: Fat Burn <span class="zone-badge">60-70%</span></div>
+                                <div class="zone-desc">Improves basic endurance and fat burning</div>
+                            </div>
+                            <div class="zone-value-container">
+                                <div class="zone-value"><span id="z2Value">0 - 0</span></div>
+                                <button class="copy-btn" onclick="copyToClipboard('z2Value')" title="Copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="zone-card z3">
+                            <div class="zone-info">
+                                <div class="zone-name">Zone 3: Aerobic <span class="zone-badge">70-80%</span></div>
+                                <div class="zone-desc">Improves aerobic fitness and stamina</div>
+                            </div>
+                            <div class="zone-value-container">
+                                <div class="zone-value"><span id="z3Value">0 - 0</span></div>
+                                <button class="copy-btn" onclick="copyToClipboard('z3Value')" title="Copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="zone-card z4">
+                            <div class="zone-info">
+                                <div class="zone-name">Zone 4: Threshold <span class="zone-badge">80-90%</span></div>
+                                <div class="zone-desc">Increases maximum performance capacity</div>
+                            </div>
+                            <div class="zone-value-container">
+                                <div class="zone-value"><span id="z4Value">0 - 0</span></div>
+                                <button class="copy-btn" onclick="copyToClipboard('z4Value')" title="Copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="zone-card z5">
+                            <div class="zone-info">
+                                <div class="zone-name">Zone 5: VO2 Max <span class="zone-badge">90-100%</span></div>
+                                <div class="zone-desc">Develops maximum performance and speed</div>
+                            </div>
+                            <div class="zone-value-container">
+                                <div class="zone-value"><span id="z5Value">0 - 0</span></div>
+                                <button class="copy-btn" onclick="copyToClipboard('z5Value')" title="Copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>Understanding the Karvonen Method</h2>
+                <p>The Karvonen formula is a mathematical equation that helps determine your target heart rate (HR) training zone. Unlike simple percentage-based calculations that only use your maximum heart rate, the Karvonen method incorporates your resting heart rate. This creates a more personalized and accurate reflection of your current fitness level.</p>
+                <p>By using your Heart Rate Reserve (HRR) &mdash; the difference between your maximum and resting heart rate &mdash; the formula calculates specific training zones tailored exactly to your cardiovascular capacity.</p>
+
+                <h2>The 5 Heart Rate Training Zones</h2>
+                <p>Training in different heart rate zones triggers different physiological adaptations in your body. Knowing which zone you are in helps you train more effectively for your specific goals.</p>
+                <ul>
+                    <li><strong>Zone 1 (50-60%): Warm Up / Recovery.</strong> Used for warming up, cooling down, and active recovery. Training in this zone promotes blood flow and aids in recovery without stressing the body.</li>
+                    <li><strong>Zone 2 (60-70%): Fat Burn / Base Endurance.</strong> The foundation of endurance training. Your body relies primarily on fat for fuel. Long, steady sessions here build your aerobic base and improve capillary density.</li>
+                    <li><strong>Zone 3 (70-80%): Aerobic / Cardio.</strong> Improves cardiovascular efficiency and aerobic capacity. Your body begins to use more carbohydrates for energy. This zone is excellent for improving general fitness and stamina.</li>
+                    <li><strong>Zone 4 (80-90%): Anaerobic / Threshold.</strong> Training at or slightly below your lactate threshold. Workouts in this zone increase your body's ability to clear lactic acid, improving your speed and high-intensity endurance.</li>
+                    <li><strong>Zone 5 (90-100%): VO2 Max.</strong> Maximum effort training. Sustainable only for short bursts, this zone increases your fast-twitch muscle fiber recruitment and absolute maximum performance.</li>
+                </ul>
+
+                <h2>How to Find Your Resting and Max Heart Rate</h2>
+                <p>For the most accurate results, you need to know your true resting and maximum heart rates.</p>
+                <p><strong>Resting Heart Rate:</strong> Measure this first thing in the morning before getting out of bed. Take your pulse for 60 seconds. Do this for a few consecutive days and take the average.</p>
+                <p><strong>Maximum Heart Rate:</strong> The standard formula (220 - your age) provides a rough estimate, but actual max HR can vary significantly due to genetics. For a more accurate number, consider a field test (like running a 5K at maximum effort and recording the highest HR) or a clinical stress test if cleared by your doctor.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('hrForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const age = parseFloat(document.getElementById('age').value);
+            const restingHr = parseFloat(document.getElementById('restingHr').value);
+            let maxHr = document.getElementById('maxHr').value;
+
+            if (isNaN(age) || isNaN(restingHr)) {
+                return;
+            }
+
+            // Calculate Max HR if not provided
+            if (!maxHr || isNaN(parseFloat(maxHr))) {
+                maxHr = 220 - age;
+            } else {
+                maxHr = parseFloat(maxHr);
+            }
+
+            // Calculate Heart Rate Reserve (HRR)
+            const hrr = maxHr - restingHr;
+
+            // Display stats
+            document.getElementById('displayMaxHr').textContent = Math.round(maxHr);
+            document.getElementById('displayRestingHr').textContent = Math.round(restingHr);
+            document.getElementById('displayHrr').textContent = Math.round(hrr);
+
+            // Calculate zones using Karvonen formula: Target HR = (HRR * %Intensity) + RHR
+            const calculateZone = (minPercent, maxPercent) => {
+                const min = Math.round((hrr * minPercent) + restingHr);
+                const max = Math.round((hrr * maxPercent) + restingHr);
+                return `${min} - ${max}`;
+            };
+
+            document.getElementById('z1Value').textContent = calculateZone(0.50, 0.60);
+            document.getElementById('z2Value').textContent = calculateZone(0.60, 0.70);
+            document.getElementById('z3Value').textContent = calculateZone(0.70, 0.80);
+            document.getElementById('z4Value').textContent = calculateZone(0.80, 0.90);
+            document.getElementById('z5Value').textContent = calculateZone(0.90, 1.00);
+
+            document.getElementById('results').classList.add('active');
+        });
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+                if (!btn) return;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
