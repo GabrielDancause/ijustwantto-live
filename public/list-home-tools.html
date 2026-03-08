@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essential Home Tools | ijustwantto.live</title>
+    <meta name="description" content="A curated list of must-have tools for every homeowner. Compare hand tools, power tools, and safety gear with budget recommendations and key features.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Essential Home Tools: Must-Have Gear for Homeowners",
+      "name": "Essential Home Tools",
+      "url": "https://ijustwantto.live/list-home-tools.html",
+      "description": "A curated list of must-have tools for every homeowner. Compare hand tools, power tools, and safety gear with budget recommendations and key features.",
+      "author": {
+        "@type": "Organization",
+        "name": "ijustwantto.live"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GAB Ventures"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Essential Home Tools Comparator",
+      "url": "https://ijustwantto.live/list-home-tools.html",
+      "description": "Interactive tool to filter and compare essential home tools.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any"
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            letter-spacing: -0.025em;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .controls-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 8px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(45, 184, 154, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .filters-sort {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background-color: rgba(45, 184, 154, 0.1);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .sort-select {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .sort-select:focus {
+             outline: none;
+             border-color: var(--accent-color);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+            padding-right: 0.5rem;
+        }
+
+        .price-tag {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: #ffffff;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        .category-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+        }
+
+        .metrics {
+            margin-bottom: 1.25rem;
+            padding: 1rem;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .metric-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+        }
+
+        .metric-value {
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .score-bar-bg {
+            width: 80px;
+            height: 6px;
+            background-color: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.5rem;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .pros-cons {
+            font-size: 0.875rem;
+        }
+
+        .pros-cons ul {
+            list-style: none;
+            margin-bottom: 0.75rem;
+        }
+
+        .pros-cons ul:last-child {
+            margin-bottom: 0;
+        }
+
+        .pros-cons li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-secondary);
+        }
+
+        .pros-cons .pro li::before {
+            content: '+';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-family: var(--font-mono);
+        }
+
+        .pros-cons .con li::before {
+            content: '-';
+            position: absolute;
+            left: 0;
+            color: #d85c5c;
+            font-weight: bold;
+            font-family: var(--font-mono);
+        }
+
+        /* SEO Section */
+        .seo-content {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .seo-content h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+        }
+
+        .seo-content ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            background-color: var(--card-bg);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .controls-container {
+                flex-direction: row;
+                align-items: center;
+            }
+            .filters-sort {
+                flex-grow: 1;
+            }
+            .search-container {
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            .filters-sort { flex-direction: column; align-items: stretch; }
+            .category-filters { justify-content: center; }
+            .sort-select { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Essential Home Tools</h1>
+            <p class="subtitle">A curated comparison of must-have tools for every homeowner. Buy once, cry once.</p>
+        </header>
+
+        <main>
+            <div class="controls-container">
+                <div class="search-container">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search tools..." aria-label="Search tools">
+                </div>
+
+                <div class="filters-sort">
+                    <div class="category-filters" id="categoryFilters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="hand">Hand Tools</button>
+                        <button class="filter-btn" data-filter="power">Power Tools</button>
+                        <button class="filter-btn" data-filter="safety">Safety Gear</button>
+                    </div>
+
+                    <select id="sortSelect" class="sort-select" aria-label="Sort tools">
+                        <option value="necessity-desc">Necessity: High to Low</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="noResults" class="no-results">
+                No tools found matching your criteria. Try adjusting your search or filters.
+            </div>
+
+            <div class="card-grid" id="toolGrid">
+                <!-- Tool Cards will be rendered via JS -->
+            </div>
+
+            <!-- SEO Content Section -->
+            <div class="seo-content">
+                <h2>Building Your First Toolkit</h2>
+                <p>When you move into a new home or apartment, the sheer number of potential repairs can be daunting. Building a basic toolkit shouldn't mean rushing to the hardware store and buying the largest pre-assembled plastic case of tools you can find. Those kits often contain low-quality items you'll rarely use. Instead, curating your own set of essential hand and power tools ensures you have reliable, high-quality equipment for the jobs that actually matter.</p>
+                <p>Start with the absolute necessities: a good hammer, a versatile multi-bit screwdriver, a tape measure, and a utility knife. These four items alone will help you unpack, hang art, assemble furniture, and handle minor fixes.</p>
+
+                <h2>Hand Tools vs. Power Tools</h2>
+                <p>It's easy to get seduced by shiny power tools, but a solid foundation of hand tools is critical. Hand tools offer precision, don't require batteries or a nearby outlet, and are inherently safer for beginners learning the mechanics of home repair.</p>
+                <ul>
+                    <li><strong>Invest in Hand Tools:</strong> Buy high-quality steel tools with comfortable grips. A good claw hammer or set of pliers can easily outlast you if cared for properly.</li>
+                    <li><strong>Strategic Power Tools:</strong> The only power tool you truly need on day one is a cordless drill/driver. It makes drilling holes and driving screws exponentially faster. Stick to a 12V or 20V system from a reputable brand (like DeWalt, Milwaukee, Makita, or Ryobi) and remember that you are buying into their battery ecosystem for future purchases.</li>
+                </ul>
+
+                <h2>Budget vs. Quality: The "Buy Once, Cry Once" Philosophy</h2>
+                <p>There is a popular saying in the trades: "Buy cheap, buy twice." While you don't need professional-grade (contractor) tools for occasional weekend DIY, you should avoid the cheapest bottom-barrel options. Cheap tools strip screws, break under pressure, and can cause injuries.</p>
+                <p>For items that see heavy impact or torque (hammers, screwdrivers, wrenches), spend a little extra for trusted brands. For specialty tools you might only use once a year, a budget option is perfectly acceptable. Always prioritize safety gear—never skimp on eye and ear protection.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        const toolsData = [
+            {
+                id: "tape-measure",
+                name: "Tape Measure (25ft)",
+                category: "hand",
+                categoryLabel: "Hand Tool",
+                price: 15,
+                priceStr: "~$15-25",
+                necessity: 98,
+                durability: "Years",
+                description: "The most frequently used tool in any home. Essential for hanging pictures, buying furniture, and measuring spaces.",
+                pros: ["Compact", "Inexpensive", "Works without power"],
+                cons: ["Cheap ones break easily or have low standout"]
+            },
+            {
+                id: "cordless-drill",
+                name: "Cordless Drill/Driver",
+                category: "power",
+                categoryLabel: "Power Tool",
+                price: 120,
+                priceStr: "~$100-150",
+                necessity: 95,
+                durability: "5-10 Years",
+                description: "The undisputed king of home power tools. Drives screws and drills holes into drywall, wood, and light metal.",
+                pros: ["Saves massive amount of time", "Highly versatile", "One battery fits many tools"],
+                cons: ["Requires charging", "More expensive upfront"]
+            },
+            {
+                id: "multi-screwdriver",
+                name: "Multi-Bit Screwdriver",
+                category: "hand",
+                categoryLabel: "Hand Tool",
+                price: 20,
+                priceStr: "~$15-30",
+                necessity: 95,
+                durability: "Lifetime",
+                description: "A single handle that holds multiple interchangeable bits (Phillips, Flathead, Torx). Reduces clutter significantly.",
+                pros: ["Space-saving", "Usually includes a ratcheting mechanism", "Cheaper than a full set"],
+                cons: ["Bits can be easily lost", "Sometimes too bulky for tight spaces"]
+            },
+            {
+                id: "claw-hammer",
+                name: "Claw Hammer (16oz)",
+                category: "hand",
+                categoryLabel: "Hand Tool",
+                price: 25,
+                priceStr: "~$20-35",
+                necessity: 90,
+                durability: "Lifetime",
+                description: "A 16oz smooth-face claw hammer is the sweet spot for driving nails, tapping things into place, and light demolition.",
+                pros: ["Indestructible if one-piece steel", "Multi-purpose (driving & pulling)"],
+                cons: ["Can damage delicate surfaces"]
+            },
+            {
+                id: "utility-knife",
+                name: "Utility Knife",
+                category: "hand",
+                categoryLabel: "Hand Tool",
+                price: 15,
+                priceStr: "~$10-20",
+                necessity: 92,
+                durability: "Lifetime (Handle)",
+                description: "A heavy-duty folding or retractable knife with replaceable razor blades. Perfect for opening boxes, cutting drywall, or trimming materials.",
+                pros: ["Always sharp (replaceable blades)", "Safer than kitchen knives for tasks", "Cheap"],
+                cons: ["Blades dull quickly on tough materials"]
+            },
+            {
+                id: "safety-glasses",
+                name: "Safety Glasses",
+                category: "safety",
+                categoryLabel: "Safety Gear",
+                price: 10,
+                priceStr: "~$5-15",
+                necessity: 100,
+                durability: "Months/Years",
+                description: "Impact-resistant polycarbonate glasses. Do not drill, saw, or hammer without them. Protect your most valuable asset.",
+                pros: ["Extremely cheap", "Prevents permanent damage", "Lightweight"],
+                cons: ["Can fog up", "Often misplaced"]
+            },
+            {
+                id: "pliers-set",
+                name: "Basic Pliers Set",
+                category: "hand",
+                categoryLabel: "Hand Tool",
+                price: 35,
+                priceStr: "~$30-50",
+                necessity: 85,
+                durability: "Lifetime",
+                description: "A small set including needle-nose, slip-joint, and cutting pliers. Essential for gripping, bending, and cutting wires.",
+                pros: ["Handles tasks fingers can't", "Great for minor electrical/plumbing", "Durable"],
+                cons: ["Cheap sets have poor grip and dull cutters"]
+            },
+            {
+                id: "adjustable-wrench",
+                name: "Adjustable Wrench",
+                category: "hand",
+                categoryLabel: "Hand Tool",
+                price: 20,
+                priceStr: "~$15-25",
+                necessity: 80,
+                durability: "Lifetime",
+                description: "An 8-inch or 10-inch crescent wrench. Replaces a whole set of standard wrenches for basic plumbing and nut-tightening tasks.",
+                pros: ["Fits many sizes of nuts/bolts", "Heavy and durable"],
+                cons: ["Can round off stubborn bolts if not tightened properly"]
+            },
+            {
+                id: "stud-finder",
+                name: "Magnetic Stud Finder",
+                category: "hand",
+                categoryLabel: "Hand Tool",
+                price: 15,
+                priceStr: "~$10-20",
+                necessity: 75,
+                durability: "Lifetime",
+                description: "Uses strong rare-earth magnets to find the screws holding your drywall to the studs. Never needs batteries and never fails.",
+                pros: ["Foolproof", "No batteries required", "Very cheap"],
+                cons: ["Takes slightly longer to use than electronic ones"]
+            },
+            {
+                id: "level",
+                name: "Torpedo Level",
+                category: "hand",
+                categoryLabel: "Hand Tool",
+                price: 15,
+                priceStr: "~$10-20",
+                necessity: 85,
+                durability: "Lifetime",
+                description: "A small 9-inch level. Perfect for making sure pictures, shelves, and small appliances are perfectly horizontal or vertical.",
+                pros: ["Fits in a pocket", "Often magnetic for hands-free use on metal"],
+                cons: ["Too short for leveling long spans (like large cabinets)"]
+            }
+        ];
+
+        // DOM Elements
+        const toolGrid = document.getElementById('toolGrid');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilters = document.querySelectorAll('.filter-btn');
+        const sortSelect = document.getElementById('sortSelect');
+        const noResults = document.getElementById('noResults');
+
+        // State
+        let currentCategory = 'all';
+        let currentSearchTerm = '';
+        let currentSort = 'necessity-desc';
+
+        // Initialize
+        function init() {
+            renderTools();
+            setupEventListeners();
+        }
+
+        function createToolCard(tool) {
+            return `
+                <div class="card" data-id="${tool.id}">
+                    <span class="category-tag">${tool.categoryLabel}</span>
+                    <div class="card-header">
+                        <h3>${tool.name}</h3>
+                        <span class="price-tag">${tool.priceStr}</span>
+                    </div>
+                    <p class="card-desc">${tool.description}</p>
+
+                    <div class="metrics">
+                        <div class="metric-row">
+                            <span class="metric-label">Necessity Score</span>
+                            <span>
+                                <span class="metric-value">${tool.necessity}/100</span>
+                                <div class="score-bar-bg">
+                                    <div class="score-bar-fill" style="width: ${tool.necessity}%; background-color: ${tool.necessity >= 90 ? 'var(--accent-color)' : (tool.necessity >= 80 ? '#e0b84c' : '#c47250')}"></div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Est. Lifespan</span>
+                            <span class="metric-value">${tool.durability}</span>
+                        </div>
+                    </div>
+
+                    <div class="pros-cons">
+                        <ul class="pro">
+                            ${tool.pros.map(pro => `<li>${pro}</li>`).join('')}
+                        </ul>
+                        <ul class="con">
+                            ${tool.cons.map(con => `<li>${con}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getFilteredAndSortedTools() {
+            // Filter
+            let filtered = toolsData.filter(tool => {
+                const matchesCategory = currentCategory === 'all' || tool.category === currentCategory;
+                const searchLower = currentSearchTerm.toLowerCase();
+                const matchesSearch = tool.name.toLowerCase().includes(searchLower) ||
+                                      tool.description.toLowerCase().includes(searchLower) ||
+                                      tool.categoryLabel.toLowerCase().includes(searchLower);
+                return matchesCategory && matchesSearch;
+            });
+
+            // Sort
+            filtered.sort((a, b) => {
+                switch (currentSort) {
+                    case 'necessity-desc':
+                        return b.necessity - a.necessity;
+                    case 'price-asc':
+                        return a.price - b.price;
+                    case 'price-desc':
+                        return b.price - a.price;
+                    case 'name-asc':
+                        return a.name.localeCompare(b.name);
+                    default:
+                        return 0;
+                }
+            });
+
+            return filtered;
+        }
+
+        function renderTools() {
+            const toolsToRender = getFilteredAndSortedTools();
+
+            if (toolsToRender.length === 0) {
+                toolGrid.innerHTML = '';
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+                toolGrid.innerHTML = toolsToRender.map(createToolCard).join('');
+            }
+        }
+
+        function setupEventListeners() {
+            // Search
+            searchInput.addEventListener('input', (e) => {
+                currentSearchTerm = e.target.value;
+                renderTools();
+            });
+
+            // Category Filters
+            categoryFilters.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Update active class
+                    categoryFilters.forEach(f => f.classList.remove('active'));
+                    e.target.classList.add('active');
+
+                    // Update state and render
+                    currentCategory = e.target.getAttribute('data-filter');
+                    renderTools();
+                });
+            });
+
+            // Sort
+            sortSelect.addEventListener('change', (e) => {
+                currentSort = e.target.value;
+                renderTools();
+            });
+        }
+
+        // Run
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
