@@ -2,11 +2,11 @@
 import BaseHead from '../layouts/BaseHead.astro';
 
 const tools = [
-  { emoji: "🔥", name: "BMR & TDEE Calculator", desc: "How many calories do you actually burn? Calculate your basal metabolic rate and total daily energy expenditure.", soon: true },
-  { emoji: "🏋️", name: "One Rep Max (1RM)", desc: "Estimate your max lift from any rep range. Supports Epley, Brzycki, and Lombardi formulas.", soon: true },
+  { emoji: "🔥", name: "BMR & TDEE Calculator", slug: "/bmr-calculator", desc: "How many calories do you actually burn? Calculate your basal metabolic rate and total daily energy expenditure." },
+  { emoji: "🏋️", name: "One Rep Max (1RM)", slug: "/one-rep-max", desc: "Estimate your max lift from any rep range. Supports Epley, Brzycki, and Lombardi formulas." },
   { emoji: "💧", name: "Hydration Target", desc: "How much water should you drink? Personalized daily target based on weight, activity, and climate.", soon: true },
   { emoji: "🥩", name: "Macro Splitter", desc: "Hit your protein, carb, and fat targets. Split macros by meal count and see grams per meal.", soon: true },
-  { emoji: "🧱", name: "Concrete Yardage Calculator", desc: "How much concrete for your slab, footing, or post hole? Cubic yards with 10% waste factor built in.", soon: true },
+  { emoji: "🧱", name: "Concrete Yardage Calculator", slug: "/concrete-calculator", desc: "How much concrete for your slab, footing, or post hole? Cubic yards with 10% waste factor built in." },
   { emoji: "🎨", name: "Paint Coverage Calculator", desc: "How many gallons for your room? Enter dimensions, doors, and windows — get the exact amount.", soon: true },
   { emoji: "🪵", name: "Lumber Board-Foot Calculator", desc: "Calculate board feet for your woodworking project. Price per board foot included.", soon: true },
 ];
@@ -33,7 +33,11 @@ const tools = [
     .card .emoji { font-size: 2rem; margin-bottom: 12px; display: block; }
     .card h2 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
     .card p { font-size: 0.85rem; color: #888; line-height: 1.6; }
+    a.card { text-decoration: none; color: inherit; cursor: pointer; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+    a.card:hover { border-color: #2DB89A; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(45,184,154,0.1); }
+    .arrow { color: #2DB89A; font-size: 0.85rem; margin-top: 14px; display: inline-block; font-weight: 600; }
     .badge { position: absolute; top: 14px; right: 14px; background: #1a2a24; color: #2DB89A; font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .live-badge { background: #1a2a1a; color: #4ade80; }
     .footer { text-align: center; padding: 40px 24px; font-size: 0.78rem; color: #333; border-top: 1px solid #0f1a15; }
     .footer a { color: #2DB89A; text-decoration: none; }
     @media (max-width: 600px) { .hero h1 { font-size: 2.2rem; } .hero { padding: 70px 20px 50px; } .grid { grid-template-columns: 1fr; } }
@@ -47,9 +51,17 @@ const tools = [
   </div>
 </div>
 <div class="grid">
-  {tools.map(t => (
+  {tools.map(t => t.slug ? (
+    <a class="card live" href={t.slug}>
+      <span class="badge live-badge">LIVE</span>
+      <span class="emoji">{t.emoji}</span>
+      <h2>{t.name}</h2>
+      <p>{t.desc}</p>
+      <span class="arrow">Try it →</span>
+    </a>
+  ) : (
     <div class="card">
-      {t.soon && <span class="badge">COMING SOON</span>}
+      <span class="badge">COMING SOON</span>
       <span class="emoji">{t.emoji}</span>
       <h2>{t.name}</h2>
       <p>{t.desc}</p>
