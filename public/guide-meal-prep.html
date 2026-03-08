@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Prep 101 | ijustwantto.live</title>
+    <meta name="description" content="Complete meal prep guide. Planning, shopping, cooking, storing. Weekly templates and cheat sheets.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Meal Prep 101",
+      "url": "https://ijustwantto.live/guide-meal-prep.html",
+      "description": "Complete meal prep guide. Planning, shopping, cooking, storing. Weekly templates and cheat sheets.",
+      "author": {
+        "@type": "Organization",
+        "name": "ijustwantto.live"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "A GAB Ventures property",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: var(--font-ui);
+            transition: border-color 0.2s;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: opacity 0.3s ease;
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h2 svg {
+            color: var(--accent-color);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: var(--border-color);
+            color: var(--text-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        td {
+            color: var(--text-primary);
+        }
+
+        details {
+            margin-bottom: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            transition: background-color 0.2s;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.25rem;
+            color: var(--accent-color);
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        summary:hover {
+            background-color: rgba(26, 42, 36, 0.5);
+        }
+
+        .details-content {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .code-block {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .code-block pre {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--accent-color);
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-color);
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .list-unstyled {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .list-unstyled li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .list-unstyled li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(45, 184, 154, 0.1);
+            color: var(--accent-color);
+            padding: 0.1rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Meal Prep 101</h1>
+            <p class="subtitle">Your complete cheat sheet for planning, shopping, cooking, and storing</p>
+        </header>
+
+        <div class="search-container">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="searchInput" placeholder="Search for planning, storage times, recipes...">
+        </div>
+
+        <main>
+            <div class="grid" id="cardGrid">
+
+                <!-- Planning Strategy -->
+                <div class="card" data-tags="planning strategy basics">
+                    <h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Planning Strategy
+                    </h2>
+                    <div class="tag-list">
+                        <span class="tag">planning</span>
+                        <span class="tag">schedule</span>
+                    </div>
+                    <p>Decide on your cadence before you shop. Here are the most common strategies:</p>
+                    <details>
+                        <summary>The Sunday Marathon</summary>
+                        <div class="details-content">
+                            Cook everything for Monday-Friday on Sunday. Best for busy weeks. Pros: Only one big cleanup. Cons: Thursday/Friday food might not taste as fresh.
+                        </div>
+                    </details>
+                    <details>
+                        <summary>The Split Prep (3/2 Split)</summary>
+                        <div class="details-content">
+                            Prep on Sunday (for Mon-Wed) and Wednesday (for Thu-Fri). Best for freshness and variety. Pros: Better tasting food. Cons: Two cleanup sessions per week.
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Buffet Style (Component Prep)</summary>
+                        <div class="details-content">
+                            Don't assemble full meals. Instead, cook large batches of carbs (rice, quinoa), proteins (chicken, tofu), and roast veggies. Mix and match during the week with different sauces.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Shopping & Pantry -->
+                <div class="card" data-tags="shopping grocery pantry staples">
+                    <h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        Shopping & Pantry
+                    </h2>
+                    <div class="tag-list">
+                        <span class="tag">shopping</span>
+                        <span class="tag">list</span>
+                    </div>
+                    <p>Keep these staples stocked to make meal prep easier and cheaper:</p>
+                    <ul class="list-unstyled">
+                        <li><strong>Carbs:</strong> Rice, Quinoa, Pasta, Oats, Potatoes</li>
+                        <li><strong>Proteins:</strong> Eggs, Canned Tuna, Beans, Lentils</li>
+                        <li><strong>Fats:</strong> Olive Oil, Nuts, Seeds, Peanut Butter</li>
+                        <li><strong>Flavor:</strong> Soy Sauce, Hot Sauce, Spices, Garlic, Onions</li>
+                    </ul>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode('shopping-list')" title="Copy">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Copy
+                        </button>
+                        <pre id="shopping-list">
+[ ] Proteins (Chicken/Tofu)
+[ ] Greens (Spinach/Kale)
+[ ] Carbs (Sweet Potatoes)
+[ ] Snacks (Fruit/Nuts)
+[ ] Sauces/Spices</pre>
+                    </div>
+                </div>
+
+                <!-- Cooking Execution -->
+                <div class="card" data-tags="cooking execution oven stove time">
+                    <h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                        Cooking Order of Operations
+                    </h2>
+                    <div class="tag-list">
+                        <span class="tag">cooking</span>
+                        <span class="tag">efficiency</span>
+                    </div>
+                    <p>Optimize your time in the kitchen by working in parallel:</p>
+                    <ol class="list-unstyled">
+                        <li><strong>1. Preheat:</strong> Start your oven and boil water first.</li>
+                        <li><strong>2. Longest Cooking Items:</strong> Get grains (rice, quinoa) simmering and root vegetables/large proteins into the oven.</li>
+                        <li><strong>3. Skillet Items:</strong> Sauté vegetables, pan-fry quick proteins while oven/stove work.</li>
+                        <li><strong>4. Prep Raw Items:</strong> Chop fresh veggies, mix sauces, wash greens.</li>
+                        <li><strong>5. Assembly:</strong> Portion out into containers assembly-line style.</li>
+                    </ol>
+                </div>
+
+                <!-- Storage Times -->
+                <div class="card full-width" data-tags="storing fridge freezer safety time">
+                    <h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V2z"></path><line x1="5" y1="10" x2="19" y2="10"></line><line x1="9" y1="14" x2="9" y2="18"></line></svg>
+                        Storage Lifespan Cheat Sheet
+                    </h2>
+                    <div class="tag-list">
+                        <span class="tag">storing</span>
+                        <span class="tag">safety</span>
+                    </div>
+                    <p>General guidelines for cooked food safety. Always use your best judgment (smell, texture).</p>
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Food Type</th>
+                                    <th>Fridge (4°C / 40°F)</th>
+                                    <th>Freezer (-18°C / 0°F)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Cooked Poultry/Meat</td>
+                                    <td>3-4 days</td>
+                                    <td>2-6 months</td>
+                                </tr>
+                                <tr>
+                                    <td>Cooked Fish</td>
+                                    <td>2-3 days</td>
+                                    <td>1-3 months</td>
+                                </tr>
+                                <tr>
+                                    <td>Cooked Rice/Pasta</td>
+                                    <td>3-4 days</td>
+                                    <td>1-2 months</td>
+                                </tr>
+                                <tr>
+                                    <td>Roasted Vegetables</td>
+                                    <td>3-4 days</td>
+                                    <td>Mushy when thawed</td>
+                                </tr>
+                                <tr>
+                                    <td>Hard Boiled Eggs</td>
+                                    <td>7 days (in shell)</td>
+                                    <td>Do not freeze</td>
+                                </tr>
+                                <tr>
+                                    <td>Soups and Stews</td>
+                                    <td>3-4 days</td>
+                                    <td>2-3 months</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Weekly Templates -->
+                <div class="card full-width" data-tags="templates weekly meals recipes">
+                    <h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Weekly Component Templates
+                    </h2>
+                    <div class="tag-list">
+                        <span class="tag">templates</span>
+                        <span class="tag">components</span>
+                    </div>
+                    <p>Copy these structural templates to build your weekly plan without relying on complex recipes.</p>
+
+                    <details>
+                        <summary>Template 1: The Classic Bodybuilder</summary>
+                        <div class="details-content">
+                            <p>Simple, clean, easily adjustable macros.</p>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode('template-1')" title="Copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Copy
+                                </button>
+                                <pre id="template-1">
+Base: White or Brown Rice (150g cooked)
+Protein: Chicken Breast or Lean Beef (120g cooked)
+Veggie: Steamed Broccoli or Green Beans (100g)
+Flavor: Hot sauce, soy sauce, or salsa
+
+Prep Steps:
+1. Cook 3 cups dry rice in rice cooker.
+2. Season protein with salt/pepper/garlic powder. Bake at 400F for 20-25m.
+3. Steam veggies in microwave or stovetop.
+4. Distribute into 5 containers.</pre>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>Template 2: The Burrito Bowl</summary>
+                        <div class="details-content">
+                            <p>High volume, highly flavorful, freezes well.</p>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode('template-2')" title="Copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Copy
+                                </button>
+                                <pre id="template-2">
+Base: Cilantro Lime Rice or Quinoa
+Protein: Ground Turkey with Taco Seasoning or Black Beans
+Veggie: Fajita Peppers and Onions, Corn
+Topping: Cheese, Greek Yogurt (sub for sour cream)
+
+Prep Steps:
+1. Cook grain base. Stir in lime juice and cilantro.
+2. Brown ground turkey in skillet, add taco seasoning and water. Simmer.
+3. Sauté sliced bell peppers and onions in olive oil until soft.
+4. Assemble. Keep cold toppings (yogurt, salsa) separate until eating.</pre>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+            </div>
+        </main>
+
+        <div class="seo-content">
+            <h2>Why Meal Prep is Essential for Fitness and Health</h2>
+            <p>Meal preparation is one of the most effective habits you can build to support your health, fitness, and financial goals. By planning and cooking your meals in advance, you eliminate the daily friction of deciding what to eat. This significantly reduces the likelihood of ordering takeout or reaching for processed convenience foods when you are tired, hungry, or stressed.</p>
+            <p>Consistency is the key to any diet, whether you are trying to lose body fat, build muscle, or simply improve your overall nutrition. Having a fridge stocked with pre-portioned, macro-friendly meals guarantees that you hit your nutritional targets day after day with minimal mental effort.</p>
+
+            <h2>Pro Tips for Successful Meal Prepping</h2>
+            <ul>
+                <li><strong>Invest in Good Containers:</strong> High-quality, BPA-free plastic or glass containers with tight-fitting, leak-proof lids are essential. Glass is preferred if you microwave your meals frequently, as it doesn't absorb odors or stain.</li>
+                <li><strong>Start Small:</strong> If you are new to meal prepping, do not try to prep 21 meals for the week on your first try. Start by prepping just your lunches for Monday to Wednesday. Once you master that, you can scale up.</li>
+                <li><strong>Sauces on the Side:</strong> To prevent food from getting soggy (especially salads or breaded items), keep your dressings and sauces in small, separate containers and add them right before eating.</li>
+                <li><strong>Use the Freezer:</strong> If you get bored of eating the same thing for four days straight, freeze half of your prep. You can then rotate meals from previous weeks to keep your diet interesting.</li>
+            </ul>
+
+            <h2>Common Meal Prep Mistakes to Avoid</h2>
+            <p>One major mistake beginners make is ignoring food safety. Cooked food should not sit at room temperature for more than two hours. Once your food is cooked and portioned, let it cool slightly and then immediately transfer it to the refrigerator or freezer.</p>
+            <p>Another common pitfall is overcomplicating recipes. Save the complex, multi-step culinary masterpieces for a relaxed weekend dinner. For meal prep, focus on simple, whole foods that can be batched efficiently: roasted vegetables, baked proteins, and boiled grains.</p>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.card');
+
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+
+            cards.forEach(card => {
+                const tags = card.getAttribute('data-tags') || '';
+                const title = card.querySelector('h2').textContent.toLowerCase();
+                const content = card.textContent.toLowerCase();
+
+                if (searchTerm === '' ||
+                    tags.includes(searchTerm) ||
+                    title.includes(searchTerm) ||
+                    content.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+
+        // Copy functionality
+        function copyCode(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector(`[onclick="copyCode('${elementId}')"]`);
+                if (!btn) return;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!';
+                btn.style.borderColor = 'var(--accent-color)';
+                btn.style.color = 'var(--accent-color)';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
