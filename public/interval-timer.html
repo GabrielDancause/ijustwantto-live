@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interval Timer | ijustwantto.live</title>
+  <meta name="description" content="Customizable interval timer for HIIT, Tabata, EMOM, and AMRAP workouts. Features audio cues, saved workouts, and works completely offline.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Interval Timer",
+    "description": "Customizable interval timer for HIIT, Tabata, EMOM, and AMRAP workouts. Features audio cues, saved workouts, and works completely offline.",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0"
+    }
+  }
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #060c0a; color: #c8e0d8; line-height: 1.6; }
+
+    .hero { text-align: center; padding: 80px 24px 60px; background: linear-gradient(180deg, #0a1a15 0%, #060c0a 100%); position: relative; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, rgba(26,122,109,0.08) 0%, transparent 60%); pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; background: linear-gradient(135deg, #fff 0%, #2DB89A 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: #888; font-size: 1.05rem; max-width: 540px; margin: 0 auto; }
+
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px 80px; }
+
+    .card { background: #0c1410; border: 2px solid #1a2a24; border-radius: 16px; padding: 32px; margin-bottom: 24px; position: relative; }
+
+    .preset-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .preset-btn { flex: 1; min-width: 80px; background: #060c0a; border: 1px solid #1a2a24; color: #888; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+    .preset-btn:hover { border-color: #2DB89A; color: #c8e0d8; }
+    .preset-btn.active { background: rgba(45, 184, 154, 0.1); border-color: #2DB89A; color: #2DB89A; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: #c8e0d8; margin-bottom: 8px; }
+
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-wrapper input { width: 100%; background: #060c0a; border: 1px solid #1a2a24; color: #fff; padding: 14px 16px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; outline: none; transition: border-color 0.2s; }
+    .input-wrapper input:focus { border-color: #2DB89A; }
+    .input-wrapper .unit { position: absolute; right: 16px; color: #888; font-size: 0.9rem; font-weight: 500; pointer-events: none; }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+    button.btn { display: inline-block; width: 100%; background: #2DB89A; color: #060c0a; font-weight: 700; font-size: 1rem; border: none; padding: 16px; border-radius: 8px; cursor: pointer; transition: background 0.2s; font-family: 'Inter', sans-serif; }
+    button.btn:hover { background: #24967d; }
+    button.btn.secondary { background: #1a2a24; color: #c8e0d8; }
+    button.btn.secondary:hover { background: #233830; }
+    button.btn.danger { background: #3a1a1a; color: #e0c8c8; border: 1px solid #5a2a2a; }
+    button.btn.danger:hover { background: #4a2020; }
+
+    .timer-display { text-align: center; padding: 40px 0; background: #060c0a; border: 1px solid #1a2a24; border-radius: 12px; margin-bottom: 24px; position: relative; }
+    .timer-phase { font-size: 1.2rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+    .timer-phase.work { color: #2DB89A; }
+    .timer-phase.rest { color: #e0c8c8; }
+    .timer-phase.prep { color: #c8e0d8; }
+
+    .timer-time { font-family: 'JetBrains Mono', monospace; font-size: 5rem; font-weight: 700; color: #fff; line-height: 1; letter-spacing: -2px; margin-bottom: 16px; }
+    .timer-stats { display: flex; justify-content: center; gap: 24px; font-size: 1rem; color: #888; }
+    .timer-stat-value { font-family: 'JetBrains Mono', monospace; color: #c8e0d8; font-weight: 600; }
+
+    .timer-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .copy-btn { position: absolute; top: 12px; right: 12px; background: none; border: none; color: #888; cursor: pointer; padding: 6px; border-radius: 6px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+    .copy-btn:hover { color: #fff; background: #1a2a24; }
+    .copy-btn svg { width: 18px; height: 18px; }
+
+    .saved-workouts { margin-top: 32px; }
+    .saved-workout-item { background: #060c0a; border: 1px solid #1a2a24; border-radius: 8px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .saved-workout-info h4 { color: #c8e0d8; font-size: 1rem; margin-bottom: 4px; }
+    .saved-workout-info p { color: #888; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; }
+    .saved-workout-actions { display: flex; gap: 8px; }
+    .saved-workout-actions button { background: #1a2a24; border: none; color: #c8e0d8; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.2s; }
+    .saved-workout-actions button:hover { background: #2DB89A; color: #060c0a; }
+    .saved-workout-actions button.delete { background: transparent; color: #888; }
+    .saved-workout-actions button.delete:hover { color: #ff6b6b; background: rgba(255, 107, 107, 0.1); }
+
+    .seo-content { margin-top: 60px; padding-top: 40px; border-top: 1px solid #1a2a24; }
+    .seo-content h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin: 32px 0 16px; letter-spacing: -0.5px; }
+    .seo-content h2:first-child { margin-top: 0; }
+    .seo-content p { color: #888; margin-bottom: 16px; }
+    .seo-content ul { color: #888; margin-bottom: 16px; padding-left: 20px; }
+    .seo-content li { margin-bottom: 8px; }
+    .seo-content strong { color: #c8e0d8; }
+
+    .footer { text-align: center; padding: 40px 24px; font-size: 0.85rem; color: #666; border-top: 1px solid #1a2a24; margin-top: 40px; }
+    .footer a { color: #2DB89A; text-decoration: none; font-weight: 500; }
+    .footer a:hover { text-decoration: underline; }
+
+    .home-link { display: inline-flex; align-items: center; gap: 6px; color: #888; text-decoration: none; font-size: 0.9rem; font-weight: 500; margin-bottom: 24px; transition: color 0.2s; }
+    .home-link:hover { color: #c8e0d8; }
+    .home-link svg { width: 16px; height: 16px; }
+
+    .hidden { display: none !important; }
+
+    /* Modal for saving workout */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(6, 12, 10, 0.8); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal { background: #0c1410; border: 2px solid #1a2a24; border-radius: 16px; padding: 32px; width: 100%; max-width: 400px; }
+    .modal h3 { color: #fff; margin-bottom: 16px; font-size: 1.2rem; }
+    .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 60px 20px 40px; }
+      .hero h1 { font-size: 2rem; }
+      .row { grid-template-columns: 1fr; gap: 12px; }
+      .card { padding: 24px; }
+      .timer-time { font-size: 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Interval Timer</h1>
+    <p>Customizable timer for HIIT, Tabata, EMOM, and AMRAP. Includes audio cues and runs entirely offline.</p>
+  </div>
+</div>
+
+<div class="container">
+  <a href="/" class="home-link">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Back to Home
+  </a>
+
+  <!-- Main Timer Display -->
+  <div class="card" id="timer-card">
+    <button class="copy-btn" id="copy-summary-btn" title="Copy workout summary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      </svg>
+    </button>
+    <div class="timer-display">
+      <div class="timer-phase" id="timer-phase">Ready</div>
+      <div class="timer-time" id="timer-time">00:00</div>
+      <div class="timer-stats">
+        <div>Round <span class="timer-stat-value" id="timer-round">0/0</span></div>
+        <div>Total Time <span class="timer-stat-value" id="timer-total">00:00</span></div>
+      </div>
+    </div>
+
+    <div class="timer-controls">
+      <button class="btn" id="start-btn">Start Timer</button>
+      <button class="btn secondary" id="reset-btn">Reset</button>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div class="card" id="settings-card">
+    <h3>Workout Settings</h3>
+    <div style="margin-bottom: 24px; margin-top: 16px;">
+      <div class="preset-buttons">
+        <button class="preset-btn active" data-preset="custom">Custom</button>
+        <button class="preset-btn" data-preset="tabata">Tabata</button>
+        <button class="preset-btn" data-preset="hiit">HIIT (30/30)</button>
+        <button class="preset-btn" data-preset="emom">EMOM</button>
+      </div>
+    </div>
+
+    <form id="settings-form">
+      <div class="row">
+        <div class="form-group">
+          <label for="work-time">Work Time</label>
+          <div class="input-wrapper">
+            <input type="number" id="work-time" min="1" value="40" required>
+            <span class="unit">sec</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="rest-time">Rest Time</label>
+          <div class="input-wrapper">
+            <input type="number" id="rest-time" min="0" value="20" required>
+            <span class="unit">sec</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="rounds">Rounds</label>
+          <div class="input-wrapper">
+            <input type="number" id="rounds" min="1" value="5" required>
+            <span class="unit">rounds</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="prep-time">Prep Time</label>
+          <div class="input-wrapper">
+            <input type="number" id="prep-time" min="0" value="10" required>
+            <span class="unit">sec</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn secondary" id="save-workout-btn">Save Workout Template</button>
+    </form>
+
+    <div class="saved-workouts hidden" id="saved-workouts-container">
+      <h3 style="margin-top: 32px; margin-bottom: 16px; font-size: 1.1rem;">Saved Workouts</h3>
+      <div id="saved-workouts-list">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO Content -->
+  <div class="seo-content">
+    <h2>What is Interval Training?</h2>
+    <p>Interval training involves alternating between periods of intense exercise (work) and periods of recovery (rest). This method can be applied to almost any exercise—from running and cycling to weightlifting and bodyweight movements. It is highly effective for improving cardiovascular fitness and burning calories efficiently.</p>
+
+    <h2>Common Interval Formats</h2>
+    <ul>
+      <li><strong>Tabata:</strong> A specific form of high-intensity interval training created by Dr. Izumi Tabata. It consists of 8 rounds of 20 seconds of all-out effort followed by 10 seconds of rest, totaling exactly 4 minutes.</li>
+      <li><strong>HIIT (High-Intensity Interval Training):</strong> Broadly refers to varying ratios of intense effort and rest. A common ratio is 1:1, such as 30 seconds of work and 30 seconds of rest.</li>
+      <li><strong>EMOM (Every Minute on the Minute):</strong> A workout format where you start a specific exercise at the top of every minute. Whatever time remains in that minute after completing the reps is your rest period before the next minute starts.</li>
+      <li><strong>AMRAP (As Many Rounds As Possible):</strong> A time-based format where you set a countdown (e.g., 10 minutes) and perform a circuit of exercises as many times as you can within the time cap.</li>
+    </ul>
+
+    <h2>How to Use This Timer</h2>
+    <p>Select a preset format like Tabata or EMOM, or build your own custom workout by adjusting the <strong>Work Time</strong>, <strong>Rest Time</strong>, and total number of <strong>Rounds</strong>. Make sure your volume is on to hear the audio cues that signal the start and end of each interval. You can also save your favorite custom timers directly to your device for quick access next time—this tool works completely offline after the initial load.</p>
+  </div>
+</div>
+
+<div class="footer">
+  © 2025 <a href="/">ijustwantto.live</a> · A <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">GAB Ventures</a> property
+</div>
+
+<!-- Modal for saving -->
+<div class="modal-overlay" id="save-modal">
+  <div class="modal">
+    <h3>Save Workout</h3>
+    <div class="form-group">
+      <label for="workout-name">Workout Name</label>
+      <div class="input-wrapper">
+        <input type="text" id="workout-name" placeholder="e.g. Morning Sprints">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn secondary" id="cancel-save-btn">Cancel</button>
+      <button class="btn" id="confirm-save-btn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Audio Context (created on first user interaction)
+    let audioCtx = null;
+
+    // Timer state
+    let timerInterval = null;
+    let isRunning = false;
+    let isPaused = false;
+    let currentPhase = 'prep'; // 'prep', 'work', 'rest', 'done'
+    let currentRound = 1;
+    let timeLeft = 0; // seconds
+
+    // Workout Config
+    let config = {
+      prep: 10,
+      work: 40,
+      rest: 20,
+      rounds: 5
+    };
+
+    // DOM Elements
+    const phaseEl = document.getElementById('timer-phase');
+    const timeEl = document.getElementById('timer-time');
+    const roundEl = document.getElementById('timer-round');
+    const totalEl = document.getElementById('timer-total');
+    const startBtn = document.getElementById('start-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const copySummaryBtn = document.getElementById('copy-summary-btn');
+
+    const workInput = document.getElementById('work-time');
+    const restInput = document.getElementById('rest-time');
+    const roundsInput = document.getElementById('rounds');
+    const prepInput = document.getElementById('prep-time');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+
+    // Presets definition
+    const presets = {
+      custom: null,
+      tabata: { prep: 10, work: 20, rest: 10, rounds: 8 },
+      hiit: { prep: 10, work: 30, rest: 30, rounds: 10 },
+      emom: { prep: 10, work: 60, rest: 0, rounds: 10 }
+    };
+
+    // Audio functions
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function beep(freq, duration, type = 'sine') {
+      if (!audioCtx) return;
+
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+      gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+      gainNode.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.05);
+      gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + duration);
+    }
+
+    function playShortBeep() { beep(800, 0.2); }
+    function playLongBeep() { beep(1200, 0.6); }
+    function playEndBeep() {
+      beep(600, 0.3);
+      setTimeout(() => beep(600, 0.3), 300);
+      setTimeout(() => beep(600, 0.6), 600);
+    }
+
+    // Timer formatting
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    // Update Config from inputs
+    function updateConfigFromInputs() {
+      config = {
+        prep: parseInt(prepInput.value) || 0,
+        work: parseInt(workInput.value) || 0,
+        rest: parseInt(restInput.value) || 0,
+        rounds: parseInt(roundsInput.value) || 1
+      };
+
+      if (!isRunning && !isPaused) {
+        resetTimer();
+      }
+    }
+
+    // Update Inputs from Preset
+    function applyPreset(presetName) {
+      document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.preset-btn[data-preset="${presetName}"]`).classList.add('active');
+
+      if (presetName !== 'custom' && presets[presetName]) {
+        const p = presets[presetName];
+        prepInput.value = p.prep;
+        workInput.value = p.work;
+        restInput.value = p.rest;
+        roundsInput.value = p.rounds;
+      }
+      updateConfigFromInputs();
+    }
+
+    // Event listeners for inputs
+    [workInput, restInput, roundsInput, prepInput].forEach(input => {
+      input.addEventListener('input', () => {
+        document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.preset-btn[data-preset="custom"]').classList.add('active');
+        updateConfigFromInputs();
+      });
+    });
+
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+    });
+
+    // Compute total time
+    function computeTotalTime() {
+      let total = config.prep;
+      total += (config.work * config.rounds);
+      total += (config.rest * (config.rounds - 1));
+      return total;
+    }
+
+    // Setup initial state
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isRunning = false;
+      isPaused = false;
+
+      currentPhase = config.prep > 0 ? 'prep' : 'work';
+      currentRound = 1;
+      timeLeft = config.prep > 0 ? config.prep : config.work;
+
+      updateDisplay();
+      startBtn.textContent = 'Start Timer';
+      startBtn.classList.remove('secondary');
+
+      totalEl.textContent = formatTime(computeTotalTime());
+    }
+
+    // Timer tick logic
+    function tick() {
+      // Always decrement total time unless we're completely done
+      let currentTotalParts = totalEl.textContent.split(':');
+      let currentTotalSecs = parseInt(currentTotalParts[0]) * 60 + parseInt(currentTotalParts[1]);
+      if (currentTotalSecs > 0 && currentPhase !== 'done') {
+        totalEl.textContent = formatTime(currentTotalSecs - 1);
+      }
+
+      if (timeLeft > 0) {
+        timeLeft--;
+        if (timeLeft > 0 && timeLeft <= 3) {
+          playShortBeep();
+        }
+        updateDisplay();
+      }
+
+      // If we hit 0 after decrementing, transition immediately
+      if (timeLeft === 0 && currentPhase !== 'done') {
+        // Phase transition
+        if (currentPhase === 'prep') {
+          playLongBeep();
+          currentPhase = 'work';
+          timeLeft = config.work;
+        } else if (currentPhase === 'work') {
+          if (currentRound >= config.rounds) {
+            playEndBeep();
+            currentPhase = 'done';
+            clearInterval(timerInterval);
+            isRunning = false;
+            startBtn.textContent = 'Done';
+            startBtn.disabled = true;
+            updateDisplay();
+            return;
+          } else {
+            playLongBeep();
+            if (config.rest > 0) {
+              currentPhase = 'rest';
+              timeLeft = config.rest;
+            } else {
+              currentRound++;
+              timeLeft = config.work;
+            }
+          }
+        } else if (currentPhase === 'rest') {
+          playLongBeep();
+          currentPhase = 'work';
+          currentRound++;
+          timeLeft = config.work;
+        }
+
+        // Update display to show the new phase duration instantly
+        updateDisplay();
+
+        // If the next phase duration is 0 (e.g., config.rest = 0), tick again instantly
+        if (timeLeft === 0 && currentPhase !== 'done') {
+          tick();
+        }
+      }
+    }
+
+    function updateDisplay() {
+      timeEl.textContent = formatTime(timeLeft);
+      roundEl.textContent = `${currentRound}/${config.rounds}`;
+
+      phaseEl.className = 'timer-phase';
+      if (currentPhase === 'prep') {
+        phaseEl.textContent = 'Get Ready';
+        phaseEl.classList.add('prep');
+      } else if (currentPhase === 'work') {
+        phaseEl.textContent = 'Work';
+        phaseEl.classList.add('work');
+      } else if (currentPhase === 'rest') {
+        phaseEl.textContent = 'Rest';
+        phaseEl.classList.add('rest');
+      } else if (currentPhase === 'done') {
+        phaseEl.textContent = 'Workout Complete';
+        timeEl.textContent = '00:00';
+      }
+    }
+
+    // Play/Pause button
+    startBtn.addEventListener('click', () => {
+      initAudio();
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      if (currentPhase === 'done') return;
+
+      if (isRunning && !isPaused) {
+        // Pause
+        clearInterval(timerInterval);
+        isPaused = true;
+        startBtn.textContent = 'Resume';
+        startBtn.classList.remove('secondary');
+      } else {
+        // Start or Resume
+        timerInterval = setInterval(tick, 1000);
+        isRunning = true;
+        isPaused = false;
+        startBtn.textContent = 'Pause';
+        startBtn.classList.add('secondary');
+
+        // If starting from very beginning, play long beep
+        if (timeLeft === (config.prep > 0 ? config.prep : config.work) && currentRound === 1 && currentPhase !== 'done') {
+            // Optional: beep immediately on start? Or wait for tick?
+        }
+      }
+    });
+
+    // Reset button
+    resetBtn.addEventListener('click', () => {
+      startBtn.disabled = false;
+      resetTimer();
+    });
+
+    // Copy Summary
+    copySummaryBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const summaryText = `Workout Timer: ${config.rounds} Rounds | ${config.work}s Work | ${config.rest}s Rest. Total Time: ${formatTime(computeTotalTime())}. Powered by ijustwantto.live`;
+
+      navigator.clipboard.writeText(summaryText).then(() => {
+        const originalHTML = copySummaryBtn.innerHTML;
+        copySummaryBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#2DB89A"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
+        setTimeout(() => {
+          copySummaryBtn.innerHTML = originalHTML;
+        }, 1500);
+      });
+    });
+
+    // SAVED WORKOUTS LOGIC
+    const savedContainer = document.getElementById('saved-workouts-container');
+    const savedList = document.getElementById('saved-workouts-list');
+    const saveModal = document.getElementById('save-modal');
+    const saveWorkoutBtn = document.getElementById('save-workout-btn');
+    const cancelSaveBtn = document.getElementById('cancel-save-btn');
+    const confirmSaveBtn = document.getElementById('confirm-save-btn');
+    const workoutNameInput = document.getElementById('workout-name');
+
+    let savedWorkouts = JSON.parse(localStorage.getItem('ijwtl-timers') || '[]');
+
+    // Helper to safely escape HTML
+    function escapeHtml(unsafe) {
+        return (unsafe || '').toString()
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    }
+
+    function renderSavedWorkouts() {
+      if (savedWorkouts.length === 0) {
+        savedContainer.classList.add('hidden');
+        return;
+      }
+      savedContainer.classList.remove('hidden');
+      savedList.innerHTML = '';
+
+      savedWorkouts.forEach((wo, index) => {
+        const el = document.createElement('div');
+        el.className = 'saved-workout-item';
+
+        const totalSecs = wo.prep + (wo.work * wo.rounds) + (wo.rest * (wo.rounds - 1));
+        const safeName = escapeHtml(wo.name);
+
+        el.innerHTML = `
+          <div class="saved-workout-info">
+            <h4>${safeName}</h4>
+            <p>${wo.rounds}R x ${wo.work}s/${wo.rest}s (${formatTime(totalSecs)})</p>
+          </div>
+          <div class="saved-workout-actions">
+            <button class="load-btn" data-index="${index}">Load</button>
+            <button class="delete delete-btn" data-index="${index}">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px; height:16px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        `;
+        savedList.appendChild(el);
+      });
+
+      // Attach events
+      document.querySelectorAll('.load-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = e.target.closest('button').dataset.index;
+          const wo = savedWorkouts[idx];
+
+          prepInput.value = wo.prep;
+          workInput.value = wo.work;
+          restInput.value = wo.rest;
+          roundsInput.value = wo.rounds;
+
+          document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+          document.querySelector('.preset-btn[data-preset="custom"]').classList.add('active');
+
+          updateConfigFromInputs();
+          window.scrollTo({ top: document.getElementById('timer-card').offsetTop - 20, behavior: 'smooth' });
+        });
+      });
+
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = e.target.closest('button').dataset.index;
+          savedWorkouts.splice(idx, 1);
+          localStorage.setItem('ijwtl-timers', JSON.stringify(savedWorkouts));
+          renderSavedWorkouts();
+        });
+      });
+    }
+
+    saveWorkoutBtn.addEventListener('click', () => {
+      workoutNameInput.value = '';
+      saveModal.classList.add('active');
+      workoutNameInput.focus();
+    });
+
+    cancelSaveBtn.addEventListener('click', () => {
+      saveModal.classList.remove('active');
+    });
+
+    confirmSaveBtn.addEventListener('click', () => {
+      const name = workoutNameInput.value.trim() || 'Custom Workout';
+      savedWorkouts.push({
+        name,
+        prep: parseInt(prepInput.value) || 0,
+        work: parseInt(workInput.value) || 0,
+        rest: parseInt(restInput.value) || 0,
+        rounds: parseInt(roundsInput.value) || 1
+      });
+      localStorage.setItem('ijwtl-timers', JSON.stringify(savedWorkouts));
+      saveModal.classList.remove('active');
+      renderSavedWorkouts();
+    });
+
+    // Initialize
+    updateConfigFromInputs();
+    renderSavedWorkouts();
+  });
+</script>
+
+</body>
+</html>
