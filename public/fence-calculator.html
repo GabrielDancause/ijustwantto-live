@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fence Calculator - Estimate Materials & Costs</title>
+    <meta name="description" content="Calculate fence materials including posts, rails, pickets, and concrete. Estimate costs for your privacy, picket, or split rail fence project.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input {
+            font-family: var(--font-code);
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .input-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .unit-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .unit-label input {
+            padding-right: 3rem;
+        }
+
+        .unit-label::after {
+            content: attr(data-unit);
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .currency-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .currency-label input {
+            padding-left: 2rem;
+        }
+
+        .currency-label::before {
+            content: '$';
+            position: absolute;
+            left: 1rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-family: var(--font-code);
+            pointer-events: none;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-code);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .result-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-value {
+            font-family: var(--font-code);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .result-item-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn:active {
+            transform: translateY(1px);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .seo-content {
+            margin-top: 3rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+    </style>
+
+    <!-- JSON-LD Schemas -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Fence Calculator",
+      "description": "Calculate fence materials including posts, rails, pickets, and concrete. Estimate costs for your privacy, picket, or split rail fence project.",
+      "url": "https://ijustwantto.live/fence-calculator",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Calculate Fence Materials and Estimate Costs",
+      "description": "Learn how to estimate materials like posts, rails, pickets, and concrete for your fencing project. A comprehensive guide to building your own fence.",
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ijustwantto.live",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ijustwantto.live/favicon.ico"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ijustwantto.live/fence-calculator"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Fence Calculator</h1>
+            <p class="subtitle">Estimate materials and costs for your fencing project, including posts, rails, pickets, and concrete bags.</p>
+        </header>
+
+        <main class="card">
+            <h2 class="section-title">Project Dimensions</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="fence-length">Total Fence Length</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="fence-length" min="1" step="1" value="100" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fence-style">Fence Style</label>
+                    <select id="fence-style" onchange="updateStyleDefaults()">
+                        <option value="privacy" selected>Solid Privacy Fence</option>
+                        <option value="picket">Spaced Picket Fence</option>
+                        <option value="split-rail">Split Rail Fence</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+            </div>
+
+            <h2 class="section-title">Specifications</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="fence-height">Fence Height</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="fence-height" min="1" step="0.5" value="6" oninput="calculate(); checkCustomStyle()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="post-spacing">Post Spacing</label>
+                    <div class="unit-label" data-unit="ft">
+                        <input type="number" id="post-spacing" min="1" step="0.5" value="8" oninput="calculate(); checkCustomStyle()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rails-per-section">Rails per Section</label>
+                    <input type="number" id="rails-per-section" min="1" step="1" value="3" oninput="calculate(); checkCustomStyle()">
+                </div>
+                <div class="form-group">
+                    <label for="picket-width">Picket Width</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="picket-width" min="0" step="0.5" value="5.5" oninput="calculate(); checkCustomStyle()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="picket-gap">Picket Gap</label>
+                    <div class="unit-label" data-unit="in">
+                        <input type="number" id="picket-gap" min="0" step="0.25" value="0" oninput="calculate(); checkCustomStyle()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="concrete-bags">Concrete Bags per Post</label>
+                    <input type="number" id="concrete-bags" min="0" step="0.5" value="1.5" oninput="calculate(); checkCustomStyle()">
+                </div>
+            </div>
+
+            <h2 class="section-title">Material Costs (Optional)</h2>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="cost-post">Cost per Post</label>
+                    <div class="currency-label">
+                        <input type="number" id="cost-post" min="0" step="0.01" value="25.00" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cost-rail">Cost per Rail</label>
+                    <div class="currency-label">
+                        <input type="number" id="cost-rail" min="0" step="0.01" value="10.00" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cost-picket">Cost per Picket</label>
+                    <div class="currency-label">
+                        <input type="number" id="cost-picket" min="0" step="0.01" value="3.50" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cost-concrete">Cost per Bag</label>
+                    <div class="currency-label">
+                        <input type="number" id="cost-concrete" min="0" step="0.01" value="6.00" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="result-main">
+                    <div class="result-value" id="res-total-cost">$0</div>
+                    <div class="result-label">Estimated Total Cost</div>
+
+                    <button class="copy-btn" onclick="copyResults()" id="copy-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy Material List
+                    </button>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-posts">0</div>
+                        <div class="result-item-label">Fence Posts</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-rails">0</div>
+                        <div class="result-item-label">Rails / Backers</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-pickets">0</div>
+                        <div class="result-item-label">Pickets / Slats</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-value" id="res-concrete">0</div>
+                        <div class="result-item-label">Concrete Bags</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="seo-content">
+            <h2>How to Calculate Fence Materials</h2>
+            <p>Estimating materials for a fence project starts with measuring the total length of the fence line in feet. This measurement allows you to determine the number of posts, rails, and pickets needed for a sturdy installation.</p>
+            <ul>
+                <li><strong>Fence Posts:</strong> Divide your total fence length by the desired post spacing (typically 6 or 8 feet) to find the number of fence sections. Add one additional post for the end of the line. Don't forget to account for corner posts and gate posts, which may require special calculations depending on your yard layout.</li>
+                <li><strong>Fence Rails:</strong> Rails act as the horizontal backers that hold your pickets. To calculate the total number of rails, multiply the number of fence sections by the number of rails per section. Taller privacy fences usually require three rails, while shorter picket fences typically use two.</li>
+                <li><strong>Pickets:</strong> Convert your section width to inches and divide by the width of a single picket plus the desired gap between pickets. Multiply this number by the total number of sections.</li>
+                <li><strong>Concrete:</strong> A secure fence post needs a solid foundation. Generally, you will need 1.5 to 2 bags of concrete per post depending on the depth of the post hole and the height of the fence.</li>
+            </ul>
+
+            <h2>Choosing the Right Fence Style</h2>
+            <p>The style of fence you choose dramatically impacts the materials required and the overall cost of the project:</p>
+            <ul>
+                <li><strong>Solid Privacy Fence:</strong> Ideal for backyards, privacy fences are typically 6 feet tall and require pickets placed tightly together with no gaps. They require more materials and often heavier posts due to wind resistance.</li>
+                <li><strong>Spaced Picket Fence:</strong> A classic look for front yards, spaced picket fences are shorter (often 3 to 4 feet tall) and leave a gap between each picket, requiring fewer pickets per section and less material overall.</li>
+                <li><strong>Split Rail Fence:</strong> A rustic option primarily used to define property lines or contain larger animals. Split rail fences use horizontal rails inserted into posts without any vertical pickets, significantly reducing material costs.</li>
+            </ul>
+
+            <h2>Estimating Fence Costs</h2>
+            <p>When budgeting for your fence, material costs are only one part of the equation. To get an accurate estimate, factor in the cost of posts, rails, pickets, and concrete mix. Remember to include a 10% waste factor in your final material order to account for damaged boards, bad cuts, and unexpected adjustments to your property line. The calculator above provides a solid baseline to help you price out your DIY fencing project before heading to the lumber yard.</p>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            calculate();
+        });
+
+        const styleDefaults = {
+            'privacy': { height: 6, spacing: 8, rails: 3, picketWidth: 5.5, gap: 0, concrete: 1.5 },
+            'picket': { height: 4, spacing: 8, rails: 2, picketWidth: 3.5, gap: 2, concrete: 1.5 },
+            'split-rail': { height: 4, spacing: 10, rails: 2, picketWidth: 0, gap: 0, concrete: 1 }
+        };
+
+        function updateStyleDefaults() {
+            const style = document.getElementById('fence-style').value;
+            if (style !== 'custom') {
+                const defaults = styleDefaults[style];
+                document.getElementById('fence-height').value = defaults.height;
+                document.getElementById('post-spacing').value = defaults.spacing;
+                document.getElementById('rails-per-section').value = defaults.rails;
+                document.getElementById('picket-width').value = defaults.picketWidth;
+                document.getElementById('picket-gap').value = defaults.gap;
+                document.getElementById('concrete-bags').value = defaults.concrete;
+            }
+            calculate();
+        }
+
+        function checkCustomStyle() {
+            document.getElementById('fence-style').value = 'custom';
+        }
+
+        function calculate() {
+            // Inputs
+            const length = parseFloat(document.getElementById('fence-length').value) || 0;
+            const postSpacing = parseFloat(document.getElementById('post-spacing').value) || 1;
+            const railsPerSection = parseInt(document.getElementById('rails-per-section').value) || 0;
+            const picketWidth = parseFloat(document.getElementById('picket-width').value) || 0;
+            const picketGap = parseFloat(document.getElementById('picket-gap').value) || 0;
+            const concreteBagsPerPost = parseFloat(document.getElementById('concrete-bags').value) || 0;
+
+            // Costs
+            const costPost = parseFloat(document.getElementById('cost-post').value) || 0;
+            const costRail = parseFloat(document.getElementById('cost-rail').value) || 0;
+            const costPicket = parseFloat(document.getElementById('cost-picket').value) || 0;
+            const costConcrete = parseFloat(document.getElementById('cost-concrete').value) || 0;
+
+            if (length <= 0) {
+                updateUI(0, 0, 0, 0, 0);
+                return;
+            }
+
+            // Material Calculations
+            const sections = Math.ceil(length / postSpacing);
+            const numPosts = sections + 1;
+            const numRails = sections * railsPerSection;
+
+            let numPickets = 0;
+            if (picketWidth > 0) {
+                // How many pickets per section
+                const sectionLengthInches = postSpacing * 12;
+                const picketsPerSection = Math.ceil(sectionLengthInches / (picketWidth + picketGap));
+                numPickets = picketsPerSection * sections;
+            }
+
+            const totalConcrete = Math.ceil(numPosts * concreteBagsPerPost);
+
+            // Cost Calculation
+            const totalCost = (numPosts * costPost) +
+                              (numRails * costRail) +
+                              (numPickets * costPicket) +
+                              (totalConcrete * costConcrete);
+
+            updateUI(numPosts, numRails, numPickets, totalConcrete, totalCost);
+        }
+
+        function updateUI(posts, rails, pickets, concrete, cost) {
+            document.getElementById('res-posts').textContent = posts.toLocaleString();
+            document.getElementById('res-rails').textContent = rails.toLocaleString();
+            document.getElementById('res-pickets').textContent = pickets.toLocaleString();
+            document.getElementById('res-concrete').textContent = concrete.toLocaleString();
+
+            document.getElementById('res-total-cost').textContent = '$' + cost.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function copyResults() {
+            const cost = document.getElementById('res-total-cost').textContent;
+            const posts = document.getElementById('res-posts').textContent;
+            const rails = document.getElementById('res-rails').textContent;
+            const pickets = document.getElementById('res-pickets').textContent;
+            const concrete = document.getElementById('res-concrete').textContent;
+
+            const textToCopy = `Fence Material Estimate:\n` +
+                               `Total Estimated Cost: ${cost}\n` +
+                               `Fence Posts: ${posts}\n` +
+                               `Rails / Backers: ${rails}\n` +
+                               `Pickets / Slats: ${pickets}\n` +
+                               `Concrete Bags: ${concrete}\n`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
