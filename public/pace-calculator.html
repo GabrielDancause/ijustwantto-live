@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Pace Calculator | ijustwantto.live</title>
+    <meta name="description" content="Calculate your running pace, finish time, or distance. Generate split times and predict race finish times for 5K, 10K, Half Marathon, and Marathon.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Running Pace Calculator",
+      "url": "https://ijustwantto.live/pace-calculator.html",
+      "description": "Calculate your running pace, finish time, or distance. Generate split times and predict race finish times for 5K, 10K, Half Marathon, and Marathon.",
+      "applicationCategory": "HealthAndFitnessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background-color: var(--bg-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: max-content;
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-ui);
+        }
+
+        .tab-btn.active {
+            background-color: var(--card-bg);
+            color: var(--accent-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .form-col-2 {
+            flex: 2;
+            min-width: 140px;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group span {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        button.calculate-btn {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            font-family: var(--font-ui);
+        }
+
+        button.calculate-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .results {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .result-title {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            width: 100%;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .result-sub {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            position: relative;
+        }
+
+        .metric-card h3 {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .metric-card .value {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .metric-card .sub-value {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .metric-card .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .table-container {
+            margin-top: 2rem;
+            overflow-x: auto;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .unit-toggle {
+            display: flex;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .unit-toggle button {
+            background: none;
+            border: none;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .unit-toggle button.active {
+            background-color: var(--accent-color);
+            color: #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 0.75rem 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+        }
+
+        th {
+            font-family: var(--font-ui);
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        td {
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 640px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .result-title {
+                width: auto;
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Running Pace Calculator</h1>
+            <p class="subtitle">Calculate pace, distance, time, and predict race finishes</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <div class="tabs">
+                    <button class="tab-btn active" data-target="calcPace">Calculate Pace</button>
+                    <button class="tab-btn" data-target="calcTime">Calculate Time</button>
+                    <button class="tab-btn" data-target="calcDistance">Calculate Distance</button>
+                </div>
+
+                <form id="paceForm">
+                    <!-- Distance Section -->
+                    <div id="sectionDistance" class="form-section active">
+                        <div class="section-title">Distance</div>
+                        <div class="form-row">
+                            <div class="form-group form-col-2">
+                                <label for="distanceVal">Value</label>
+                                <input type="number" id="distanceVal" step="0.001" min="0" placeholder="e.g. 5">
+                            </div>
+                            <div class="form-group form-col">
+                                <label for="distanceUnit">Unit</label>
+                                <select id="distanceUnit">
+                                    <option value="km">Kilometers</option>
+                                    <option value="mi">Miles</option>
+                                    <option value="m">Meters</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventSelect">Or select a popular event</label>
+                            <select id="eventSelect">
+                                <option value="">Custom Distance</option>
+                                <option value="1500m">1500m</option>
+                                <option value="1mi">1 Mile</option>
+                                <option value="3k">3K</option>
+                                <option value="5k">5K (3.11 mi)</option>
+                                <option value="10k">10K (6.21 mi)</option>
+                                <option value="15k">15K (9.32 mi)</option>
+                                <option value="10mi">10 Miles</option>
+                                <option value="half">Half Marathon (13.11 mi)</option>
+                                <option value="marathon">Marathon (26.22 mi)</option>
+                                <option value="50k">50K</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Time Section -->
+                    <div id="sectionTime" class="form-section active">
+                        <div class="section-title">Time</div>
+                        <div class="form-row">
+                            <div class="form-group form-col">
+                                <label for="timeH">Hours</label>
+                                <input type="number" id="timeH" min="0" placeholder="00">
+                            </div>
+                            <div class="form-group form-col">
+                                <label for="timeM">Minutes</label>
+                                <input type="number" id="timeM" min="0" max="59" placeholder="00">
+                            </div>
+                            <div class="form-group form-col">
+                                <label for="timeS">Seconds</label>
+                                <input type="number" id="timeS" min="0" max="59" placeholder="00">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pace Section -->
+                    <div id="sectionPace" class="form-section">
+                        <div class="section-title">Pace</div>
+                        <div class="form-row">
+                            <div class="form-group form-col">
+                                <label for="paceM">Minutes</label>
+                                <input type="number" id="paceM" min="0" placeholder="00">
+                            </div>
+                            <div class="form-group form-col">
+                                <label for="paceS">Seconds</label>
+                                <input type="number" id="paceS" min="0" max="59" placeholder="00">
+                            </div>
+                            <div class="form-group form-col-2">
+                                <label for="paceUnit">Per</label>
+                                <select id="paceUnit">
+                                    <option value="km">Kilometer</option>
+                                    <option value="mi">Mile</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="calculate-btn">Calculate Pace</button>
+                </form>
+
+                <div id="results" class="results">
+                    <div class="result-box">
+                        <div class="result-title" id="mainResultTitle">Your Pace</div>
+                        <div class="result-value">
+                            <span id="mainResultValue">00:00</span>
+                            <span class="result-sub" id="mainResultSub">/km</span>
+                            <button class="copy-btn" onclick="copyToClipboard('mainResultValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="metric-card">
+                            <button class="copy-btn" onclick="copyToClipboard('resDistance')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Distance</h3>
+                            <div class="value" id="resDistance">0.00 km</div>
+                            <div class="sub-value" id="resDistanceSub">0.00 mi</div>
+                        </div>
+                        <div class="metric-card">
+                            <button class="copy-btn" onclick="copyToClipboard('resTime')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Finish Time</h3>
+                            <div class="value" id="resTime">00:00:00</div>
+                        </div>
+                        <div class="metric-card">
+                            <button class="copy-btn" onclick="copyToClipboard('resPace')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Pace</h3>
+                            <div class="value" id="resPace">00:00 /km</div>
+                            <div class="sub-value" id="resPaceSub">00:00 /mi</div>
+                        </div>
+                        <div class="metric-card">
+                            <button class="copy-btn" onclick="copyToClipboard('resSpeed')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Speed</h3>
+                            <div class="value" id="resSpeed">0.00 km/h</div>
+                            <div class="sub-value" id="resSpeedSub">0.00 mph</div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Splits Table</h3>
+                            <div class="unit-toggle">
+                                <button id="splitKmBtn" class="active" onclick="renderSplits('km')" type="button">Kilometers</button>
+                                <button id="splitMiBtn" onclick="renderSplits('mi')" type="button">Miles</button>
+                            </div>
+                        </div>
+                        <table id="splitsTable">
+                            <thead>
+                                <tr>
+                                    <th>Split</th>
+                                    <th>Time</th>
+                                    <th>Cumulative</th>
+                                </tr>
+                            </thead>
+                            <tbody id="splitsBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>Race Predictions</h3>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Predicted Time</th>
+                                    <th>Pace</th>
+                                </tr>
+                            </thead>
+                            <tbody id="predictionsBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>How the Running Pace Calculator Works</h2>
+                <p>A running pace calculator uses a simple mathematical relationship between three variables: <strong>Distance</strong>, <strong>Time</strong>, and <strong>Pace</strong>. If you know any two of these variables, you can accurately calculate the third.</p>
+                <ul>
+                    <li><strong>Pace</strong> = Time ÷ Distance</li>
+                    <li><strong>Time</strong> = Pace × Distance</li>
+                    <li><strong>Distance</strong> = Time ÷ Pace</li>
+                </ul>
+                <p>This tool converts all inputs into a common unit (meters for distance and seconds for time) behind the scenes to ensure accurate calculations across kilometers and miles.</p>
+
+                <h2>Understanding Race Predictions</h2>
+                <p>The race predictions provided by this tool use <strong>Riegel's Formula</strong>, developed by engineer Peter Riegel in 1977. The formula is widely accepted as one of the most accurate ways to predict race times based on a recent performance.</p>
+                <p>The formula is: <code>T2 = T1 × (D2 ÷ D1)^1.06</code>, where T1 is the time achieved for distance D1, and T2 is the predicted time for distance D2. It assumes you have done the appropriate training for the target distance.</p>
+
+                <h2>Why Calculate Your Splits?</h2>
+                <p>A splits table breaks down your total race or run into smaller, manageable chunks (typically 1 kilometer or 1 mile). Knowing your splits is crucial for <strong>even pacing</strong>—the strategy used by almost all world-record breakers.</p>
+                <p>Starting a race too fast is a common mistake that leads to early fatigue. By generating a splits table, you can memorize or write down your target times for each marker, ensuring you stay on track and conserve energy for the finish.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // State
+        let currentMode = 'calcPace';
+        let calcData = { distanceM: 0, timeS: 0 }; // Store base data in meters and seconds
+
+        // Event Constants in meters
+        const events = {
+            '1500m': 1500,
+            '1mi': 1609.344,
+            '3k': 3000,
+            '5k': 5000,
+            '10k': 10000,
+            '15k': 15000,
+            '10mi': 16093.44,
+            'half': 21097.5,
+            'marathon': 42195,
+            '50k': 50000
+        };
+
+        // DOM Elements
+        const form = document.getElementById('paceForm');
+        const tabs = document.querySelectorAll('.tab-btn');
+        const sectionDistance = document.getElementById('sectionDistance');
+        const sectionTime = document.getElementById('sectionTime');
+        const sectionPace = document.getElementById('sectionPace');
+        const submitBtn = document.getElementById('submitBtn');
+        const eventSelect = document.getElementById('eventSelect');
+        const distanceVal = document.getElementById('distanceVal');
+        const distanceUnit = document.getElementById('distanceUnit');
+
+        // Tab Switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentMode = tab.dataset.target;
+
+                sectionDistance.classList.remove('active');
+                sectionTime.classList.remove('active');
+                sectionPace.classList.remove('active');
+
+                if (currentMode === 'calcPace') {
+                    sectionDistance.classList.add('active');
+                    sectionTime.classList.add('active');
+                    submitBtn.textContent = 'Calculate Pace';
+                } else if (currentMode === 'calcTime') {
+                    sectionDistance.classList.add('active');
+                    sectionPace.classList.add('active');
+                    submitBtn.textContent = 'Calculate Time';
+                } else if (currentMode === 'calcDistance') {
+                    sectionTime.classList.add('active');
+                    sectionPace.classList.add('active');
+                    submitBtn.textContent = 'Calculate Distance';
+                }
+            });
+        });
+
+        // Event Dropdown Logic
+        eventSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            if (val && events[val]) {
+                const meters = events[val];
+                if (distanceUnit.value === 'km') {
+                    distanceVal.value = (meters / 1000).toFixed(3);
+                } else if (distanceUnit.value === 'mi') {
+                    distanceVal.value = (meters / 1609.344).toFixed(3);
+                } else {
+                    distanceVal.value = meters.toFixed(0);
+                }
+            } else {
+                distanceVal.value = '';
+            }
+        });
+
+        distanceVal.addEventListener('input', () => {
+            eventSelect.value = '';
+        });
+
+        distanceUnit.addEventListener('change', () => {
+            eventSelect.value = '';
+        });
+
+        // Helper functions
+        function getSecondsFromInputs(h, m, s) {
+            return (parseInt(h) || 0) * 3600 + (parseInt(m) || 0) * 60 + (parseInt(s) || 0);
+        }
+
+        function formatTime(totalSeconds) {
+            if (!isFinite(totalSeconds) || totalSeconds < 0) return "00:00:00";
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = Math.round(totalSeconds % 60);
+            if (h > 0) {
+                return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function formatPace(secPerUnit) {
+            if (!isFinite(secPerUnit) || secPerUnit <= 0) return "00:00";
+            const m = Math.floor(secPerUnit / 60);
+            const s = Math.round(secPerUnit % 60);
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Main Form Submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let distanceM = 0;
+            let timeS = 0;
+            let paceSecPerKm = 0;
+
+            // Read Distance
+            if (currentMode === 'calcPace' || currentMode === 'calcTime') {
+                const dVal = parseFloat(distanceVal.value) || 0;
+                const dUnit = distanceUnit.value;
+                if (dUnit === 'km') distanceM = dVal * 1000;
+                else if (dUnit === 'mi') distanceM = dVal * 1609.344;
+                else distanceM = dVal;
+
+                if (distanceM <= 0) return alert('Please enter a valid distance.');
+            }
+
+            // Read Time
+            if (currentMode === 'calcPace' || currentMode === 'calcDistance') {
+                timeS = getSecondsFromInputs(
+                    document.getElementById('timeH').value,
+                    document.getElementById('timeM').value,
+                    document.getElementById('timeS').value
+                );
+                if (timeS <= 0) return alert('Please enter a valid time.');
+            }
+
+            // Read Pace
+            if (currentMode === 'calcTime' || currentMode === 'calcDistance') {
+                const pM = parseInt(document.getElementById('paceM').value) || 0;
+                const pS = parseInt(document.getElementById('paceS').value) || 0;
+                const pUnit = document.getElementById('paceUnit').value;
+                const paceSec = pM * 60 + pS;
+
+                if (paceSec <= 0) return alert('Please enter a valid pace.');
+
+                if (pUnit === 'km') paceSecPerKm = paceSec;
+                else paceSecPerKm = paceSec / 1.609344; // Convert sec/mi to sec/km
+            }
+
+            // Calculate missing variable
+            if (currentMode === 'calcPace') {
+                paceSecPerKm = timeS / (distanceM / 1000);
+            } else if (currentMode === 'calcTime') {
+                timeS = paceSecPerKm * (distanceM / 1000);
+            } else if (currentMode === 'calcDistance') {
+                distanceM = (timeS / paceSecPerKm) * 1000;
+            }
+
+            // Update State
+            calcData.distanceM = distanceM;
+            calcData.timeS = timeS;
+
+            updateResultsUI(distanceM, timeS, paceSecPerKm);
+            renderSplits('km'); // Default to km splits
+            renderPredictions(timeS, distanceM);
+
+            document.getElementById('results').classList.add('active');
+        });
+
+        function updateResultsUI(distanceM, timeS, paceSecPerKm) {
+            const distanceKm = distanceM / 1000;
+            const distanceMi = distanceM / 1609.344;
+            const paceSecPerMi = paceSecPerKm * 1.609344;
+
+            const speedKmH = distanceKm / (timeS / 3600);
+            const speedMph = distanceMi / (timeS / 3600);
+
+            // Populate Main Result based on mode
+            const mainTitle = document.getElementById('mainResultTitle');
+            const mainValue = document.getElementById('mainResultValue');
+            const mainSub = document.getElementById('mainResultSub');
+
+            if (currentMode === 'calcPace') {
+                mainTitle.textContent = 'Your Pace';
+                mainValue.textContent = formatPace(paceSecPerKm);
+                mainSub.textContent = '/km';
+            } else if (currentMode === 'calcTime') {
+                mainTitle.textContent = 'Your Finish Time';
+                mainValue.textContent = formatTime(timeS);
+                mainSub.textContent = '';
+            } else if (currentMode === 'calcDistance') {
+                mainTitle.textContent = 'Your Distance';
+                mainValue.textContent = distanceKm.toFixed(2);
+                mainSub.textContent = 'km';
+            }
+
+            // Populate Summary Grid
+            document.getElementById('resDistance').textContent = `${distanceKm.toFixed(2)} km`;
+            document.getElementById('resDistanceSub').textContent = `${distanceMi.toFixed(2)} mi`;
+
+            document.getElementById('resTime').textContent = formatTime(timeS);
+
+            document.getElementById('resPace').textContent = `${formatPace(paceSecPerKm)} /km`;
+            document.getElementById('resPaceSub').textContent = `${formatPace(paceSecPerMi)} /mi`;
+
+            document.getElementById('resSpeed').textContent = `${speedKmH.toFixed(2)} km/h`;
+            document.getElementById('resSpeedSub').textContent = `${speedMph.toFixed(2)} mph`;
+        }
+
+        function renderSplits(unit) {
+            document.getElementById('splitKmBtn').classList.toggle('active', unit === 'km');
+            document.getElementById('splitMiBtn').classList.toggle('active', unit === 'mi');
+
+            const tbody = document.getElementById('splitsBody');
+            tbody.innerHTML = '';
+
+            const distanceTotal = calcData.distanceM;
+            const timeTotal = calcData.timeS;
+
+            if (distanceTotal <= 0) return;
+
+            const splitDistanceM = unit === 'km' ? 1000 : 1609.344;
+            const numFullSplits = Math.floor(distanceTotal / splitDistanceM);
+            const remainderM = distanceTotal % splitDistanceM;
+
+            const secPerSplit = (timeTotal / distanceTotal) * splitDistanceM;
+
+            let cumulativeTime = 0;
+
+            for (let i = 1; i <= numFullSplits; i++) {
+                cumulativeTime += secPerSplit;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${i} ${unit}</td>
+                    <td>${formatTime(secPerSplit)}</td>
+                    <td>${formatTime(cumulativeTime)}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+
+            if (remainderM > 1) { // If there's a significant remainder
+                const remainderSec = (timeTotal / distanceTotal) * remainderM;
+                cumulativeTime += remainderSec;
+                const tr = document.createElement('tr');
+                const remainderLabel = unit === 'km' ? (remainderM / 1000).toFixed(2) : (remainderM / 1609.344).toFixed(2);
+                tr.innerHTML = `
+                    <td>+ ${remainderLabel} ${unit}</td>
+                    <td>${formatTime(remainderSec)}</td>
+                    <td>${formatTime(cumulativeTime)}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function renderPredictions(timeS, distanceM) {
+            const tbody = document.getElementById('predictionsBody');
+            tbody.innerHTML = '';
+
+            if (distanceM <= 0) return;
+
+            const predEvents = [
+                { name: '5K', dist: 5000 },
+                { name: '10K', dist: 10000 },
+                { name: 'Half Marathon', dist: 21097.5 },
+                { name: 'Marathon', dist: 42195 }
+            ];
+
+            predEvents.forEach(ev => {
+                // Riegel's Formula: T2 = T1 * (D2/D1)^1.06
+                let predTimeS = timeS * Math.pow((ev.dist / distanceM), 1.06);
+                let predPaceSecPerKm = predTimeS / (ev.dist / 1000);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${ev.name}</td>
+                    <td>${formatTime(predTimeS)}</td>
+                    <td>${formatPace(predPaceSecPerKm)} /km</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function copyToClipboard(elementId) {
+            let text = document.getElementById(elementId).textContent;
+
+            // Handle specific formatted copies if needed, but for now simple innerText
+            if (elementId === 'mainResultValue') {
+                const sub = document.getElementById('mainResultSub').textContent;
+                text = text + ' ' + sub;
+            }
+
+            navigator.clipboard.writeText(text.trim()).then(() => {
+                const btn = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+                if (!btn) return;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
