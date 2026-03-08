@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Due Date Calculator | ijustwantto.live</title>
+    <meta name="description" content="Calculate your pregnancy due date based on your last menstrual period (LMP) or conception date. View your trimester timeline and key milestones.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Pregnancy Due Date Calculator",
+      "url": "https://ijustwantto.live/pregnancy-calculator.html",
+      "description": "Calculate your pregnancy due date based on your last menstrual period (LMP) or conception date. View your trimester timeline and key milestones.",
+      "applicationCategory": "HealthAndFitnessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        input[type="date"],
+        input[type="number"],
+        select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            appearance: none;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            opacity: 0.5;
+            cursor: pointer;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 400;
+            cursor: pointer;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            flex: 1;
+            justify-content: center;
+            background-color: var(--bg-color);
+            transition: all 0.2s;
+        }
+
+        .radio-label:has(input:checked) {
+            border-color: var(--accent-color);
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        button.calculate-btn {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            font-family: var(--font-ui);
+        }
+
+        button.calculate-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .results {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .result-title {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .timeline-container {
+            margin-top: 2rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+
+        .timeline-container h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        #cycleLengthGroup {
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Pregnancy Due Date Calculator</h1>
+            <p class="subtitle">Calculate your due date, trimesters, and important milestones</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <form id="calcForm">
+                    <div class="form-group">
+                        <label>Calculate based on</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="calcMethod" value="lmp" checked>
+                                Last Menstrual Period
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="calcMethod" value="conception">
+                                Conception Date
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col">
+                            <label id="dateLabel" for="calcDate">First day of last period</label>
+                            <input type="date" id="calcDate" name="calcDate" required>
+                        </div>
+                        <div class="form-group form-col" id="cycleLengthGroup">
+                            <label for="cycleLength">Average cycle length (days)</label>
+                            <input type="number" id="cycleLength" name="cycleLength" value="28" min="20" max="45" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="calculate-btn">Calculate Due Date</button>
+                </form>
+
+                <div id="results" class="results">
+                    <div class="result-box">
+                        <div class="result-title">Estimated Due Date</div>
+                        <div class="result-value">
+                            <span id="dueDateValue">-</span>
+                            <button class="copy-btn" onclick="copyToClipboard('dueDateValue')" title="Copy due date">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="result-title">Current Gestational Age</div>
+                        <div class="result-value">
+                            <span id="gestationalAgeValue">-</span>
+                            <button class="copy-btn" onclick="copyToClipboard('gestationalAgeValue')" title="Copy gestational age">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="timeline-container">
+                        <h3>Trimester Timeline</h3>
+                        <div class="timeline-item">
+                            <span class="timeline-label">First Trimester (Ends)</span>
+                            <span class="timeline-date" id="tri1Date">-</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-label">Second Trimester (Ends)</span>
+                            <span class="timeline-date" id="tri2Date">-</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-label">Third Trimester (Due Date)</span>
+                            <span class="timeline-date" id="tri3Date">-</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-container">
+                        <h3>Key Milestones</h3>
+                        <div class="timeline-item">
+                            <span class="timeline-label">Heartbeat typically visible</span>
+                            <span class="timeline-date" id="msHeartbeat">-</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-label">Anatomy scan window</span>
+                            <span class="timeline-date" id="msAnatomy">-</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-label">Viability</span>
+                            <span class="timeline-date" id="msViability">-</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-label">Full term</span>
+                            <span class="timeline-date" id="msFullTerm">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>How is the Due Date Calculated?</h2>
+                <p>An estimated due date (EDD) is calculated based on either the first day of your last menstrual period (LMP) or the date of conception. A typical pregnancy lasts about 280 days (40 weeks) from the first day of the last menstrual period.</p>
+                <p>If you have a standard 28-day cycle, Naegele's rule is often used: add seven days to the first day of your LMP, then subtract three months. If your cycle is longer or shorter than 28 days, the calculator adjusts the due date by adding or subtracting the difference in days.</p>
+                <p>If you know your exact conception date (for example, through IVF or tracking ovulation), the calculator simply adds 266 days (38 weeks) to that date to determine your estimated due date.</p>
+
+                <h2>Understanding the Trimesters</h2>
+                <p>Pregnancy is divided into three trimesters, each marking different stages of fetal development and changes in the mother's body:</p>
+                <ul>
+                    <li><strong>First Trimester (Weeks 1-13):</strong> This is a period of rapid development. Major organs and body systems begin to form. Many women experience early pregnancy symptoms like morning sickness and fatigue during this time.</li>
+                    <li><strong>Second Trimester (Weeks 14-27):</strong> Often considered the most comfortable trimester. The baby continues to grow and develop features like hair and fingerprints. You may start to feel the baby move (quickening) halfway through this trimester.</li>
+                    <li><strong>Third Trimester (Weeks 28-40+):</strong> The final stretch of pregnancy. The baby is gaining weight rapidly and their organs are maturing in preparation for birth. You may experience more physical discomfort as the baby grows larger.</li>
+                </ul>
+
+                <h2>Important Milestones</h2>
+                <p>Throughout your pregnancy, there are several key developmental milestones and medical checkpoints:</p>
+                <ul>
+                    <li><strong>6-8 Weeks:</strong> A fetal heartbeat can usually be detected via ultrasound.</li>
+                    <li><strong>18-22 Weeks:</strong> The mid-pregnancy anatomy scan is typically performed to check the baby's development and determine the sex if desired.</li>
+                    <li><strong>24 Weeks:</strong> This is generally considered the point of viability, meaning a baby born at this stage has a chance of survival with intensive medical care.</li>
+                    <li><strong>37-40 Weeks:</strong> A baby is considered "full term" at 37-39 weeks, arriving anytime between 37 and 42 weeks is normal.</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Set today's date as default
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+        if(dd < 10) dd = '0' + dd;
+        if(mm < 10) mm = '0' + mm;
+        const formattedToday = yyyy + '-' + mm + '-' + dd;
+        document.getElementById('calcDate').value = formattedToday;
+
+        const calcMethodRadios = document.querySelectorAll('input[name="calcMethod"]');
+        const dateLabel = document.getElementById('dateLabel');
+        const cycleLengthGroup = document.getElementById('cycleLengthGroup');
+        const cycleLengthInput = document.getElementById('cycleLength');
+
+        calcMethodRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'lmp') {
+                    dateLabel.textContent = 'First day of last period';
+                    cycleLengthGroup.style.display = 'block';
+                    cycleLengthInput.required = true;
+                } else {
+                    dateLabel.textContent = 'Conception date';
+                    cycleLengthGroup.style.display = 'none';
+                    cycleLengthInput.required = false;
+                }
+            });
+        });
+
+        document.getElementById('calcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const calcMethod = document.querySelector('input[name="calcMethod"]:checked').value;
+            const calcDateStr = document.getElementById('calcDate').value;
+            const cycleLength = parseInt(document.getElementById('cycleLength').value) || 28;
+
+            if (!calcDateStr) return;
+
+            // Use UTC to avoid timezone shift issues
+            const [year, month, day] = calcDateStr.split('-');
+            let baseDate = new Date(Date.UTC(year, month - 1, day));
+            let dueDate = new Date(baseDate);
+
+            if (calcMethod === 'lmp') {
+                // Standard LMP due date is +280 days
+                // Adjustment: +(cycleLength - 28)
+                const daysToAdd = 280 + (cycleLength - 28);
+                dueDate.setUTCDate(dueDate.getUTCDate() + daysToAdd);
+            } else {
+                // Conception date + 266 days = Due Date
+                dueDate.setUTCDate(dueDate.getUTCDate() + 266);
+            }
+
+            // LMP date is always 280 days before Due Date for standard calculation
+            const lmpDate = new Date(dueDate);
+            lmpDate.setUTCDate(lmpDate.getUTCDate() - 280);
+
+            // Calculate gestational age based on today
+            const now = new Date();
+            const nowUtc = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+
+            const diffTime = nowUtc.getTime() - lmpDate.getTime();
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            let gaText = "";
+            if (diffDays < 0) {
+                gaText = "Not yet pregnant";
+            } else if (diffDays >= 294) { // 42 weeks
+                gaText = "Post-term (>42 weeks)";
+            } else {
+                const weeks = Math.floor(diffDays / 7);
+                const days = diffDays % 7;
+                gaText = `${weeks} weeks, ${days} days`;
+            }
+
+            const formatDate = (d) => {
+                return d.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+            };
+
+            document.getElementById('dueDateValue').textContent = formatDate(dueDate);
+            document.getElementById('gestationalAgeValue').textContent = gaText;
+
+            // Trimesters
+            const tri1 = new Date(lmpDate);
+            tri1.setUTCDate(tri1.getUTCDate() + (13 * 7 + 6)); // End of week 13
+            document.getElementById('tri1Date').textContent = formatDate(tri1);
+
+            const tri2 = new Date(lmpDate);
+            tri2.setUTCDate(tri2.getUTCDate() + (27 * 7 + 6)); // End of week 27
+            document.getElementById('tri2Date').textContent = formatDate(tri2);
+
+            document.getElementById('tri3Date').textContent = formatDate(dueDate); // Due date
+
+            // Milestones
+            const msHeartbeat = new Date(lmpDate);
+            msHeartbeat.setUTCDate(msHeartbeat.getUTCDate() + (7 * 7)); // ~7 weeks
+            document.getElementById('msHeartbeat').textContent = formatDate(msHeartbeat);
+
+            const msAnatomy1 = new Date(lmpDate);
+            msAnatomy1.setUTCDate(msAnatomy1.getUTCDate() + (18 * 7));
+            const msAnatomy2 = new Date(lmpDate);
+            msAnatomy2.setUTCDate(msAnatomy2.getUTCDate() + (22 * 7));
+
+            // Format without year if they are in same year, but simpler to just use full date or short month/day
+            const formatShort = (d) => {
+                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+            };
+
+            document.getElementById('msAnatomy').textContent = `${formatShort(msAnatomy1)} - ${formatShort(msAnatomy2)}`;
+
+            const msViability = new Date(lmpDate);
+            msViability.setUTCDate(msViability.getUTCDate() + (24 * 7));
+            document.getElementById('msViability').textContent = formatDate(msViability);
+
+            const msFullTerm = new Date(lmpDate);
+            msFullTerm.setUTCDate(msFullTerm.getUTCDate() + (37 * 7));
+            document.getElementById('msFullTerm').textContent = formatDate(msFullTerm);
+
+            document.getElementById('results').classList.add('active');
+        });
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+                if (!btn) return;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
