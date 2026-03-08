@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Gym on a Budget | ijustwantto.live</title>
+    <meta name="description" content="Build a comprehensive home gym for under $500. A complete reference guide with essential equipment, space requirements, and workout programs.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Home Gym on a Budget: Build Under $500",
+      "name": "Home Gym on a Budget",
+      "url": "https://ijustwantto.live/guide-home-gym.html",
+      "description": "A comprehensive reference guide for building a home gym under $500. Covers essential equipment, space requirements, and workout programs.",
+      "author": {
+        "@type": "Organization",
+        "name": "ijustwantto.live"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GAB Ventures"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            letter-spacing: -0.025em;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 8px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(45, 184, 154, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .section-icon {
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .price-tag {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--accent-color);
+            background: rgba(45, 184, 154, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .card-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .tag {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.2);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .td-mono {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+        }
+
+        .td-highlight {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .accordion {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-ui);
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.2s;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .accordion-icon {
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .accordion.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: var(--bg-color);
+        }
+
+        .accordion-inner {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .routine-block {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .routine-block h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .routine-list {
+            list-style-type: none;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .routine-list li {
+            margin-bottom: 0.25rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .routine-list li span:last-child {
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.4rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* SEO Section */
+        .seo-content {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .seo-content h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+        }
+
+        .seo-content ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* Utility classes for filtering */
+        .hidden {
+            display: none !important;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            .section-header h2 { font-size: 1.25rem; }
+            .routine-list li { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Home Gym on a Budget</h1>
+            <p class="subtitle">Complete reference guide to building a functional home gym for under $500.</p>
+        </header>
+
+        <main>
+            <div class="search-container">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search equipment, workouts, or space requirements..." aria-label="Search guide content">
+            </div>
+
+            <div id="noResults" class="no-results">
+                No matching content found. Try a different search term.
+            </div>
+
+            <!-- Essential Equipment Section -->
+            <section class="content-section" data-tags="equipment weights dumbbells bench bands pullup buy list">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5Z"></path><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M12 11v4"></path><path d="M10 13h4"></path></svg>
+                    </div>
+                    <h2>Essential Equipment (Sub $500)</h2>
+                </div>
+
+                <div class="card-grid">
+                    <div class="card searchable-item" data-search="adjustable dumbbells weights powerblock bowflex">
+                        <div class="card-header">
+                            <h3>Adjustable Dumbbells</h3>
+                            <span class="price-tag">~$200-250</span>
+                        </div>
+                        <p class="card-desc">The cornerstone of a budget gym. Replaces an entire rack of fixed weights. Look for sets up to 50lbs per hand to start.</p>
+                        <div class="card-meta">
+                            <span class="tag">Essential</span>
+                            <span>Footprint: Minimal</span>
+                        </div>
+                    </div>
+
+                    <div class="card searchable-item" data-search="adjustable bench incline flat decline">
+                        <div class="card-header">
+                            <h3>Adjustable Bench</h3>
+                            <span class="price-tag">~$100-150</span>
+                        </div>
+                        <p class="card-desc">Allows for chest presses, flyes, seated rows, and step-ups. Ensure it has a weight capacity of at least 500lbs.</p>
+                        <div class="card-meta">
+                            <span class="tag">Essential</span>
+                            <span>Footprint: Medium</span>
+                        </div>
+                    </div>
+
+                    <div class="card searchable-item" data-search="pull-up bar doorway back chin-up">
+                        <div class="card-header">
+                            <h3>Doorway Pull-up Bar</h3>
+                            <span class="price-tag">~$30-40</span>
+                        </div>
+                        <p class="card-desc">Crucial for vertical pulling movements (back/biceps) which are hard to hit with just dumbbells.</p>
+                        <div class="card-meta">
+                            <span class="tag">Essential</span>
+                            <span>Footprint: Zero</span>
+                        </div>
+                    </div>
+
+                    <div class="card searchable-item" data-search="resistance bands loop handles mobility">
+                        <div class="card-header">
+                            <h3>Resistance Bands Set</h3>
+                            <span class="price-tag">~$30-50</span>
+                        </div>
+                        <p class="card-desc">Great for warmups, mobility, and replicating cable machine exercises like tricep pushdowns and face pulls.</p>
+                        <div class="card-meta">
+                            <span class="tag">Recommended</span>
+                            <span>Footprint: Zero</span>
+                        </div>
+                    </div>
+
+                    <div class="card searchable-item" data-search="gym mat flooring stall mats puzzle">
+                        <div class="card-header">
+                            <h3>Floor Mats (Puzzle or Stall)</h3>
+                            <span class="price-tag">~$40-60</span>
+                        </div>
+                        <p class="card-desc">Protects your floor and joints. A few high-density EVA foam puzzle mats or a single horse stall mat works perfectly.</p>
+                        <div class="card-meta">
+                            <span class="tag">Recommended</span>
+                            <span>Footprint: Large</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Space Requirements Section -->
+            <section class="content-section" data-tags="space requirements room size garage apartment dimensions">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m18 8-4-4-4 4"></path><path d="m14 4v16"></path></svg>
+                    </div>
+                    <h2>Space Requirements</h2>
+                </div>
+
+                <div class="table-wrapper searchable-item" data-search="dimensions room size minimum ideal clearance">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Setup Type</th>
+                                <th>Min. Dimensions</th>
+                                <th>Best For</th>
+                                <th>Limitations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="td-highlight">Corner/Closet</td>
+                                <td class="td-mono">4' x 6' (24 sq ft)</td>
+                                <td>Apartments, small rooms</td>
+                                <td>Must store bench vertically, no jumping</td>
+                            </tr>
+                            <tr>
+                                <td class="td-highlight">Dedicated Room</td>
+                                <td class="td-mono">8' x 8' (64 sq ft)</td>
+                                <td>Spare bedrooms, offices</td>
+                                <td>Ceiling height for overhead presses</td>
+                            </tr>
+                            <tr>
+                                <td class="td-highlight">Garage/Basement</td>
+                                <td class="td-mono">10' x 10' (100 sq ft)</td>
+                                <td>Future expansion (racks/barbells)</td>
+                                <td>Temperature control, sloping floors</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Workout Programs Section -->
+            <section class="content-section" data-tags="workout programs routines exercises plan schedule pvl full body split">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                    </div>
+                    <h2>Dumbbell-Only Workout Programs</h2>
+                </div>
+
+                <!-- Accordion 1 -->
+                <div class="accordion searchable-item" data-search="full body routine beginner 3 days week">
+                    <button class="accordion-header">
+                        <span>3-Day Full Body Split (Beginner)</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">Perform Workout A, rest, Workout B, rest, Workout A. Alternate weekly.</p>
+
+                            <div class="routine-block" id="routine-fb-a">
+                                <button class="copy-btn" onclick="copyRoutine('routine-fb-a')" title="Copy Routine" aria-label="Copy Workout A to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Workout A</h4>
+                                <ul class="routine-list">
+                                    <li><span>Goblet Squats</span><span>3 sets x 8-12 reps</span></li>
+                                    <li><span>Dumbbell Bench Press</span><span>3 sets x 8-12 reps</span></li>
+                                    <li><span>Dumbbell Rows</span><span>3 sets x 8-12 reps</span></li>
+                                    <li><span>Overhead Dumbbell Press</span><span>3 sets x 8-12 reps</span></li>
+                                    <li><span>Plank</span><span>3 sets x 30-60 secs</span></li>
+                                </ul>
+                            </div>
+
+                            <div class="routine-block" id="routine-fb-b">
+                                <button class="copy-btn" onclick="copyRoutine('routine-fb-b')" title="Copy Routine" aria-label="Copy Workout B to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Workout B</h4>
+                                <ul class="routine-list">
+                                    <li><span>Dumbbell Romanian Deadlifts</span><span>3 sets x 8-12 reps</span></li>
+                                    <li><span>Incline Dumbbell Press</span><span>3 sets x 8-12 reps</span></li>
+                                    <li><span>Pull-ups (or Band Pulldowns)</span><span>3 sets x AMRAP</span></li>
+                                    <li><span>Dumbbell Lateral Raises</span><span>3 sets x 12-15 reps</span></li>
+                                    <li><span>Bicep Curls / Tricep Extensions</span><span>2 sets x 10-15 reps</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 2 -->
+                <div class="accordion searchable-item" data-search="upper lower split 4 days intermediate advanced">
+                    <button class="accordion-header">
+                        <span>4-Day Upper/Lower Split (Intermediate)</span>
+                        <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">Schedule: Mon (Upper), Tue (Lower), Thu (Upper), Fri (Lower).</p>
+
+                            <div class="routine-block" id="routine-ul-u">
+                                <button class="copy-btn" onclick="copyRoutine('routine-ul-u')" title="Copy Routine" aria-label="Copy Upper Body to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Upper Body</h4>
+                                <ul class="routine-list">
+                                    <li><span>Flat DB Bench Press</span><span>4 sets x 6-8 reps</span></li>
+                                    <li><span>One-Arm DB Rows</span><span>4 sets x 8-10 reps</span></li>
+                                    <li><span>Seated DB Shoulder Press</span><span>3 sets x 8-10 reps</span></li>
+                                    <li><span>Pull-ups</span><span>3 sets x AMRAP</span></li>
+                                    <li><span>DB Skullcrushers superset w/ Curls</span><span>3 sets x 10-12 reps</span></li>
+                                </ul>
+                            </div>
+
+                            <div class="routine-block" id="routine-ul-l">
+                                <button class="copy-btn" onclick="copyRoutine('routine-ul-l')" title="Copy Routine" aria-label="Copy Lower Body to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                                <h4>Lower Body</h4>
+                                <ul class="routine-list">
+                                    <li><span>DB Bulgarian Split Squats</span><span>4 sets x 8-10 reps/leg</span></li>
+                                    <li><span>DB Romanian Deadlifts</span><span>4 sets x 8-12 reps</span></li>
+                                    <li><span>DB Walking Lunges</span><span>3 sets x 10-12 reps/leg</span></li>
+                                    <li><span>DB Calf Raises</span><span>4 sets x 15-20 reps</span></li>
+                                    <li><span>Hanging Leg Raises / Crunches</span><span>3 sets x 15-20 reps</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEO Content Section -->
+            <div class="seo-content">
+                <h2>Why Build a Home Gym?</h2>
+                <p>Building a home gym is one of the best investments you can make for your physical health and long-term financial wellbeing. By eliminating the commute to a commercial gym, you reclaim valuable time in your day, making it significantly easier to maintain consistency with your workouts. A budget-friendly home setup removes the barrier of monthly membership fees, often paying for itself within the first year.</p>
+                <p>Furthermore, a home gym offers unparalleled privacy and hygiene. You no longer have to wait for equipment, listen to unappealing gym music, or worry about wiping down benches used by hundreds of others. It’s your personalized environment, tailored to your exact needs and preferences.</p>
+
+                <h2>Maximizing a $500 Gym Budget</h2>
+                <p>When working with a strict $500 budget, prioritization is key. The goal is to acquire versatile equipment that allows for a full range of motion across all major muscle groups. Avoid single-use machines or trendy gadgets.</p>
+                <ul>
+                    <li><strong>Invest heavily in adjustable dumbbells:</strong> They are the most space-efficient and cost-effective way to get a wide range of weights. Brands like PowerBlock or Bowflex (often found used) offer massive value.</li>
+                    <li><strong>Don't skimp on the bench:</strong> An adjustable bench (incline/flat/decline) exponentially increases the number of exercises you can perform. Ensure it's sturdy and rated for your body weight plus the maximum weight you plan to lift.</li>
+                    <li><strong>Buy used when possible:</strong> Weights are simply heavy pieces of metal. Buying them second-hand on local marketplaces can stretch your $500 budget incredibly far, often allowing you to add luxury items like premium flooring or a wider array of resistance bands.</li>
+                </ul>
+
+                <h2>Transitioning to Dumbbell-Only Workouts</h2>
+                <p>Many people worry that transitioning from barbells and machines to a dumbbell-only setup will hinder their progress. However, dumbbells require greater stabilization, often leading to improved muscle activation and balanced development. Unilateral exercises (working one side at a time), like Bulgarian split squats or single-arm rows, are easily performed with dumbbells and are excellent for correcting muscular imbalances. By focusing on progressive overload—gradually increasing the weight, reps, or improving form over time—a sub-$500 home gym is more than capable of building significant strength and muscle mass.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ijustwantto.live &middot; <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">A GAB Ventures property</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Accordion Functionality
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordion = button.parentElement;
+                const content = accordion.querySelector('.accordion-content');
+
+                // Toggle active class
+                accordion.classList.toggle('active');
+
+                // Animate height
+                if (accordion.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = "0";
+                }
+            });
+        });
+
+        // Search/Filter Functionality
+        const searchInput = document.getElementById('searchInput');
+        const contentSections = document.querySelectorAll('.content-section');
+        const searchableItems = document.querySelectorAll('.searchable-item');
+        const noResultsMessage = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            let totalVisibleItems = 0;
+
+            if (searchTerm === '') {
+                // Reset everything if search is empty
+                searchableItems.forEach(item => item.classList.remove('hidden'));
+                contentSections.forEach(section => section.classList.remove('hidden'));
+                noResultsMessage.style.display = 'none';
+
+                // Close accordions on reset
+                document.querySelectorAll('.accordion.active').forEach(acc => {
+                    acc.classList.remove('active');
+                    acc.querySelector('.accordion-content').style.maxHeight = '0';
+                });
+                return;
+            }
+
+            // Filter items within sections
+            contentSections.forEach(section => {
+                let sectionHasVisibleItems = false;
+                const sectionItems = section.querySelectorAll('.searchable-item');
+
+                // Check if the section tags themselves match the search
+                const sectionTags = section.getAttribute('data-tags') || '';
+                const sectionMatches = sectionTags.toLowerCase().includes(searchTerm) ||
+                                     section.querySelector('h2').textContent.toLowerCase().includes(searchTerm);
+
+                sectionItems.forEach(item => {
+                    const searchableText = (item.getAttribute('data-search') || '') + ' ' +
+                                         (item.textContent || '').toLowerCase();
+
+                    if (sectionMatches || searchableText.toLowerCase().includes(searchTerm)) {
+                        item.classList.remove('hidden');
+                        sectionHasVisibleItems = true;
+                        totalVisibleItems++;
+
+                        // If it's an accordion, open it automatically when it matches a search
+                        if (item.classList.contains('accordion') && !item.classList.contains('active')) {
+                            item.classList.add('active');
+                            const content = item.querySelector('.accordion-content');
+                            // Use a slight timeout to ensure display:block has taken effect before animating height
+                            setTimeout(() => {
+                                content.style.maxHeight = content.scrollHeight + "px";
+                            }, 10);
+                        }
+                    } else {
+                        item.classList.add('hidden');
+
+                        // Close hidden accordions
+                        if (item.classList.contains('accordion') && item.classList.contains('active')) {
+                            item.classList.remove('active');
+                            item.querySelector('.accordion-content').style.maxHeight = '0';
+                        }
+                    }
+                });
+
+                // Hide the whole section if it has no matching items
+                if (sectionHasVisibleItems || sectionMatches) {
+                    section.classList.remove('hidden');
+                    // If section matches but items don't, show all items in that section
+                    if (sectionMatches && !sectionHasVisibleItems) {
+                        sectionItems.forEach(item => {
+                            item.classList.remove('hidden');
+                            totalVisibleItems++;
+                        });
+                    }
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+
+            // Show 'No Results' message if necessary
+            if (totalVisibleItems === 0) {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+            }
+        });
+
+        // Copy Routine Functionality
+        function copyRoutine(routineId) {
+            const routineBlock = document.getElementById(routineId);
+            const title = routineBlock.querySelector('h4').textContent;
+            const items = routineBlock.querySelectorAll('.routine-list li');
+
+            let textToCopy = `${title}\n${'-'.repeat(title.length)}\n`;
+
+            items.forEach(item => {
+                const exercise = item.querySelector('span:first-child').textContent;
+                const setsReps = item.querySelector('span:last-child').textContent;
+                textToCopy += `• ${exercise} (${setsReps})\n`;
+            });
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = routineBlock.querySelector('.copy-btn');
+                const originalHTML = btn.innerHTML;
+
+                // Change icon to checkmark
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                btn.style.borderColor = 'var(--accent-color)';
+                btn.style.color = 'var(--accent-color)';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy to clipboard.');
+            });
+        }
+    </script>
+</body>
+</html>
