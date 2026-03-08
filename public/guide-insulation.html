@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Insulation Guide - Types & R-Values Cheat Sheet</title>
+    <meta name="description" content="A comprehensive reference guide for home insulation. Compare fiberglass, spray foam, cellulose, and mineral wool. Find recommended R-values for your climate zone.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-container input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(45, 184, 154, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            margin-top: 3rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border-color: rgba(45, 184, 154, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .r-value-badge {
+            background-color: rgba(45, 184, 154, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(45, 184, 154, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-family: var(--font-code);
+            font-size: 0.875rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .card-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-stats {
+            margin-top: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            background-color: rgba(0,0,0,0.2);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-value {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-family: var(--font-code);
+        }
+
+        .stat-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Expandable Accordion */
+        .accordion-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .accordion-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-color);
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        .accordion-content-inner {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Tables */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.02);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        td.highlight {
+            color: var(--text-primary);
+            font-family: var(--font-code);
+            font-weight: 500;
+        }
+
+        .zone-badge {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 4px;
+            background-color: var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-code);
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+        }
+
+        .copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        .copy-btn svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* SEO Content */
+        .seo-content {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .seo-content ul {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .seo-content strong {
+            color: var(--text-primary);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            display: none;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #3fe0be;
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+
+    <!-- JSON-LD Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Home Insulation Guide - Types & R-Values",
+      "description": "A comprehensive reference guide for home insulation. Compare fiberglass, spray foam, cellulose, and mineral wool. Find recommended R-values for your climate zone.",
+      "author": {
+        "@type": "Organization",
+        "name": "GAB Ventures",
+        "url": "https://gab.ae"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ijustwantto.live",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ijustwantto.live/favicon.ico"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ijustwantto.live/guide-insulation"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Home Insulation Guide</h1>
+            <p class="subtitle">Quick reference for insulation types, R-values per inch, and recommended climate zone specs.</p>
+        </header>
+
+        <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search for 'fiberglass', 'Zone 4', 'attic'..." onkeyup="filterContent()">
+        </div>
+
+        <div id="no-results" class="no-results">
+            No matching insulation types or climate zones found. Try a different term.
+        </div>
+
+        <!-- Insulation Types -->
+        <h2 class="section-title searchable-section" data-section="types">
+            Types of Insulation
+        </h2>
+
+        <div class="card-grid searchable-section" data-section="types">
+            <!-- Fiberglass -->
+            <div class="card search-item" data-keywords="fiberglass batts rolls pink fluffy cheap common walls floors ceilings">
+                <div class="card-header">
+                    <h3 class="card-title">Fiberglass (Batts & Rolls)</h3>
+                    <span class="r-value-badge">R-2.9 to R-3.8 / in</span>
+                </div>
+                <div class="card-content">
+                    <p>The most common and DIY-friendly insulation. Made of spun glass fibers. Comes in pre-cut batts or long rolls. Best for standard stud spacing in walls, floors, and unfinished attics.</p>
+                </div>
+                <div class="card-stats">
+                    <div class="stat-group">
+                        <span class="stat-label">Cost</span>
+                        <span class="stat-value">$</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label">Moisture Res.</span>
+                        <span class="stat-value">Low</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spray Foam (Closed Cell) -->
+            <div class="card search-item" data-keywords="spray foam closed cell polyurethane expensive air barrier rigid high r-value">
+                <div class="card-header">
+                    <h3 class="card-title">Spray Foam (Closed-Cell)</h3>
+                    <span class="r-value-badge">R-6.0 to R-7.0 / in</span>
+                </div>
+                <div class="card-content">
+                    <p>Expands and hardens to form a rigid, highly efficient air and moisture barrier. Excellent for tight spaces, crawlspaces, and exterior walls. Usually requires professional installation.</p>
+                </div>
+                <div class="card-stats">
+                    <div class="stat-group">
+                        <span class="stat-label">Cost</span>
+                        <span class="stat-value">$$$</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label">Moisture Res.</span>
+                        <span class="stat-value">High</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cellulose -->
+            <div class="card search-item" data-keywords="cellulose blown-in loose fill recycled paper eco-friendly attic walls settling">
+                <div class="card-header">
+                    <h3 class="card-title">Cellulose (Blown-In)</h3>
+                    <span class="r-value-badge">R-3.1 to R-3.8 / in</span>
+                </div>
+                <div class="card-content">
+                    <p>Made primarily from recycled paper products treated with fire retardants. Usually blown into attics or existing wall cavities. Great for filling irregularly shaped areas.</p>
+                </div>
+                <div class="card-stats">
+                    <div class="stat-group">
+                        <span class="stat-label">Cost</span>
+                        <span class="stat-value">$$</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label">Moisture Res.</span>
+                        <span class="stat-value">Moderate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mineral Wool -->
+            <div class="card search-item" data-keywords="mineral wool rockwool stone slag fire resistant soundproofing dense heavy batts">
+                <div class="card-header">
+                    <h3 class="card-title">Mineral Wool (Rockwool)</h3>
+                    <span class="r-value-badge">R-3.0 to R-3.3 / in</span>
+                </div>
+                <div class="card-content">
+                    <p>Made from molten rock or steel slag. Extremely dense, offering superior fire resistance and soundproofing. Does not absorb moisture and holds its shape well in wall cavities.</p>
+                </div>
+                <div class="card-stats">
+                    <div class="stat-group">
+                        <span class="stat-label">Cost</span>
+                        <span class="stat-value">$$</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label">Moisture Res.</span>
+                        <span class="stat-value">High</span>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Spray Foam (Open Cell) -->
+             <div class="card search-item" data-keywords="spray foam open cell polyurethane soft expansive soundproofing roof deck">
+                <div class="card-header">
+                    <h3 class="card-title">Spray Foam (Open-Cell)</h3>
+                    <span class="r-value-badge">R-3.6 to R-3.9 / in</span>
+                </div>
+                <div class="card-content">
+                    <p>Expands significantly more than closed-cell, remaining relatively soft and flexible. Provides an air barrier but allows vapor permeance. Good for interior walls and unvented attics.</p>
+                </div>
+                <div class="card-stats">
+                    <div class="stat-group">
+                        <span class="stat-label">Cost</span>
+                        <span class="stat-value">$$</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label">Moisture Res.</span>
+                        <span class="stat-value">Low</span>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Rigid Foam Board -->
+             <div class="card search-item" data-keywords="rigid foam board xps eps polyiso continuous exterior foundation basement boards">
+                <div class="card-header">
+                    <h3 class="card-title">Rigid Foam Board</h3>
+                    <span class="r-value-badge">R-3.8 to R-6.8 / in</span>
+                </div>
+                <div class="card-content">
+                    <p>Sturdy panels of polystyrene (EPS/XPS) or polyisocyanurate. Ideal for continuous exterior insulation, basement walls, and foundations. High R-value per inch with minimal thickness.</p>
+                </div>
+                <div class="card-stats">
+                    <div class="stat-group">
+                        <span class="stat-label">Cost</span>
+                        <span class="stat-value">$$</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label">Moisture Res.</span>
+                        <span class="stat-value">High</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- R-Values by Climate Zone -->
+        <h2 class="section-title searchable-section" data-section="zones">
+            Recommended R-Values by Climate Zone
+            <button class="copy-btn" onclick="copyTable('zone-table')" id="copy-table-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy Table
+            </button>
+        </h2>
+
+        <div class="accordion-item searchable-section" data-section="zones">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+                What is my Climate Zone?
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">The US Department of Energy divides the country into 8 climate zones. Generally:</p>
+                    <ul style="color: var(--text-secondary); padding-left: 1.5rem; margin-bottom: 0;">
+                        <li><strong>Zones 1-2:</strong> Hot/Humid (South FL, Deep South, HI)</li>
+                        <li><strong>Zone 3:</strong> Warm (Southeast, CA coast)</li>
+                        <li><strong>Zone 4:</strong> Mixed (Mid-Atlantic, Central states, PNW)</li>
+                        <li><strong>Zones 5-6:</strong> Cold (Northeast, Midwest)</li>
+                        <li><strong>Zones 7-8:</strong> Very Cold (Northern tier, AK)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container searchable-section" data-section="zones">
+            <table id="zone-table">
+                <thead>
+                    <tr>
+                        <th>Zone</th>
+                        <th>Uninsulated Attic</th>
+                        <th>Existing Attic</th>
+                        <th>Floors</th>
+                        <th>Wood Frame Walls</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="search-item" data-keywords="zone 1 zone 2 hot humid south florida hawaii">
+                        <td><span class="zone-badge">1</span><span class="zone-badge">2</span></td>
+                        <td class="highlight">R-30 to R-49</td>
+                        <td class="highlight">R-25 to R-30</td>
+                        <td class="highlight">R-13</td>
+                        <td class="highlight">R-13 to R-15</td>
+                    </tr>
+                    <tr class="search-item" data-keywords="zone 3 warm southeast california">
+                        <td><span class="zone-badge">3</span></td>
+                        <td class="highlight">R-30 to R-60</td>
+                        <td class="highlight">R-25 to R-38</td>
+                        <td class="highlight">R-19 to R-25</td>
+                        <td class="highlight">R-20 or R-13+5</td>
+                    </tr>
+                    <tr class="search-item" data-keywords="zone 4 mixed mid-atlantic pnw central">
+                        <td><span class="zone-badge">4</span></td>
+                        <td class="highlight">R-38 to R-60</td>
+                        <td class="highlight">R-38</td>
+                        <td class="highlight">R-25 to R-30</td>
+                        <td class="highlight">R-20 or R-13+5</td>
+                    </tr>
+                    <tr class="search-item" data-keywords="zone 5 zone 6 cold northeast midwest">
+                        <td><span class="zone-badge">5</span><span class="zone-badge">6</span></td>
+                        <td class="highlight">R-49 to R-60</td>
+                        <td class="highlight">R-38 to R-49</td>
+                        <td class="highlight">R-25 to R-30</td>
+                        <td class="highlight">R-20+5 or R-13+10</td>
+                    </tr>
+                    <tr class="search-item" data-keywords="zone 7 zone 8 very cold alaska northern">
+                        <td><span class="zone-badge">7</span><span class="zone-badge">8</span></td>
+                        <td class="highlight">R-49 to R-60</td>
+                        <td class="highlight">R-38 to R-49</td>
+                        <td class="highlight">R-25 to R-30</td>
+                        <td class="highlight">R-20+5 or R-13+10</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="padding: 1rem 1.5rem; font-size: 0.8rem; color: var(--text-secondary); border-top: 1px solid var(--border-color);">
+                <em>* "R-13+5" means R-13 cavity insulation plus R-5 continuous rigid foam on the exterior.</em>
+            </div>
+        </div>
+
+        <section class="seo-content">
+            <h2>Why Home Insulation Matters</h2>
+            <p>Proper home insulation is one of the most cost-effective ways to improve your home's energy efficiency, comfort, and acoustics. Insulation creates a barrier that slows the transfer of heat. In the winter, it keeps the warmth generated by your heating system inside. In the summer, it prevents the hot exterior air from penetrating your living spaces, reducing the load on your air conditioning system.</p>
+            <p>Beyond energy savings, good insulation also acts as a sound dampener, reducing noise transfer between rooms and blocking outside noise like traffic. It can also help control moisture accumulation by moving the dew point within wall cavities, preventing condensation and mold growth when paired with proper vapor retarders.</p>
+
+            <h2>Understanding R-Value</h2>
+            <p>The performance of insulation is measured by its <strong>R-value</strong>, which stands for resistance to heat flow. The higher the R-value, the greater the insulating power. The total R-value of a wall or ceiling is determined by the type of insulation, its thickness, and its density.</p>
+            <p>It's important to note that compressing insulation (like cramming R-19 fiberglass meant for a 2x6 wall into a 2x4 cavity) actually <em>decreases</em> its R-value. Furthermore, gaps or voids in insulation can severely degrade performance. Continuous insulation, such as rigid foam board applied to the exterior of the studs, helps prevent "thermal bridging" where heat bypasses the cavity insulation through the wood framing itself.</p>
+
+            <h2>How to Choose the Right Insulation</h2>
+            <p>Selecting the best insulation for your project depends on several factors:</p>
+            <ul>
+                <li><strong>Location:</strong> Are you insulating an unfinished attic floor, existing enclosed walls, a damp crawlspace, or a cathedral ceiling? Blown-in cellulose is great for filling existing walls, while closed-cell spray foam is ideal for damp basement walls.</li>
+                <li><strong>Climate:</strong> If you live in a cold climate (Zones 5-8), you need significantly higher R-values, especially in the attic, compared to someone living in Zone 1.</li>
+                <li><strong>Budget:</strong> Fiberglass batts are generally the most affordable and DIY-friendly option. Spray foam provides exceptional performance and air sealing but comes at a premium price and usually requires professional installation.</li>
+                <li><strong>Space Constraints:</strong> If you only have a 2x4 wall cavity (3.5 inches depth) but need a high R-value, you might need to use a denser material like closed-cell spray foam or continuous rigid foam on the exterior rather than standard fiberglass.</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 ijustwantto.live · A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>)
+    </footer>
+
+    <script>
+        // Accordion functionality
+        function toggleAccordion(button) {
+            const item = button.parentElement;
+            const content = item.querySelector('.accordion-content');
+
+            item.classList.toggle('active');
+
+            if (item.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = "0";
+            }
+        }
+
+        // Copy Table Data
+        function copyTable(tableId) {
+            const table = document.getElementById(tableId);
+            let text = "Climate Zone | Uninsulated Attic | Existing Attic | Floors | Wood Frame Walls\n";
+            text += "---|---|---|---|---\n";
+
+            const rows = table.querySelectorAll('tbody tr:not(.hidden)');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let rowData = [];
+                cells.forEach(cell => {
+                    // Extract text, handling the multiple badges in Zone 1/2 or 5/6 cleanly
+                    let cellText = cell.innerText.replace(/\n/g, '/');
+                    rowData.push(cellText);
+                });
+                text += rowData.join(" | ") + "\n";
+            });
+
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copy-table-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        // Search/Filter functionality
+        function filterContent() {
+            const searchInput = document.getElementById('searchInput');
+            const filter = searchInput.value.toLowerCase();
+            const searchItems = document.querySelectorAll('.search-item');
+            const noResults = document.getElementById('no-results');
+
+            let totalVisible = 0;
+            let visibleTypes = 0;
+            let visibleZones = 0;
+
+            searchItems.forEach(item => {
+                const keywords = item.getAttribute('data-keywords') || "";
+                const text = item.innerText.toLowerCase();
+
+                if (text.includes(filter) || keywords.includes(filter)) {
+                    item.classList.remove('hidden');
+                    totalVisible++;
+
+                    if(item.classList.contains('card')) visibleTypes++;
+                    if(item.tagName.toLowerCase() === 'tr') visibleZones++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Handle section headers visibility based on content
+            const typeSectionElements = document.querySelectorAll('[data-section="types"]');
+            typeSectionElements.forEach(el => {
+                if (visibleTypes === 0) {
+                    el.classList.add('hidden');
+                } else {
+                    el.classList.remove('hidden');
+                }
+            });
+
+            const zoneSectionElements = document.querySelectorAll('[data-section="zones"]');
+            zoneSectionElements.forEach(el => {
+                if (visibleZones === 0) {
+                    el.classList.add('hidden');
+                } else {
+                    el.classList.remove('hidden');
+                }
+            });
+
+            // Show 'no results' message if needed
+            if (totalVisible === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
