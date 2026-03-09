@@ -1,0 +1,317 @@
+[
+  {
+    "gym": "Planet Fitness",
+    "monthlyBase": 10,
+    "monthlyPremium": 24.99,
+    "initFee": 1,
+    "contractLength": "Month-to-month or 12 mo",
+    "locations": 2400,
+    "amenities": [
+      "Cardio equipment",
+      "Free weights",
+      "Tanning",
+      "Massage chairs"
+    ]
+  },
+  {
+    "gym": "LA Fitness",
+    "monthlyBase": 34.99,
+    "monthlyPremium": 199.96,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 550,
+    "amenities": [
+      "Cardio equipment",
+      "Free weights",
+      "Pool",
+      "Basketball court",
+      "Group classes"
+    ]
+  },
+  {
+    "gym": "Equinox",
+    "monthlyBase": 168,
+    "monthlyPremium": 230,
+    "initFee": 100,
+    "contractLength": "12 mo",
+    "locations": 106,
+    "amenities": [
+      "Premium cardio/weights",
+      "Eucalyptus towels",
+      "Luxury pool",
+      "Spa services",
+      "Boutique classes"
+    ]
+  },
+  {
+    "gym": "Crunch Fitness",
+    "monthlyBase": 9.99,
+    "monthlyPremium": 29.99,
+    "initFee": 0.24,
+    "contractLength": "Month-to-month",
+    "locations": 400,
+    "amenities": [
+      "Cardio equipment",
+      "Free weights",
+      "HIITZone",
+      "Group classes"
+    ]
+  },
+  {
+    "gym": "Anytime Fitness",
+    "monthlyBase": 49.99,
+    "monthlyPremium": 49.99,
+    "initFee": 49.99,
+    "contractLength": "12-24 mo",
+    "locations": 5000,
+    "amenities": [
+      "24/7 Access",
+      "Cardio equipment",
+      "Free weights",
+      "Private showers"
+    ]
+  },
+  {
+    "gym": "Gold's Gym",
+    "monthlyBase": 34.95,
+    "monthlyPremium": 59.99,
+    "initFee": 1,
+    "contractLength": "12 mo",
+    "locations": 600,
+    "amenities": [
+      "Heavy free weights",
+      "Cardio equipment",
+      "Pool",
+      "Group classes"
+    ]
+  },
+  {
+    "gym": "24 Hour Fitness",
+    "monthlyBase": 29.99,
+    "monthlyPremium": 44.99,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 280,
+    "amenities": [
+      "24/7 Access",
+      "Pool",
+      "Basketball court",
+      "Free weights"
+    ]
+  },
+  {
+    "gym": "Life Time",
+    "monthlyBase": 139,
+    "monthlyPremium": 269,
+    "initFee": null,
+    "contractLength": "Month-to-month",
+    "locations": 160,
+    "amenities": [
+      "Resort pool",
+      "Tennis/Pickleball",
+      "Childcare",
+      "Premium cafes",
+      "Spa"
+    ]
+  },
+  {
+    "gym": "CrossFit",
+    "monthlyBase": 50,
+    "monthlyPremium": 100,
+    "initFee": null,
+    "contractLength": "Month-to-month",
+    "locations": 12000,
+    "amenities": [
+      "Coached group classes",
+      "Olympic lifting",
+      "Community events"
+    ]
+  },
+  {
+    "gym": "Orangetheory Fitness",
+    "monthlyBase": 169,
+    "monthlyPremium": 169,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 1500,
+    "amenities": [
+      "Heart-rate monitored classes",
+      "Rowing",
+      "Treadmills",
+      "Free weights"
+    ]
+  },
+  {
+    "gym": "F45 Training",
+    "monthlyBase": 180,
+    "monthlyPremium": 200,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 1700,
+    "amenities": [
+      "Functional HIIT classes",
+      "Heart-rate tracking",
+      "No mirrors"
+    ]
+  },
+  {
+    "gym": "Blink Fitness",
+    "monthlyBase": 10,
+    "monthlyPremium": 39,
+    "initFee": null,
+    "contractLength": "12 mo",
+    "locations": 100,
+    "amenities": [
+      "Cardio equipment",
+      "Free weights",
+      "Personal training"
+    ]
+  },
+  {
+    "gym": "Youfit",
+    "monthlyBase": 9.99,
+    "monthlyPremium": 24.99,
+    "initFee": 39.99,
+    "contractLength": "Month-to-month",
+    "locations": 80,
+    "amenities": [
+      "Cardio equipment",
+      "Free weights",
+      "Pickleball"
+    ]
+  },
+  {
+    "gym": "Vasa Fitness",
+    "monthlyBase": 9.99,
+    "monthlyPremium": 39.99,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 50,
+    "amenities": [
+      "Pool",
+      "Basketball",
+      "Cardio equipment",
+      "Free weights"
+    ]
+  },
+  {
+    "gym": "Chuze Fitness",
+    "monthlyBase": 9.99,
+    "monthlyPremium": 49.99,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 30,
+    "amenities": [
+      "Hydro massage",
+      "Cardio equipment",
+      "Free weights",
+      "Smoothie bar"
+    ]
+  },
+  {
+    "gym": "YMCA",
+    "monthlyBase": 45,
+    "monthlyPremium": 84,
+    "initFee": 50,
+    "contractLength": "Month-to-month",
+    "locations": 2500,
+    "amenities": [
+      "Pool",
+      "Basketball",
+      "Childcare",
+      "Community events"
+    ]
+  },
+  {
+    "gym": "EōS Fitness",
+    "monthlyBase": 9.99,
+    "monthlyPremium": 26.99,
+    "initFee": 0.24,
+    "contractLength": "Month-to-month",
+    "locations": 75,
+    "amenities": [
+      "Cinema room",
+      "Pool",
+      "Free weights",
+      "Turf area"
+    ]
+  },
+  {
+    "gym": "Snap Fitness",
+    "monthlyBase": 45.95,
+    "monthlyPremium": 45.95,
+    "initFee": null,
+    "contractLength": "Month-to-month",
+    "locations": 1000,
+    "amenities": [
+      "24/7 Access",
+      "Cardio equipment",
+      "Free weights"
+    ]
+  },
+  {
+    "gym": "Retro Fitness",
+    "monthlyBase": 19.99,
+    "monthlyPremium": 29.99,
+    "initFee": null,
+    "contractLength": "12 mo",
+    "locations": 120,
+    "amenities": [
+      "Cardio equipment",
+      "Free weights",
+      "Smoothie bar"
+    ]
+  },
+  {
+    "gym": "World Gym",
+    "monthlyBase": 130,
+    "monthlyPremium": 520,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 200,
+    "amenities": [
+      "Heavy free weights",
+      "Cardio equipment",
+      "Group classes"
+    ]
+  },
+  {
+    "gym": "Pure Barre",
+    "monthlyBase": 199,
+    "monthlyPremium": 199,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 600,
+    "amenities": [
+      "Barre classes",
+      "Low-impact full body",
+      "Community"
+    ]
+  },
+  {
+    "gym": "SoulCycle",
+    "monthlyBase": 200,
+    "monthlyPremium": 250,
+    "initFee": 0,
+    "contractLength": "Per class or Month-to-month",
+    "locations": 80,
+    "amenities": [
+      "Indoor cycling",
+      "Premium facilities",
+      "Music-driven workouts"
+    ]
+  },
+  {
+    "gym": "Barre3",
+    "monthlyBase": 159,
+    "monthlyPremium": 189,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 170,
+    "amenities": [
+      "Barre classes",
+      "Mindfulness",
+      "Childcare (some)"
+    ]
+  }
+]
