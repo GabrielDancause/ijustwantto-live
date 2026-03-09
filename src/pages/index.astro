@@ -2,6 +2,15 @@
 import BaseHead from '../layouts/BaseHead.astro';
 
 const tools = [
+  {
+    title: "Protein Per Dollar 2026",
+    subtitle: "35 items analyzed",
+    slug: "/protein-per-dollar",
+    stat: "66",
+    statLabel: "g per $",
+    desc: "Ranked list of the cheapest protein sources for 2026 by cost-per-gram. We analyzed 30+ common foods.",
+    tag: "ORIGINAL RESEARCH",
+  },
   { emoji: "🔥", name: "BMR & TDEE Calculator", slug: "/bmr-calculator", desc: "How many calories do you actually burn? Calculate your basal metabolic rate and total daily energy expenditure." },
   { emoji: "🏋️", name: "One Rep Max (1RM)", slug: "/one-rep-max", desc: "Estimate your max lift from any rep range. Supports Epley, Brzycki, and Lombardi formulas." },
   { emoji: "💧", name: "Water Intake Calculator", slug: "/water-intake", desc: "Calculate your daily water needs based on weight, activity level, and climate. Recommended intake in glasses, liters, and ounces." },
@@ -66,6 +75,12 @@ const tools = [
     .arrow { color: #2DB89A; font-size: 0.85rem; margin-top: 14px; display: inline-block; font-weight: 600; }
     .badge { position: absolute; top: 14px; right: 14px; background: #1a2a24; color: #2DB89A; font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
     .live-badge { background: #1a2a1a; color: #4ade80; }
+    .research-badge { background: #3b0764; color: #d8b4fe; border: 1px solid #6b21a8; }
+    .study-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .study-subtitle { font-size: 0.75rem; color: #888; margin-bottom: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .study-stat-box { display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px; }
+    .study-stat { font-size: 2.5rem; font-weight: 900; color: #2DB89A; line-height: 1; font-family: 'JetBrains Mono', monospace; }
+    .study-stat-label { font-size: 0.85rem; font-weight: 600; color: #c8e0d8; }
     .footer { text-align: center; padding: 40px 24px; font-size: 0.78rem; color: #333; border-top: 1px solid #0f1a15; }
     .footer a { color: #2DB89A; text-decoration: none; }
     @media (max-width: 600px) { .hero h1 { font-size: 2.2rem; } .hero { padding: 70px 20px 50px; } .grid { grid-template-columns: 1fr; } }
@@ -79,22 +94,40 @@ const tools = [
   </div>
 </div>
 <div class="grid">
-  {tools.map(t => t.slug ? (
-    <a class="card live" href={t.slug}>
-      <span class="badge live-badge">LIVE</span>
-      <span class="emoji">{t.emoji}</span>
-      <h2>{t.name}</h2>
-      <p>{t.desc}</p>
-      <span class="arrow">Try it →</span>
-    </a>
-  ) : (
-    <div class="card">
-      <span class="badge">COMING SOON</span>
-      <span class="emoji">{t.emoji}</span>
-      <h2>{t.name}</h2>
-      <p>{t.desc}</p>
-    </div>
-  ))}
+  {tools.map(t => {
+    if (t.tag === "ORIGINAL RESEARCH") {
+      return (
+        <a class="card live" href={t.slug}>
+          <span class="badge research-badge">{t.tag}</span>
+          <div class="study-title">{t.title}</div>
+          <div class="study-subtitle">{t.subtitle}</div>
+          <div class="study-stat-box">
+            <span class="study-stat">{t.stat}</span>
+            <span class="study-stat-label">{t.statLabel}</span>
+          </div>
+          <p>{t.desc}</p>
+          <span class="arrow">Read Study →</span>
+        </a>
+      );
+    }
+
+    return t.slug ? (
+      <a class="card live" href={t.slug}>
+        <span class="badge live-badge">LIVE</span>
+        <span class="emoji">{t.emoji}</span>
+        <h2>{t.name}</h2>
+        <p>{t.desc}</p>
+        <span class="arrow">Try it →</span>
+      </a>
+    ) : (
+      <div class="card">
+        <span class="badge">COMING SOON</span>
+        <span class="emoji">{t.emoji}</span>
+        <h2>{t.name}</h2>
+        <p>{t.desc}</p>
+      </div>
+    );
+  })}
 </div>
 <div class="footer">© 2026 <a href="https://ijustwantto.live">ijustwantto.live</a> · A <a href="https://gab.ae">GAB Ventures</a> property</div>
 </body>
