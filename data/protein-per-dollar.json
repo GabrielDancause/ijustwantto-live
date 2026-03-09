@@ -1,69 +1,58 @@
 [
   {
-    "name": "Lentils (Dry)",
+    "name": "Black Beans (Dry)",
     "category": "legume",
-    "servingSize": "1/4 cup dry (50g)",
-    "proteinGrams": 12,
-    "caloriesPerServing": 170,
-    "priceUSD": 0.18,
+    "servingSize": "1/4 cup dry (45g)",
+    "proteinGrams": 10,
+    "caloriesPerServing": 160,
+    "priceUSD": 0.15,
     "isPlantBased": true,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 66.7
+    "proteinPerDollar": 66.67
+  },
+  {
+    "name": "Lentils (Dry)",
+    "category": "legume",
+    "servingSize": "1/4 cup dry (48g)",
+    "proteinGrams": 12,
+    "caloriesPerServing": 170,
+    "priceUSD": 0.2,
+    "isPlantBased": true,
+    "prepRequired": "cooking required",
+    "proteinPerDollar": 60
   },
   {
     "name": "Whole Chicken",
     "category": "poultry",
     "servingSize": "100g",
-    "proteinGrams": 27,
+    "proteinGrams": 25,
     "caloriesPerServing": 239,
     "priceUSD": 0.45,
     "isPlantBased": false,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 60
-  },
-  {
-    "name": "Black Beans (Dry)",
-    "category": "legume",
-    "servingSize": "1/4 cup dry (35g)",
-    "proteinGrams": 8,
-    "caloriesPerServing": 114,
-    "priceUSD": 0.15,
-    "isPlantBased": true,
-    "prepRequired": "cooking required",
-    "proteinPerDollar": 53.3
+    "proteinPerDollar": 55.56
   },
   {
     "name": "Peanut Butter",
     "category": "legume",
     "servingSize": "2 tbsp (32g)",
-    "proteinGrams": 8,
+    "proteinGrams": 7,
     "caloriesPerServing": 190,
     "priceUSD": 0.15,
     "isPlantBased": true,
     "prepRequired": "none",
-    "proteinPerDollar": 53.3
-  },
-  {
-    "name": "Oats",
-    "category": "other",
-    "servingSize": "1/2 cup dry (40g)",
-    "proteinGrams": 5,
-    "caloriesPerServing": 150,
-    "priceUSD": 0.12,
-    "isPlantBased": true,
-    "prepRequired": "minimal",
-    "proteinPerDollar": 41.7
+    "proteinPerDollar": 46.67
   },
   {
     "name": "Chicken Thighs",
     "category": "poultry",
     "servingSize": "100g",
-    "proteinGrams": 24,
+    "proteinGrams": 26,
     "caloriesPerServing": 209,
     "priceUSD": 0.65,
     "isPlantBased": false,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 36.9
+    "proteinPerDollar": 40
   },
   {
     "name": "Chicken Breast",
@@ -74,12 +63,23 @@
     "priceUSD": 0.88,
     "isPlantBased": false,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 35.2
+    "proteinPerDollar": 35.23
+  },
+  {
+    "name": "Oats (Rolled)",
+    "category": "other",
+    "servingSize": "1/2 cup dry (40g)",
+    "proteinGrams": 5,
+    "caloriesPerServing": 150,
+    "priceUSD": 0.15,
+    "isPlantBased": true,
+    "prepRequired": "cooking required",
+    "proteinPerDollar": 33.33
   },
   {
     "name": "Milk (2%)",
     "category": "dairy",
-    "servingSize": "1 cup (244g)",
+    "servingSize": "1 cup (240ml)",
     "proteinGrams": 8,
     "caloriesPerServing": 122,
     "priceUSD": 0.25,
@@ -88,37 +88,15 @@
     "proteinPerDollar": 32
   },
   {
-    "name": "Tofu (Firm)",
-    "category": "legume",
-    "servingSize": "100g",
-    "proteinGrams": 17,
-    "caloriesPerServing": 144,
-    "priceUSD": 0.55,
-    "isPlantBased": true,
-    "prepRequired": "minimal",
-    "proteinPerDollar": 30.9
-  },
-  {
-    "name": "Tilapia",
-    "category": "seafood",
-    "servingSize": "100g",
-    "proteinGrams": 26,
-    "caloriesPerServing": 128,
-    "priceUSD": 0.9,
-    "isPlantBased": false,
-    "prepRequired": "cooking required",
-    "proteinPerDollar": 28.9
-  },
-  {
     "name": "Pork Chops",
     "category": "pork",
     "servingSize": "100g",
     "proteinGrams": 25,
-    "caloriesPerServing": 196,
-    "priceUSD": 0.95,
+    "caloriesPerServing": 197,
+    "priceUSD": 0.85,
     "isPlantBased": false,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 26.3
+    "proteinPerDollar": 29.41
   },
   {
     "name": "Ground Turkey",
@@ -126,24 +104,57 @@
     "servingSize": "100g",
     "proteinGrams": 27,
     "caloriesPerServing": 149,
-    "priceUSD": 1.05,
-    "isPlantBased": false,
-    "prepRequired": "cooking required",
-    "proteinPerDollar": 25.7
-  },
-  {
-    "name": "Whey Protein Powder",
-    "category": "supplement",
-    "servingSize": "1 scoop (30g)",
-    "proteinGrams": 24,
-    "caloriesPerServing": 120,
     "priceUSD": 0.95,
     "isPlantBased": false,
-    "prepRequired": "none",
-    "proteinPerDollar": 25.3
+    "prepRequired": "cooking required",
+    "proteinPerDollar": 28.42
   },
   {
-    "name": "Canned Tuna (Water)",
+    "name": "Tofu (Firm)",
+    "category": "legume",
+    "servingSize": "100g",
+    "proteinGrams": 17,
+    "caloriesPerServing": 144,
+    "priceUSD": 0.6,
+    "isPlantBased": true,
+    "prepRequired": "minimal",
+    "proteinPerDollar": 28.33
+  },
+  {
+    "name": "Egg Whites (Liquid)",
+    "category": "eggs",
+    "servingSize": "46g (3 tbsp)",
+    "proteinGrams": 5,
+    "caloriesPerServing": 25,
+    "priceUSD": 0.18,
+    "isPlantBased": false,
+    "prepRequired": "cooking required",
+    "proteinPerDollar": 27.78
+  },
+  {
+    "name": "Tilapia (Frozen)",
+    "category": "seafood",
+    "servingSize": "100g",
+    "proteinGrams": 26,
+    "caloriesPerServing": 128,
+    "priceUSD": 0.95,
+    "isPlantBased": false,
+    "prepRequired": "cooking required",
+    "proteinPerDollar": 27.37
+  },
+  {
+    "name": "Eggs (Large)",
+    "category": "eggs",
+    "servingSize": "1 large egg",
+    "proteinGrams": 6,
+    "caloriesPerServing": 78,
+    "priceUSD": 0.22,
+    "isPlantBased": false,
+    "prepRequired": "cooking required",
+    "proteinPerDollar": 27.27
+  },
+  {
+    "name": "Canned Tuna (Chunk Light)",
     "category": "seafood",
     "servingSize": "1 can (142g)",
     "proteinGrams": 29,
@@ -151,18 +162,29 @@
     "priceUSD": 1.15,
     "isPlantBased": false,
     "prepRequired": "none",
-    "proteinPerDollar": 25.2
+    "proteinPerDollar": 25.22
   },
   {
-    "name": "Eggs",
-    "category": "eggs",
-    "servingSize": "1 large egg (50g)",
-    "proteinGrams": 6,
-    "caloriesPerServing": 72,
-    "priceUSD": 0.25,
+    "name": "Pork Tenderloin",
+    "category": "pork",
+    "servingSize": "100g",
+    "proteinGrams": 26,
+    "caloriesPerServing": 143,
+    "priceUSD": 1.05,
     "isPlantBased": false,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 24
+    "proteinPerDollar": 24.76
+  },
+  {
+    "name": "Whey Protein Powder",
+    "category": "supplement",
+    "servingSize": "1 scoop (30g)",
+    "proteinGrams": 24,
+    "caloriesPerServing": 120,
+    "priceUSD": 1.05,
+    "isPlantBased": false,
+    "prepRequired": "minimal",
+    "proteinPerDollar": 22.86
   },
   {
     "name": "Ground Beef (80/20)",
@@ -173,47 +195,14 @@
     "priceUSD": 1.1,
     "isPlantBased": false,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 22.7
+    "proteinPerDollar": 22.73
   },
   {
-    "name": "Egg Whites (Liquid)",
-    "category": "eggs",
-    "servingSize": "46g (3 tbsp)",
-    "proteinGrams": 5,
-    "caloriesPerServing": 25,
-    "priceUSD": 0.22,
-    "isPlantBased": false,
-    "prepRequired": "cooking required",
-    "proteinPerDollar": 22.7
-  },
-  {
-    "name": "Pork Tenderloin",
-    "category": "pork",
-    "servingSize": "100g",
-    "proteinGrams": 26,
-    "caloriesPerServing": 143,
-    "priceUSD": 1.25,
-    "isPlantBased": false,
-    "prepRequired": "cooking required",
-    "proteinPerDollar": 20.8
-  },
-  {
-    "name": "Tempeh",
-    "category": "legume",
-    "servingSize": "100g",
-    "proteinGrams": 19,
-    "caloriesPerServing": 192,
-    "priceUSD": 0.95,
-    "isPlantBased": true,
-    "prepRequired": "minimal",
-    "proteinPerDollar": 20
-  },
-  {
-    "name": "Cheese (Cheddar)",
+    "name": "Cheddar Cheese",
     "category": "dairy",
     "servingSize": "1 oz (28g)",
     "proteinGrams": 7,
-    "caloriesPerServing": 115,
+    "caloriesPerServing": 114,
     "priceUSD": 0.35,
     "isPlantBased": false,
     "prepRequired": "none",
@@ -225,21 +214,10 @@
     "servingSize": "1 scoop (33g)",
     "proteinGrams": 24,
     "caloriesPerServing": 120,
-    "priceUSD": 1.25,
+    "priceUSD": 1.3,
     "isPlantBased": false,
-    "prepRequired": "none",
-    "proteinPerDollar": 19.2
-  },
-  {
-    "name": "Sardines (Oil)",
-    "category": "seafood",
-    "servingSize": "1 can (106g)",
-    "proteinGrams": 23,
-    "caloriesPerServing": 191,
-    "priceUSD": 1.25,
-    "isPlantBased": false,
-    "prepRequired": "none",
-    "proteinPerDollar": 18.4
+    "prepRequired": "minimal",
+    "proteinPerDollar": 18.46
   },
   {
     "name": "Ground Beef (90/10)",
@@ -250,54 +228,76 @@
     "priceUSD": 1.45,
     "isPlantBased": false,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 17.9
+    "proteinPerDollar": 17.93
+  },
+  {
+    "name": "Cottage Cheese (Low Fat)",
+    "category": "dairy",
+    "servingSize": "1/2 cup (113g)",
+    "proteinGrams": 14,
+    "caloriesPerServing": 90,
+    "priceUSD": 0.85,
+    "isPlantBased": false,
+    "prepRequired": "none",
+    "proteinPerDollar": 16.47
   },
   {
     "name": "Black Beans (Canned)",
     "category": "legume",
     "servingSize": "1/2 cup (130g)",
-    "proteinGrams": 7,
+    "proteinGrams": 8,
     "caloriesPerServing": 114,
-    "priceUSD": 0.4,
+    "priceUSD": 0.5,
     "isPlantBased": true,
-    "prepRequired": "none",
-    "proteinPerDollar": 17.5
+    "prepRequired": "minimal",
+    "proteinPerDollar": 16
   },
   {
-    "name": "Greek Yogurt (Nonfat)",
+    "name": "Tempeh",
+    "category": "legume",
+    "servingSize": "100g",
+    "proteinGrams": 19,
+    "caloriesPerServing": 192,
+    "priceUSD": 1.2,
+    "isPlantBased": true,
+    "prepRequired": "cooking required",
+    "proteinPerDollar": 15.83
+  },
+  {
+    "name": "Greek Yogurt (Plain, Non-Fat)",
     "category": "dairy",
-    "servingSize": "3/4 cup (170g)",
+    "servingSize": "170g",
     "proteinGrams": 17,
     "caloriesPerServing": 100,
     "priceUSD": 1.1,
     "isPlantBased": false,
     "prepRequired": "none",
-    "proteinPerDollar": 15.5
+    "proteinPerDollar": 15.45
   },
   {
-    "name": "Cottage Cheese (2%)",
-    "category": "dairy",
-    "servingSize": "1/2 cup (113g)",
-    "proteinGrams": 12,
-    "caloriesPerServing": 90,
-    "priceUSD": 0.85,
+    "name": "Sardines (Canned)",
+    "category": "seafood",
+    "servingSize": "1 can (106g)",
+    "proteinGrams": 23,
+    "caloriesPerServing": 191,
+    "priceUSD": 1.5,
     "isPlantBased": false,
     "prepRequired": "none",
-    "proteinPerDollar": 14.1
+    "proteinPerDollar": 15.33
   },
   {
     "name": "Edamame",
     "category": "legume",
-    "servingSize": "1/2 cup (75g)",
+    "servingSize": "1/2 cup (78g)",
     "proteinGrams": 9,
     "caloriesPerServing": 94,
     "priceUSD": 0.65,
     "isPlantBased": true,
     "prepRequired": "minimal",
-    "proteinPerDollar": 13.8
+    "proteinPerDollar": 13.85
   },
   {
-    "name": "Shrimp",
+    "name": "Shrimp (Frozen)",
     "category": "seafood",
     "servingSize": "100g",
     "proteinGrams": 24,
@@ -305,18 +305,40 @@
     "priceUSD": 1.8,
     "isPlantBased": false,
     "prepRequired": "cooking required",
-    "proteinPerDollar": 13.3
+    "proteinPerDollar": 13.33
+  },
+  {
+    "name": "Quinoa",
+    "category": "other",
+    "servingSize": "1/4 cup dry (43g)",
+    "proteinGrams": 6,
+    "caloriesPerServing": 160,
+    "priceUSD": 0.45,
+    "isPlantBased": true,
+    "prepRequired": "cooking required",
+    "proteinPerDollar": 13.33
+  },
+  {
+    "name": "Turkey Breast (Deli)",
+    "category": "poultry",
+    "servingSize": "2 oz (56g)",
+    "proteinGrams": 12,
+    "caloriesPerServing": 60,
+    "priceUSD": 0.9,
+    "isPlantBased": false,
+    "prepRequired": "none",
+    "proteinPerDollar": 13.33
   },
   {
     "name": "Chickpeas (Canned)",
     "category": "legume",
     "servingSize": "1/2 cup (125g)",
-    "proteinGrams": 6,
-    "caloriesPerServing": 120,
-    "priceUSD": 0.45,
+    "proteinGrams": 7,
+    "caloriesPerServing": 135,
+    "priceUSD": 0.55,
     "isPlantBased": true,
-    "prepRequired": "none",
-    "proteinPerDollar": 13.3
+    "prepRequired": "minimal",
+    "proteinPerDollar": 12.73
   },
   {
     "name": "Almonds",
@@ -324,21 +346,21 @@
     "servingSize": "1 oz (28g)",
     "proteinGrams": 6,
     "caloriesPerServing": 164,
-    "priceUSD": 0.5,
+    "priceUSD": 0.6,
     "isPlantBased": true,
     "prepRequired": "none",
-    "proteinPerDollar": 12
+    "proteinPerDollar": 10
   },
   {
-    "name": "Quinoa",
-    "category": "other",
-    "servingSize": "1/4 cup dry (43g)",
-    "proteinGrams": 6,
-    "caloriesPerServing": 156,
-    "priceUSD": 0.55,
-    "isPlantBased": true,
-    "prepRequired": "cooking required",
-    "proteinPerDollar": 10.9
+    "name": "Protein Bar",
+    "category": "supplement",
+    "servingSize": "1 bar (60g)",
+    "proteinGrams": 20,
+    "caloriesPerServing": 200,
+    "priceUSD": 2.25,
+    "isPlantBased": false,
+    "prepRequired": "none",
+    "proteinPerDollar": 8.89
   },
   {
     "name": "Canned Salmon",
@@ -346,39 +368,17 @@
     "servingSize": "1 can (147g)",
     "proteinGrams": 30,
     "caloriesPerServing": 210,
-    "priceUSD": 2.8,
+    "priceUSD": 3.5,
     "isPlantBased": false,
     "prepRequired": "none",
-    "proteinPerDollar": 10.7
-  },
-  {
-    "name": "Turkey Breast Deli Meat",
-    "category": "poultry",
-    "servingSize": "2 oz (56g)",
-    "proteinGrams": 10,
-    "caloriesPerServing": 60,
-    "priceUSD": 0.95,
-    "isPlantBased": false,
-    "prepRequired": "none",
-    "proteinPerDollar": 10.5
-  },
-  {
-    "name": "Protein Bars",
-    "category": "supplement",
-    "servingSize": "1 bar (60g)",
-    "proteinGrams": 20,
-    "caloriesPerServing": 200,
-    "priceUSD": 2.5,
-    "isPlantBased": false,
-    "prepRequired": "none",
-    "proteinPerDollar": 8
+    "proteinPerDollar": 8.57
   },
   {
     "name": "Beef Jerky",
     "category": "beef",
     "servingSize": "1 oz (28g)",
     "proteinGrams": 9,
-    "caloriesPerServing": 80,
+    "caloriesPerServing": 116,
     "priceUSD": 1.8,
     "isPlantBased": false,
     "prepRequired": "none",
