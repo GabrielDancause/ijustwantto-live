@@ -1,0 +1,402 @@
+[
+  {
+    "state": "Alabama",
+    "ratePerKwh": 14.95,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Alaska",
+    "ratePerKwh": 21.61,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Arizona",
+    "ratePerKwh": 11.87,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Arkansas",
+    "ratePerKwh": 10.72,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "California",
+    "ratePerKwh": 26.92,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Colorado",
+    "ratePerKwh": 12.21,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Connecticut",
+    "ratePerKwh": 22.21,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Delaware",
+    "ratePerKwh": 12.91,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Florida",
+    "ratePerKwh": 11.38,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Georgia",
+    "ratePerKwh": 11.49,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Hawaii",
+    "ratePerKwh": 38.18,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Idaho",
+    "ratePerKwh": 8.9,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Illinois",
+    "ratePerKwh": 12.42,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Indiana",
+    "ratePerKwh": 13.64,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Iowa",
+    "ratePerKwh": 10.26,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Kansas",
+    "ratePerKwh": 10.93,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Kentucky",
+    "ratePerKwh": 11.75,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Louisiana",
+    "ratePerKwh": 11.6,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Maine",
+    "ratePerKwh": 21.55,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Maryland",
+    "ratePerKwh": 15.86,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Massachusetts",
+    "ratePerKwh": 24.76,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Michigan",
+    "ratePerKwh": 14.41,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Minnesota",
+    "ratePerKwh": 11.61,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Mississippi",
+    "ratePerKwh": 13.41,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Missouri",
+    "ratePerKwh": 9.47,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Montana",
+    "ratePerKwh": 11.62,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Nebraska",
+    "ratePerKwh": 8.28,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Nevada",
+    "ratePerKwh": 8.95,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "New Hampshire",
+    "ratePerKwh": 21.19,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "New Jersey",
+    "ratePerKwh": 16.13,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "New Mexico",
+    "ratePerKwh": 10.78,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "New York",
+    "ratePerKwh": 20.61,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "North Carolina",
+    "ratePerKwh": 10.74,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "North Dakota",
+    "ratePerKwh": 7.28,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Ohio",
+    "ratePerKwh": 12.25,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Oklahoma",
+    "ratePerKwh": 8.6,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Oregon",
+    "ratePerKwh": 10.31,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Pennsylvania",
+    "ratePerKwh": 13.16,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Rhode Island",
+    "ratePerKwh": 25.69,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "South Carolina",
+    "ratePerKwh": 11.53,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "South Dakota",
+    "ratePerKwh": 10.43,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Tennessee",
+    "ratePerKwh": 12.62,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Texas",
+    "ratePerKwh": 9.03,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Utah",
+    "ratePerKwh": 9.47,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Vermont",
+    "ratePerKwh": 20.7,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Virginia",
+    "ratePerKwh": 10.21,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Washington",
+    "ratePerKwh": 11.05,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "West Virginia",
+    "ratePerKwh": 11.41,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Wisconsin",
+    "ratePerKwh": 12.66,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Wyoming",
+    "ratePerKwh": 9.55,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  }
+]
