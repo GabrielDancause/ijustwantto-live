@@ -32,8 +32,18 @@ const tools = [
   { emoji: "🏡", name: "Fence Calculator", slug: "/fence-calculator", desc: "Fence materials: posts, rails, pickets, concrete with cost estimate" }
 ];
 
-// Studies (none for this domain)
-const studies = [];
+// Studies
+const studies = [
+  {
+    title: "Average Electricity Cost by State 2026",
+    subtitle: "50 items analyzed",
+    slug: "/electricity-costs",
+    stat: "16¢",
+    statLabel: "National Average",
+    desc: "A comprehensive breakdown of residential electricity rates across all 50 US states with nulls properly handled.",
+    tag: "ORIGINAL RESEARCH"
+  }
+];
 
 // Guides
 const guides = [
@@ -262,6 +272,32 @@ const lists = [
             <span class="tool-emoji">{tool.emoji}</span>
             <h3 class="tool-name">{tool.name}</h3>
             <p class="tool-desc">{tool.desc}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+
+  <!-- Studies Section -->
+  {studies.length > 0 && (
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">🔬 STUDIES</span>
+        <h2 class="section-title">Original Research</h2>
+        <p class="section-sub">Data-driven analysis and insights.</p>
+      </div>
+      <div class="guides-grid">
+        {studies.map(study => (
+          <a class="guide-card" href={study.slug}>
+            <span class="section-tag" style="margin-bottom: 8px;">{study.tag}</span>
+            <h3 class="guide-name">{study.title}</h3>
+            <p class="guide-desc" style="margin-bottom: 12px;">{study.subtitle}</p>
+            <div style="margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+              <strong style="color: #2DB89A; font-size: 1.2rem; display: block; margin-bottom: 4px;">{study.stat}</strong>
+              <span style="font-size: 0.8rem; color: #888; text-transform: uppercase;">{study.statLabel}</span>
+            </div>
+            <p class="guide-desc">{study.desc}</p>
           </a>
         ))}
       </div>

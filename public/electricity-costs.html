@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Average Electricity Cost by State 2026 | ijustwantto.live</title>
+  <meta name="description" content="Compare residential electricity rates across all 50 US states. Find the cheapest and most expensive states for electricity in 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0a0b10;
+      --card-bg: #111318;
+      --border-color: #1e2030;
+      --accent: #2DB89A;
+      --text-main: #c8e0d8;
+      --text-muted: #888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #fff;
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(45, 184, 154, 0.1);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    input, select {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .table-wrapper {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow-x: auto;
+      margin-bottom: 60px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    th:hover { color: #fff; }
+    th.sort-asc::after { content: ' ↑'; color: var(--accent); }
+    th.sort-desc::after { content: ' ↓'; color: var(--accent); }
+
+    td { font-size: 0.95rem; }
+    td.mono { font-family: 'JetBrains Mono', monospace; }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .content-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+
+    .content-section h2 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .faq-item { margin-bottom: 24px; }
+    .faq-item:last-child { margin-bottom: 0; }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .faq-item p { color: var(--text-muted); }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+
+    .null-val { color: #555; font-style: italic; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">ijustwantto<span>.live</span></a>
+  </header>
+
+  <div class="hero">
+    <div class="tag">ORIGINAL RESEARCH</div>
+    <h1>Average Electricity Cost by State 2026</h1>
+    <p>A comprehensive analysis of residential electricity rates across all 50 US states. See where your state ranks.</p>
+
+    <div class="stats-grid" id="stats-grid">
+      <!-- Stats populated by JS -->
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search for a state...">
+    </div>
+
+    <div class="table-wrapper">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th data-sort="state">State</th>
+            <th data-sort="ratePerKwh">Rate (¢/kWh)</th>
+            <th data-sort="avgMonthlyBill">Avg Bill ($)</th>
+            <th data-sort="yoyChange">YoY Change</th>
+            <th data-sort="renewablePct">Renewable %</th>
+            <th data-sort="topUtility">Top Utility</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Data populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>What is the average electricity rate in the US?</h3>
+        <p>The national average residential electricity rate fluctuates, but recent data shows it hovering around 16 cents per kWh, depending heavily on regional energy sources and grid infrastructure.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Which state has the most expensive electricity?</h3>
+        <p>Historically, Hawaii has the highest electricity rates due to its reliance on imported petroleum for power generation. Other high-cost states include California and Northeastern states.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why are electricity rates going up?</h3>
+        <p>Electricity rates increase due to a combination of factors including the rising cost of natural gas, infrastructure upgrades, extreme weather events stressing the grid, and transition costs to renewable energy.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How can I lower my electricity bill?</h3>
+        <p>To lower your bill, consider improving home insulation, upgrading to energy-efficient appliances, using a smart thermostat, and shifting heavy energy use to off-peak hours if your utility offers time-of-use rates.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does solar power reduce electricity costs?</h3>
+        <p>Yes, installing residential solar panels can significantly reduce monthly electricity bills. The exact savings depend on your local electricity rates, sun exposure, and available incentives or net metering policies.</p>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h2>Methodology</h2>
+      <p style="color: var(--text-muted);">Data for this study was collected from public sources compiling residential electricity rates for all 50 US states. The figures represent the average retail price of electricity to ultimate customers. Values that were unavailable at the time of data collection are marked as null to ensure data integrity rather than relying on estimations.</p>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 ijustwantto.live · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+  </footer>
+
+  <script>
+    // JSON DATA WILL BE INJECTED HERE
+    const electricityData = [
+  {
+    "state": "Alabama",
+    "ratePerKwh": 14.95,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Alaska",
+    "ratePerKwh": 21.61,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Arizona",
+    "ratePerKwh": 11.87,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Arkansas",
+    "ratePerKwh": 10.72,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "California",
+    "ratePerKwh": 26.92,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Colorado",
+    "ratePerKwh": 12.21,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Connecticut",
+    "ratePerKwh": 22.21,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Delaware",
+    "ratePerKwh": 12.91,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Florida",
+    "ratePerKwh": 11.38,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Georgia",
+    "ratePerKwh": 11.49,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Hawaii",
+    "ratePerKwh": 38.18,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Idaho",
+    "ratePerKwh": 8.9,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Illinois",
+    "ratePerKwh": 12.42,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Indiana",
+    "ratePerKwh": 13.64,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Iowa",
+    "ratePerKwh": 10.26,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Kansas",
+    "ratePerKwh": 10.93,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Kentucky",
+    "ratePerKwh": 11.75,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Louisiana",
+    "ratePerKwh": 11.6,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Maine",
+    "ratePerKwh": 21.55,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Maryland",
+    "ratePerKwh": 15.86,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Massachusetts",
+    "ratePerKwh": 24.76,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Michigan",
+    "ratePerKwh": 14.41,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Minnesota",
+    "ratePerKwh": 11.61,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Mississippi",
+    "ratePerKwh": 13.41,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Missouri",
+    "ratePerKwh": 9.47,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Montana",
+    "ratePerKwh": 11.62,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Nebraska",
+    "ratePerKwh": 8.28,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Nevada",
+    "ratePerKwh": 8.95,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "New Hampshire",
+    "ratePerKwh": 21.19,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "New Jersey",
+    "ratePerKwh": 16.13,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "New Mexico",
+    "ratePerKwh": 10.78,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "New York",
+    "ratePerKwh": 20.61,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "North Carolina",
+    "ratePerKwh": 10.74,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "North Dakota",
+    "ratePerKwh": 7.28,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Ohio",
+    "ratePerKwh": 12.25,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Oklahoma",
+    "ratePerKwh": 8.6,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Oregon",
+    "ratePerKwh": 10.31,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Pennsylvania",
+    "ratePerKwh": 13.16,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Rhode Island",
+    "ratePerKwh": 25.69,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "South Carolina",
+    "ratePerKwh": 11.53,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "South Dakota",
+    "ratePerKwh": 10.43,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Tennessee",
+    "ratePerKwh": 12.62,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Texas",
+    "ratePerKwh": 9.03,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Utah",
+    "ratePerKwh": 9.47,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Vermont",
+    "ratePerKwh": 20.7,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Virginia",
+    "ratePerKwh": 10.21,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Washington",
+    "ratePerKwh": 11.05,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "West Virginia",
+    "ratePerKwh": 11.41,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Wisconsin",
+    "ratePerKwh": 12.66,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  },
+  {
+    "state": "Wyoming",
+    "ratePerKwh": 9.55,
+    "avgMonthlyBill": null,
+    "yoyChange": null,
+    "renewablePct": null,
+    "topUtility": null
+  }
+];
+
+    // State management
+    let currentData = [...electricityData];
+    let sortCol = 'state';
+    let sortAsc = true;
+
+    // Elements
+    const tableBody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const headers = document.querySelectorAll('th');
+    const statsGrid = document.getElementById('stats-grid');
+
+    // Calculate and render stats
+    function renderStats() {
+      const validRates = electricityData.filter(d => d.ratePerKwh !== null).map(d => d.ratePerKwh);
+
+      if (validRates.length === 0) return;
+
+      const avg = validRates.reduce((a, b) => a + b, 0) / validRates.length;
+
+      let maxRate = -1;
+      let minRate = 999;
+      let maxState = '';
+      let minState = '';
+
+      electricityData.forEach(d => {
+        if (d.ratePerKwh !== null) {
+          if (d.ratePerKwh > maxRate) { maxRate = d.ratePerKwh; maxState = d.state; }
+          if (d.ratePerKwh < minRate) { minRate = d.ratePerKwh; minState = d.state; }
+        }
+      });
+
+      statsGrid.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-value">${avg.toFixed(2)}¢</div>
+          <div class="stat-label">National Average</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${minRate.toFixed(2)}¢</div>
+          <div class="stat-label">Lowest (${minState})</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${maxRate.toFixed(2)}¢</div>
+          <div class="stat-label">Highest (${maxState})</div>
+        </div>
+      `;
+    }
+
+    // Format helpers
+    const formatMoney = (val) => val === null ? '<span class="null-val">--</span>' : '$' + val.toFixed(2);
+    const formatRate = (val) => val === null ? '<span class="null-val">--</span>' : val.toFixed(2) + '¢';
+    const formatPct = (val) => val === null ? '<span class="null-val">--</span>' : val + '%';
+    const formatText = (val) => val === null ? '<span class="null-val">--</span>' : val;
+
+    // Render table
+    function renderTable() {
+      tableBody.innerHTML = currentData.map(row => `
+        <tr>
+          <td><strong>${row.state}</strong></td>
+          <td class="mono">${formatRate(row.ratePerKwh)}</td>
+          <td class="mono">${formatMoney(row.avgMonthlyBill)}</td>
+          <td class="mono">${formatPct(row.yoyChange)}</td>
+          <td class="mono">${formatPct(row.renewablePct)}</td>
+          <td>${formatText(row.topUtility)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Sort data
+    function sortData(col) {
+      if (sortCol === col) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = col;
+        sortAsc = true;
+      }
+
+      headers.forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+        if (th.dataset.sort === col) {
+          th.classList.add(sortAsc ? 'sort-asc' : 'sort-desc');
+        }
+      });
+
+      currentData.sort((a, b) => {
+        let valA = a[col];
+        let valB = b[col];
+
+        // Push nulls to the bottom always
+        if (valA === null && valB !== null) return 1;
+        if (valB === null && valA !== null) return -1;
+        if (valA === null && valB === null) return 0;
+
+        if (typeof valA === 'string') {
+          return sortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+
+        return sortAsc ? valA - valB : valB - valA;
+      });
+
+      renderTable();
+    }
+
+    // Filter data
+    function filterData() {
+      const term = searchInput.value.toLowerCase();
+      currentData = electricityData.filter(row =>
+        row.state.toLowerCase().includes(term)
+      );
+      // Re-apply sort
+      const sc = sortCol;
+      const sa = sortAsc;
+      sortCol = ''; // force re-sort
+      sortData(sc);
+      sortAsc = sa; // restore direction
+    }
+
+    // Event listeners
+    headers.forEach(th => {
+      th.addEventListener('click', () => sortData(th.dataset.sort));
+    });
+
+    searchInput.addEventListener('input', filterData);
+
+    // Initial render
+    renderStats();
+    sortData('state');
+  </script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          "headline": "Average Electricity Cost by State 2026",
+          "description": "Compare residential electricity rates across all 50 US states.",
+          "author": {
+            "@type": "Organization",
+            "name": "ijustwantto.live",
+            "url": "https://ijustwantto.live"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is the average electricity rate in the US?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The national average residential electricity rate fluctuates, but recent data shows it hovering around 16 cents per kWh, depending heavily on regional energy sources and grid infrastructure."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which state has the most expensive electricity?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Historically, Hawaii has the highest electricity rates due to its reliance on imported petroleum for power generation. Other high-cost states include California and Northeastern states."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why are electricity rates going up?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Electricity rates increase due to a combination of factors including the rising cost of natural gas, infrastructure upgrades, extreme weather events stressing the grid, and transition costs to renewable energy."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can I lower my electricity bill?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "To lower your bill, consider improving home insulation, upgrading to energy-efficient appliances, using a smart thermostat, and shifting heavy energy use to off-peak hours if your utility offers time-of-use rates."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does solar power reduce electricity costs?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, installing residential solar panels can significantly reduce monthly electricity bills. The exact savings depend on your local electricity rates, sun exposure, and available incentives or net metering policies."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</body>
+</html>
