@@ -1,0 +1,206 @@
+[
+  {
+    "gym": "Planet Fitness",
+    "monthlyBase": 25,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "LA Fitness",
+    "monthlyBase": 40,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Equinox",
+    "monthlyBase": 55,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "CrossFit",
+    "monthlyBase": 130,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Anytime Fitness",
+    "monthlyBase": 47,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Gold's Gym",
+    "monthlyBase": 80,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "24 Hour Fitness",
+    "monthlyBase": 18,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Crunch Fitness",
+    "monthlyBase": 30,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Life Time Fitness",
+    "monthlyBase": 60,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Orangetheory Fitness",
+    "monthlyBase": 47,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "F45 Training",
+    "monthlyBase": 169,
+    "monthlyPremium": 199,
+    "initFee": 0,
+    "contractLength": "Month-to-month",
+    "locations": 1700,
+    "amenities": [
+      "classes",
+      "showers"
+    ]
+  },
+  {
+    "gym": "Blink Fitness",
+    "monthlyBase": 40,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Chuze Fitness",
+    "monthlyBase": 40,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "EOS Fitness",
+    "monthlyBase": 35,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Vasa Fitness",
+    "monthlyBase": 40,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "YouFit",
+    "monthlyBase": 200,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Snap Fitness",
+    "monthlyBase": 36,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "World Gym",
+    "monthlyBase": 27,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Retro Fitness",
+    "monthlyBase": 25,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "Curves",
+    "monthlyBase": 39.99,
+    "monthlyPremium": null,
+    "initFee": 99,
+    "contractLength": "12 months",
+    "locations": 4000,
+    "amenities": [
+      "classes",
+      "personal training"
+    ]
+  },
+  {
+    "gym": "YMCA",
+    "monthlyBase": 35,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  },
+  {
+    "gym": "XSport Fitness",
+    "monthlyBase": 35,
+    "monthlyPremium": null,
+    "initFee": null,
+    "contractLength": null,
+    "locations": null,
+    "amenities": []
+  }
+]

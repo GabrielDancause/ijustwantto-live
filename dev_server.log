@@ -1,0 +1,32 @@
+
+> ijustwantto-live@0.0.1 dev
+> astro dev
+
+08:04:34 [types] Generated 1ms
+08:04:34 [content] Syncing content
+08:04:34 [content] Synced content
+08:04:34 [vite] Re-optimizing dependencies because vite config has changed
+
+ astro  v5.18.0 ready in 748 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+08:04:35 watching for file changes...
+08:05:01 [200] / 22ms
+08:05:02 [WARN] [router] getStaticPaths() returned an invalid path param: "slug". `undefined` expected for an optional param, but got empty string.
+08:05:02 [WARN] [router] A `getStaticPaths()` route pattern was matched, but no matching static path was found for requested path `/gym-costs`.
+
+Possible dynamic routes being matched: src/pages/[...slug].astro.
+08:05:02 [404] /gym-costs 2ms
+08:05:49 [WARN] [router] getStaticPaths() returned an invalid path param: "slug". `undefined` expected for an optional param, but got empty string.
+08:05:49 [WARN] [router] A `getStaticPaths()` route pattern was matched, but no matching static path was found for requested path `/gym-costs`.
+
+Possible dynamic routes being matched: src/pages/[...slug].astro.
+08:05:49 [404] /gym-costs 1ms
+08:07:55 [WARN] [router] getStaticPaths() returned an invalid path param: "slug". `undefined` expected for an optional param, but got empty string.
+08:07:55 [WARN] [router] A `getStaticPaths()` route pattern was matched, but no matching static path was found for requested path `/bmr-calculator`.
+
+Possible dynamic routes being matched: src/pages/[...slug].astro.
+08:07:55 [404] /bmr-calculator 1ms
+08:08:45 [200] / 8ms

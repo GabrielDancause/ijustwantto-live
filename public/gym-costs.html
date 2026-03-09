@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Membership Costs Compared 2026 | ijustwantto.live</title>
+  <meta name="description" content="Compare monthly costs, initiation fees, and amenities across major gym chains for 2026. Planet Fitness vs LA Fitness vs Equinox and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0a0b10;
+      --card-bg: #111318;
+      --border-color: #1e2030;
+      --accent-color: #2DB89A;
+      --text-main: #c8e0d8;
+      --text-muted: #888888;
+      --font-main: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    header { border-bottom: 1px solid var(--border-color); padding: 20px 0; }
+    header .logo { font-weight: 700; font-size: 1.2rem; color: #fff; }
+
+    /* Hero */
+    .hero { padding: 60px 0; text-align: center; border-bottom: 1px solid var(--border-color); }
+    .hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 20px; color: #fff; line-height: 1.2; }
+    .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; }
+
+    /* Stats */
+    .stats { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 40px 0; }
+    .stat-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      min-width: 200px;
+    }
+    .stat-value { font-family: var(--font-mono); font-size: 2.5rem; font-weight: 600; color: var(--accent-color); }
+    .stat-label { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+
+    /* Content Area */
+    .content-area { padding: 60px 0; }
+    .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 30px; color: #fff; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+
+    /* Controls */
+    .controls { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+    .controls input, .controls select {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-family: var(--font-main);
+      font-size: 1rem;
+    }
+    .controls input:focus, .controls select:focus { outline: none; border-color: var(--accent-color); }
+
+    /* Table */
+    .table-container { overflow-x: auto; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 15px; border-bottom: 1px solid var(--border-color); }
+    th { font-weight: 600; color: #fff; cursor: pointer; user-select: none; position: relative; }
+    th:hover { color: var(--accent-color); }
+    th.sort-asc::after { content: ' ▲'; font-size: 0.8em; }
+    th.sort-desc::after { content: ' ▼'; font-size: 0.8em; }
+    td { font-family: var(--font-mono); font-size: 0.95rem; }
+    td:first-child { font-family: var(--font-main); font-weight: 500; color: #fff; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background-color: rgba(255, 255, 255, 0.03); }
+
+    .null-value { color: var(--text-muted); font-style: italic; }
+    .amenities-list { font-family: var(--font-main); font-size: 0.85rem; max-width: 250px; display: flex; flex-wrap: wrap; gap: 4px; }
+    .amenity-tag { background: rgba(45, 184, 154, 0.1); color: var(--accent-color); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; border: 1px solid rgba(45, 184, 154, 0.2); }
+
+    /* FAQ Section */
+    .faq-item { margin-bottom: 20px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; }
+    .faq-q { font-weight: 600; font-size: 1.2rem; color: #fff; margin-bottom: 10px; }
+    .faq-a { color: var(--text-muted); }
+
+    /* Methodology */
+    .methodology { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 30px; margin-top: 40px; }
+    .methodology p { margin-bottom: 15px; color: var(--text-muted); }
+    .methodology ul { margin-left: 20px; color: var(--text-muted); margin-bottom: 15px; }
+
+    /* Footer */
+    footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--border-color); margin-top: 60px; color: var(--text-muted); font-size: 0.9rem; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Gym Membership Costs Compared 2026",
+        "description": "A comprehensive comparison of monthly costs across major gym chains including Planet Fitness, LA Fitness, Equinox, and CrossFit.",
+        "author": {
+          "@type": "Organization",
+          "name": "ijustwantto.live"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "GAB Ventures",
+          "url": "https://gab.ae"
+        },
+        "datePublished": "2026-01-01T00:00:00Z"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the cheapest gym membership in 2026?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Based on our data, 24 Hour Fitness offers some of the lowest reported base monthly rates starting around $18, though chains like Planet Fitness ($25) and Retro Fitness ($25) are also extremely competitive."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does a Planet Fitness membership cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Planet Fitness typically charges a base monthly rate of around $25 for their classic membership. Premium (Black Card) memberships usually cost more but provide additional benefits like guest privileges."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are initiation fees common for gym memberships?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, initiation fees are very common, though many gyms waive them during promotional periods (like January or holiday sales). When charged, they can range from $49 to $99 or more depending on the chain."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much is an Equinox membership?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Equinox is a premium tier gym. While rates vary by location, our collected data shows starting base rates around $55, though full access or all-club access often pushes into the $200-$300+ range per month."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do gym memberships require long-term contracts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Many gyms now offer month-to-month options, but long-term contracts (typically 12 months) are still common. Choosing a 12-month contract often lowers the monthly rate or waives the initiation fee."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo"><a href="/">ijustwantto.live</a></div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <h1>Gym Membership Costs Compared 2026</h1>
+      <p>We tracked real monthly prices across major US gym chains to help you find the best value for your fitness goals. Data collected from official sites and community reports.</p>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-count">22</div>
+          <div class="stat-label">Gyms Analyzed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-avg-base">$0</div>
+          <div class="stat-label">Avg Base Monthly</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-lowest">$0</div>
+          <div class="stat-label">Lowest Monthly</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container content-area">
+    <h2 class="section-title">Data Table</h2>
+
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search gyms..." aria-label="Search gyms">
+      <select id="sortSelect" aria-label="Sort by">
+        <option value="name-asc">Name (A-Z)</option>
+        <option value="base-asc">Base Price (Low to High)</option>
+        <option value="base-desc">Base Price (High to Low)</option>
+      </select>
+    </div>
+
+    <div class="table-container">
+      <table id="gymTable">
+        <thead>
+          <tr>
+            <th data-sort="gym">Gym Chain</th>
+            <th data-sort="monthlyBase">Base Monthly</th>
+            <th data-sort="monthlyPremium">Premium Monthly</th>
+            <th data-sort="initFee">Initiation Fee</th>
+            <th data-sort="contractLength">Contract</th>
+            <th>Amenities</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 60px;"></div>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">What is the cheapest gym membership in 2026?</div>
+      <div class="faq-a">Based on our data, 24 Hour Fitness offers some of the lowest reported base monthly rates starting around $18, though chains like Planet Fitness ($25) and Retro Fitness ($25) are also extremely competitive.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How much does a Planet Fitness membership cost?</div>
+      <div class="faq-a">Planet Fitness typically charges a base monthly rate of around $25 for their classic membership. Premium (Black Card) memberships usually cost more but provide additional benefits like guest privileges.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Are initiation fees common for gym memberships?</div>
+      <div class="faq-a">Yes, initiation fees are very common, though many gyms waive them during promotional periods (like January or holiday sales). When charged, they can range from $49 to $99 or more depending on the chain.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How much is an Equinox membership?</div>
+      <div class="faq-a">Equinox is a premium tier gym. While rates vary by location, our collected data shows starting base rates around $55, though full access or all-club access often pushes into the $200-$300+ range per month.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Do gym memberships require long-term contracts?</div>
+      <div class="faq-a">Many gyms now offer month-to-month options, but long-term contracts (typically 12 months) are still common. Choosing a 12-month contract often lowers the monthly rate or waives the initiation fee.</div>
+    </div>
+
+    <div class="methodology">
+      <h2 class="section-title" style="border:none; margin-bottom: 10px; padding: 0;">Methodology</h2>
+      <p>Data was collected via automated scripts scraping information from various sources:</p>
+      <ul>
+        <li>Official gym chain websites (when prices are publicly listed)</li>
+        <li>Aggregator sites like GymMembershipFees.com</li>
+        <li>Community reports from Reddit (r/fitness) for actual paid prices</li>
+      </ul>
+      <p><strong>Note on Missing Data:</strong> Gym prices vary wildly by location and current promotions. Where exact numbers could not be reliably verified, we have chosen to display "N/A" (null) rather than providing inaccurate estimates.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 <a href="/">ijustwantto.live</a> &middot; A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+  </footer>
+
+  <script>
+    // Embedded JSON data
+    const gymData = [
+      {
+        "gym": "Planet Fitness",
+        "monthlyBase": 25,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "LA Fitness",
+        "monthlyBase": 40,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Equinox",
+        "monthlyBase": 55,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "CrossFit",
+        "monthlyBase": 130,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Anytime Fitness",
+        "monthlyBase": 47,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Gold's Gym",
+        "monthlyBase": 80,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "24 Hour Fitness",
+        "monthlyBase": 18,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Crunch Fitness",
+        "monthlyBase": 30,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Life Time Fitness",
+        "monthlyBase": 60,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Orangetheory Fitness",
+        "monthlyBase": 47,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "F45 Training",
+        "monthlyBase": 169,
+        "monthlyPremium": 199,
+        "initFee": 0,
+        "contractLength": "Month-to-month",
+        "locations": 1700,
+        "amenities": ["classes", "showers"]
+      },
+      {
+        "gym": "Blink Fitness",
+        "monthlyBase": 40,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Chuze Fitness",
+        "monthlyBase": 40,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "EOS Fitness",
+        "monthlyBase": 35,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Vasa Fitness",
+        "monthlyBase": 40,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "YouFit",
+        "monthlyBase": 200,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Snap Fitness",
+        "monthlyBase": 36,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "World Gym",
+        "monthlyBase": 27,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Retro Fitness",
+        "monthlyBase": 25,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "Curves",
+        "monthlyBase": 39.99,
+        "monthlyPremium": null,
+        "initFee": 99,
+        "contractLength": "12 months",
+        "locations": 4000,
+        "amenities": ["classes", "personal training"]
+      },
+      {
+        "gym": "YMCA",
+        "monthlyBase": 35,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      },
+      {
+        "gym": "XSport Fitness",
+        "monthlyBase": 35,
+        "monthlyPremium": null,
+        "initFee": null,
+        "contractLength": null,
+        "locations": null,
+        "amenities": []
+      }
+    ];
+
+    // State
+    let currentData = [...gymData];
+    let sortCol = 'gym';
+    let sortAsc = true;
+
+    // DOM Elements
+    const tbody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    const headers = document.querySelectorAll('th[data-sort]');
+
+    // Formatting helpers
+    const formatCurrency = (val) => val === null ? '<span class="null-value">N/A</span>' : `$${val.toFixed(2)}`;
+    const formatText = (val) => val === null ? '<span class="null-value">N/A</span>' : val;
+    const formatAmenities = (amenities) => {
+      if (!amenities || amenities.length === 0) return '<span class="null-value">N/A</span>';
+      return `<div class="amenities-list">${amenities.map(a => `<span class="amenity-tag">${a}</span>`).join('')}</div>`;
+    };
+
+    // Calculate Stats
+    function updateStats() {
+      document.getElementById('stat-count').innerText = currentData.length;
+
+      const bases = currentData.map(d => d.monthlyBase).filter(v => v !== null);
+      if (bases.length > 0) {
+        const sum = bases.reduce((a, b) => a + b, 0);
+        const avg = sum / bases.length;
+        document.getElementById('stat-avg-base').innerText = `$${Math.round(avg)}`;
+
+        const min = Math.min(...bases);
+        document.getElementById('stat-lowest').innerText = `$${min}`;
+      } else {
+        document.getElementById('stat-avg-base').innerText = `N/A`;
+        document.getElementById('stat-lowest').innerText = `N/A`;
+      }
+    }
+
+    // Render Table
+    function renderTable() {
+      tbody.innerHTML = '';
+
+      if (currentData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #888;">No gyms found matching criteria</td></tr>';
+        return;
+      }
+
+      currentData.forEach(gym => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${gym.gym}</td>
+          <td>${formatCurrency(gym.monthlyBase)}</td>
+          <td>${formatCurrency(gym.monthlyPremium)}</td>
+          <td>${formatCurrency(gym.initFee)}</td>
+          <td>${formatText(gym.contractLength)}</td>
+          <td>${formatAmenities(gym.amenities)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      updateStats();
+    }
+
+    // Sorting
+    function sortData(col, asc) {
+      currentData.sort((a, b) => {
+        let valA = a[col];
+        let valB = b[col];
+
+        // Handle nulls (always put nulls at the bottom)
+        if (valA === null && valB === null) return 0;
+        if (valA === null) return 1;
+        if (valB === null) return -1;
+
+        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valB === 'string') valB = valB.toLowerCase();
+
+        if (valA < valB) return asc ? -1 : 1;
+        if (valA > valB) return asc ? 1 : -1;
+        return 0;
+      });
+
+      // Update headers UI
+      headers.forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+        if (th.dataset.sort === col) {
+          th.classList.add(asc ? 'sort-asc' : 'sort-desc');
+        }
+      });
+
+      renderTable();
+    }
+
+    // Event Listeners
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      currentData = gymData.filter(gym => gym.gym.toLowerCase().includes(term));
+      sortData(sortCol, sortAsc); // maintain sort
+    });
+
+    sortSelect.addEventListener('change', (e) => {
+      const [col, dir] = e.target.value.split('-');
+      if (col === 'name') {
+        sortCol = 'gym';
+        sortAsc = dir === 'asc';
+      } else if (col === 'base') {
+        sortCol = 'monthlyBase';
+        sortAsc = dir === 'asc';
+      }
+      sortData(sortCol, sortAsc);
+    });
+
+    headers.forEach(th => {
+      th.addEventListener('click', () => {
+        const col = th.dataset.sort;
+        if (!col) return;
+
+        if (sortCol === col) {
+          sortAsc = !sortAsc; // toggle
+        } else {
+          sortCol = col;
+          sortAsc = true;
+        }
+        sortData(sortCol, sortAsc);
+      });
+    });
+
+    // Initial sort and render
+    sortData('gym', true);
+
+  </script>
+</body>
+</html>
