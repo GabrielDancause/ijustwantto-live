@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Guides & Tools - ijustwantto.live</title>
+  <meta name="description" content="A complete collection of all guides, calculators, and tools available on ijustwantto.live.">
+  <link rel="canonical" href="https://ijustwantto.live/guides/">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #060a12;
+      color: #c8d0de;
+      line-height: 1.6;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 100px 24px 50px;
+      background: linear-gradient(180deg, #0a1a15 0%, #060a12 100%);
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(45,184,154,0.08) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, #2DB89A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Search Box */
+    .search-container {
+      margin: 30px auto;
+      max-width: 500px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 16px 20px 16px 50px;
+      border-radius: 30px;
+      border: 1px solid #1e2030;
+      background: #111318;
+      color: #fff;
+      font-size: 1.05rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus {
+      border-color: #2DB89A;
+    }
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #5a6a80;
+    }
+
+    .counter {
+      color: #5a6a80;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 40px;
+    }
+
+    /* Guides Grid */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .guide-card {
+      background: #111318;
+      border: 1px solid #1e2030;
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.2s ease;
+    }
+    .guide-card:hover {
+      border-color: #2DB89A;
+      transform: translateY(-2px);
+    }
+    .guide-emoji {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .guide-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #e0e8f0;
+      margin-bottom: 6px;
+    }
+    .guide-desc {
+      font-size: 0.85rem;
+      color: #6a7a90;
+      line-height: 1.4;
+    }
+
+    /* No Results */
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #5a6a80;
+      font-size: 1.1rem;
+      display: none;
+      grid-column: 1 / -1;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 50px 24px;
+      font-size: 0.85rem;
+      color: #3a4a5a;
+      border-top: 1px solid #151f2e;
+      background: #040810;
+    }
+    .footer a {
+      color: #2DB89A;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero { padding: 70px 20px 40px; }
+      .guides-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <script src="/nav.js"></script>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Guides & Tools</h1>
+
+      <div class="search-container">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search guides, tools, and calculators...">
+      </div>
+
+      <div class="counter" id="counter">35 guides</div>
+    </div>
+  </div>
+
+  <div class="section-container">
+    <div class="guides-grid" id="guidesGrid">
+
+        <a class="guide-card" href="/bmr-calculator">
+          <span class="guide-emoji">🔥</span>
+          <h3 class="guide-name">BMR & TDEE Calculator</h3>
+          <p class="guide-desc">Calculate your basal metabolic rate and total daily energy expenditure</p>
+        </a>
+        <a class="guide-card" href="/one-rep-max">
+          <span class="guide-emoji">🏋️</span>
+          <h3 class="guide-name">One Rep Max Calculator</h3>
+          <p class="guide-desc">Estimate your max lift from any rep range with multiple formulas</p>
+        </a>
+        <a class="guide-card" href="/water-intake">
+          <span class="guide-emoji">💧</span>
+          <h3 class="guide-name">Water Intake Calculator</h3>
+          <p class="guide-desc">Calculate daily water needs based on weight, activity, and climate</p>
+        </a>
+        <a class="guide-card" href="/macro-calculator">
+          <span class="guide-emoji">🥩</span>
+          <h3 class="guide-name">Macro Calculator</h3>
+          <p class="guide-desc">Daily macronutrient targets for cutting, maintenance, or bulking</p>
+        </a>
+        <a class="guide-card" href="/calorie-deficit">
+          <span class="guide-emoji">🔥</span>
+          <h3 class="guide-name">Calorie Deficit Calculator</h3>
+          <p class="guide-desc">Calculate calorie deficit for weight loss with safety warnings</p>
+        </a>
+        <a class="guide-card" href="/body-fat">
+          <span class="guide-emoji">📏</span>
+          <h3 class="guide-name">Body Fat Calculator</h3>
+          <p class="guide-desc">Body fat percentage using U.S. Navy or Jackson-Pollock methods</p>
+        </a>
+        <a class="guide-card" href="/ideal-weight">
+          <span class="guide-emoji">⚖️</span>
+          <h3 class="guide-name">Ideal Weight Calculator</h3>
+          <p class="guide-desc">Ideal weight using BMI, Devine, Robinson, and Hamwi formulas</p>
+        </a>
+        <a class="guide-card" href="/heart-rate-zones">
+          <span class="guide-emoji">❤️</span>
+          <h3 class="guide-name">Heart Rate Zone Calculator</h3>
+          <p class="guide-desc">Personalized training zones using the Karvonen method</p>
+        </a>
+        <a class="guide-card" href="/bmi-calculator">
+          <span class="guide-emoji">⚖️</span>
+          <h3 class="guide-name">BMI Calculator</h3>
+          <p class="guide-desc">Calculate Body Mass Index and see where you fall on the scale</p>
+        </a>
+        <a class="guide-card" href="/sleep-cycle">
+          <span class="guide-emoji">😴</span>
+          <h3 class="guide-name">Sleep Cycle Calculator</h3>
+          <p class="guide-desc">Find best bedtime or wake time based on 90-minute cycles</p>
+        </a>
+        <a class="guide-card" href="/pace-calculator">
+          <span class="guide-emoji">🏃</span>
+          <h3 class="guide-name">Pace Calculator</h3>
+          <p class="guide-desc">Calculate running pace, finish time, or distance</p>
+        </a>
+        <a class="guide-card" href="/vo2max-estimator">
+          <span class="guide-emoji">🫁</span>
+          <h3 class="guide-name">VO2 Max Estimator</h3>
+          <p class="guide-desc">Estimate VO2 max from timed run with fitness comparisons</p>
+        </a>
+        <a class="guide-card" href="/interval-timer">
+          <span class="guide-emoji">⏱️</span>
+          <h3 class="guide-name">Interval Timer</h3>
+          <p class="guide-desc">Customizable timer for HIIT, Tabata, circuit training</p>
+        </a>
+        <a class="guide-card" href="/pregnancy-calculator">
+          <span class="guide-emoji">👶</span>
+          <h3 class="guide-name">Pregnancy Due Date Calculator</h3>
+          <p class="guide-desc">Due date from LMP or conception with trimester timeline</p>
+        </a>
+        <a class="guide-card" href="/concrete-calculator">
+          <span class="guide-emoji">🧱</span>
+          <h3 class="guide-name">Concrete Calculator</h3>
+          <p class="guide-desc">Cubic yards for slabs, footings, post holes with waste factor</p>
+        </a>
+        <a class="guide-card" href="/paint-calculator">
+          <span class="guide-emoji">🎨</span>
+          <h3 class="guide-name">Paint Coverage Calculator</h3>
+          <p class="guide-desc">How many gallons needed for rooms with doors and windows</p>
+        </a>
+        <a class="guide-card" href="/tile-calculator">
+          <span class="guide-emoji">🔲</span>
+          <h3 class="guide-name">Tile Calculator</h3>
+          <p class="guide-desc">Calculate tiles needed for floors or walls with waste factor</p>
+        </a>
+        <a class="guide-card" href="/deck-calculator">
+          <span class="guide-emoji">🪵</span>
+          <h3 class="guide-name">Deck Calculator</h3>
+          <p class="guide-desc">Estimate decking boards, joists, and hardware for deck builds</p>
+        </a>
+        <a class="guide-card" href="/gravel-calculator">
+          <span class="guide-emoji">🪨</span>
+          <h3 class="guide-name">Gravel Calculator</h3>
+          <p class="guide-desc">Calculate tons or cubic yards for driveways and landscaping</p>
+        </a>
+        <a class="guide-card" href="/stair-calculator">
+          <span class="guide-emoji">🪜</span>
+          <h3 class="guide-name">Stair Calculator</h3>
+          <p class="guide-desc">Calculate riser height, tread depth, stringer length to code</p>
+        </a>
+        <a class="guide-card" href="/roof-pitch">
+          <span class="guide-emoji">📐</span>
+          <h3 class="guide-name">Roof Pitch Calculator</h3>
+          <p class="guide-desc">Calculate roof pitch, angle, and rafter length from measurements</p>
+        </a>
+        <a class="guide-card" href="/drywall-calculator">
+          <span class="guide-emoji">🧱</span>
+          <h3 class="guide-name">Drywall Calculator</h3>
+          <p class="guide-desc">Calculate drywall sheets needed with doors, windows, waste</p>
+        </a>
+        <a class="guide-card" href="/btu-calculator">
+          <span class="guide-emoji">🌡️</span>
+          <h3 class="guide-name">BTU Calculator</h3>
+          <p class="guide-desc">Calculate BTU heating/cooling capacity needed for rooms</p>
+        </a>
+        <a class="guide-card" href="/solar-calculator">
+          <span class="guide-emoji">☀️</span>
+          <h3 class="guide-name">Solar Calculator</h3>
+          <p class="guide-desc">Estimate solar panel system size, cost, and savings</p>
+        </a>
+        <a class="guide-card" href="/lumber-calculator">
+          <span class="guide-emoji">🪵</span>
+          <h3 class="guide-name">Board Foot Calculator</h3>
+          <p class="guide-desc">Calculate board feet for lumber with waste factor</p>
+        </a>
+        <a class="guide-card" href="/sqft-calculator">
+          <span class="guide-emoji">📐</span>
+          <h3 class="guide-name">Square Footage Calculator</h3>
+          <p class="guide-desc">Calculate square footage for rectangular, triangular, circular areas</p>
+        </a>
+        <a class="guide-card" href="/fence-calculator">
+          <span class="guide-emoji">🏡</span>
+          <h3 class="guide-name">Fence Calculator</h3>
+          <p class="guide-desc">Fence materials: posts, rails, pickets, concrete with cost estimate</p>
+        </a>
+        <a class="guide-card" href="/guide-home-gym">
+          <span class="guide-emoji">🏠</span>
+          <h3 class="guide-name">Home Gym Setup Guide</h3>
+          <p class="guide-desc">Build a home gym on any budget with equipment and layout tips</p>
+        </a>
+        <a class="guide-card" href="/guide-meal-prep">
+          <span class="guide-emoji">🥗</span>
+          <h3 class="guide-name">Meal Prep Guide</h3>
+          <p class="guide-desc">Weekly meal prep plans, grocery lists, and batch cooking tips</p>
+        </a>
+        <a class="guide-card" href="/guide-insulation">
+          <span class="guide-emoji">📚</span>
+          <h3 class="guide-name">Home Insulation Guide</h3>
+          <p class="guide-desc">Types of insulation and R-values by climate zone</p>
+        </a>
+        <a class="guide-card" href="/guide-paint-room">
+          <span class="guide-emoji">📚</span>
+          <h3 class="guide-name">How to Paint a Room Like a Pro</h3>
+          <p class="guide-desc">Step-by-step painting guide with prep, primer, tools</p>
+        </a>
+        <a class="guide-card" href="/guide-running-plan">
+          <span class="guide-emoji">🏃</span>
+          <h3 class="guide-name">Couch to 5K Running Plan</h3>
+          <p class="guide-desc">8-week running plan for beginners with injury prevention</p>
+        </a>
+        <a class="guide-card" href="/list-home-tools">
+          <span class="guide-emoji">🛠️</span>
+          <h3 class="guide-name">Essential Home Tools</h3>
+          <p class="guide-desc">Must-have tools for homeowners: hand tools, power tools, safety gear</p>
+        </a>
+        <a class="guide-card" href="/list-air-purifiers">
+          <span class="guide-emoji">🌬️</span>
+          <h3 class="guide-name">Best Air Purifiers</h3>
+          <p class="guide-desc">Compare air purifiers by room size, filter type, noise, price</p>
+        </a>
+        <a class="guide-card" href="/list-standing-desks">
+          <span class="guide-emoji">🪑</span>
+          <h3 class="guide-name">Best Standing Desks</h3>
+          <p class="guide-desc">Compare standing desks by height range, stability, presets, price</p>
+        </a>
+      <div class="no-results" id="noResults">No guides found matching your search.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 <a href="/">ijustwantto.live</a> · A <a href="https://gab.ae">GAB Ventures</a> property
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const guidesGrid = document.getElementById('guidesGrid');
+      const cards = guidesGrid.querySelectorAll('.guide-card');
+      const counter = document.getElementById('counter');
+      const noResults = document.getElementById('noResults');
+
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const name = card.querySelector('.guide-name').textContent.toLowerCase();
+          const desc = card.querySelector('.guide-desc').textContent.toLowerCase();
+
+          if (name.includes(searchTerm) || desc.includes(searchTerm)) {
+            card.style.display = 'block';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Update counter
+        counter.textContent = visibleCount === 1 ? '1 guide' : visibleCount + ' guides';
+
+        // Show/hide no results message
+        if (visibleCount === 0) {
+          noResults.style.display = 'block';
+        } else {
+          noResults.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
