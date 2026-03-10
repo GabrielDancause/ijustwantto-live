@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+    <meta charset="UTF-8">
+<link rel="canonical" href="https://ijustwantto.live/tdee-calculator" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMR & TDEE Calculator | ijustwantto.live</title>
+    <meta name="description" content="Calculate your Basal Metabolic Rate (BMR), Total Daily Energy Expenditure (TDEE), and daily macronutrient targets for cutting, maintenance, or bulking.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "BMR & TDEE Calculator",
+      "url": "https://ijustwantto.live/tdee-calculator.html",
+      "description": "Calculate your Basal Metabolic Rate (BMR), Total Daily Energy Expenditure (TDEE), and macronutrient split suggestions.",
+      "applicationCategory": "HealthAndFitnessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is BMR?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Basal Metabolic Rate (BMR) represents the minimum amount of energy (calories) your body requires to function while resting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is TDEE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Total Daily Energy Expenditure (TDEE) is an estimation of how many calories you burn per day when exercise and physical activity are taken into account. It's calculated by multiplying your BMR by an activity multiplier."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is BMR calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This calculator uses the Mifflin-St Jeor equation, which is widely considered the most accurate formula for calculating BMR in modern populations."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060c0a;
+            --card-bg: #0c1410;
+            --border-color: #1a2a24;
+            --accent-color: #2DB89A;
+            --accent-hover: #24987f;
+            --text-primary: #c8e0d8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 400;
+            cursor: pointer;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            flex: 1;
+            min-width: 120px;
+            justify-content: center;
+            background-color: var(--bg-color);
+            transition: all 0.2s;
+        }
+
+        .radio-label:has(input:checked) {
+            border-color: var(--accent-color);
+            background-color: rgba(45, 184, 154, 0.1);
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        button.calculate-btn {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            font-family: var(--font-ui);
+        }
+
+        button.calculate-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .results {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-title {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .macros-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .macro-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .macro-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .macro-card .value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .macro-card .desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .macro-card .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .seo-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 640px) {
+            .macros-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<script src="/nav.js"></script>
+
+    <div class="container">
+        <header>
+            <h1>BMR & TDEE Calculator</h1>
+            <p class="subtitle">Calculate your basal metabolic rate, total daily energy expenditure, and macronutrient targets</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <form id="tdeeForm">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="male" checked>
+                                Male
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="female">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col">
+                            <label for="age">Age (years)</label>
+                            <input type="number" id="age" name="age" required min="1" max="120" placeholder="e.g. 30">
+                        </div>
+                        <div class="form-group form-col">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" name="weight" required min="1" step="0.1" placeholder="e.g. 70">
+                        </div>
+                        <div class="form-group form-col">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" name="height" required min="1" step="0.1" placeholder="e.g. 175">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="activity">Activity Level</label>
+                        <select id="activity" name="activity">
+                            <option value="1.2">Sedentary (little to no exercise)</option>
+                            <option value="1.375">Lightly Active (light exercise/sports 1-3 days/week)</option>
+                            <option value="1.55">Moderately Active (moderate exercise/sports 3-5 days/week)</option>
+                            <option value="1.725">Very Active (hard exercise/sports 6-7 days a week)</option>
+                            <option value="1.9">Extra Active (very hard exercise/sports & physical job)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Goal</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="goal" value="cutting">
+                                Cutting (-500 kcal)
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="goal" value="maintenance" checked>
+                                Maintenance
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="goal" value="bulking">
+                                Bulking (+500 kcal)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="split">Diet Split</label>
+                        <select id="split" name="split">
+                            <option value="balanced">Balanced (30% Protein, 40% Carbs, 30% Fat)</option>
+                            <option value="high-protein">High Protein (40% Protein, 30% Carbs, 30% Fat)</option>
+                            <option value="low-carb">Low Carb (40% Protein, 20% Carbs, 40% Fat)</option>
+                            <option value="keto">Keto (20% Protein, 5% Carbs, 75% Fat)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="calculate-btn">Calculate BMR, TDEE & Macros</button>
+                </form>
+
+                <div id="results" class="results">
+                    <div class="result-box">
+                        <div class="result-title">Basal Metabolic Rate (BMR)</div>
+                        <div class="result-value">
+                            <span id="bmrValue">0</span> kcal
+                            <button class="copy-btn" onclick="copyToClipboard('bmrValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="result-title">Total Daily Energy Expenditure (TDEE)</div>
+                        <div class="result-value">
+                            <span id="tdeeValue">0</span> kcal
+                            <button class="copy-btn" onclick="copyToClipboard('tdeeValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-box" style="border-color: var(--accent-color);">
+                        <div class="result-title">Target Daily Calories (based on your goal)</div>
+                        <div class="result-value">
+                            <span id="targetCalories">0</span> kcal
+                            <button class="copy-btn" onclick="copyToClipboard('targetCalories')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; color: #ffffff;">Suggested Daily Macros</h3>
+                    <div class="macros-grid">
+                        <div class="macro-card">
+                            <button class="copy-btn" onclick="copyToClipboard('proteinValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Protein</h3>
+                            <div class="value"><span id="proteinValue">0</span>g</div>
+                            <div class="desc" id="proteinPercent">30% (4 kcal/g)</div>
+                        </div>
+                        <div class="macro-card">
+                            <button class="copy-btn" onclick="copyToClipboard('carbsValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Carbohydrates</h3>
+                            <div class="value"><span id="carbsValue">0</span>g</div>
+                            <div class="desc" id="carbsPercent">40% (4 kcal/g)</div>
+                        </div>
+                        <div class="macro-card">
+                            <button class="copy-btn" onclick="copyToClipboard('fatsValue')" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <h3>Fats</h3>
+                            <div class="value"><span id="fatsValue">0</span>g</div>
+                            <div class="desc" id="fatsPercent">30% (9 kcal/g)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>Understanding BMR and TDEE</h2>
+                <p>Basal Metabolic Rate (BMR) represents the minimum amount of energy (calories) your body requires to function while resting. This includes energy needed for vital organs like the heart, lungs, brain, and liver, as well as basic cellular processes. This calculator uses the Mifflin-St Jeor equation, which is widely considered the most accurate formula for calculating BMR in modern populations.</p>
+                <p>Total Daily Energy Expenditure (TDEE) is an estimation of how many calories you burn per day when exercise and physical activity are taken into account. It's calculated by multiplying your BMR by an activity multiplier.</p>
+
+                <h2>How to Use Your TDEE for Dieting</h2>
+                <p>Knowing your TDEE is the cornerstone of any nutritional plan. Whether your goal is to lose, maintain, or gain weight, your caloric intake relative to your TDEE will dictate your progress.</p>
+                <ul>
+                    <li><strong>Weight Loss:</strong> To lose weight, you need to consume fewer calories than your TDEE. A common and sustainable deficit is 500 calories per day, which typically leads to about 1 lb (0.45 kg) of weight loss per week.</li>
+                    <li><strong>Maintenance:</strong> Consuming calories equal to your TDEE will allow you to maintain your current weight.</li>
+                    <li><strong>Bulking (Muscle Gain):</strong> To build muscle effectively, you need a caloric surplus. Consuming 250-500 calories above your TDEE provides the extra energy your body needs to synthesize new muscle tissue.</li>
+                </ul>
+
+                <h2>What are Macronutrients?</h2>
+                <p>Macronutrients, or "macros" for short, are the primary building blocks of the food we eat. They provide the energy (calories) necessary for our bodies to function properly, repair tissues, and perform physical activities. The three main macronutrients are:</p>
+                <ul>
+                    <li><strong>Protein (4 kcal/g):</strong> Essential for building and repairing muscle tissue, skin, hair, and enzymes. Important for satiety and maintaining lean body mass during weight loss.</li>
+                    <li><strong>Carbohydrates (4 kcal/g):</strong> Your body's primary and preferred energy source. They fuel your brain, nervous system, and physical exercise.</li>
+                    <li><strong>Fats (9 kcal/g):</strong> Crucial for hormone production, nutrient absorption (vitamins A, D, E, and K), and providing long-lasting energy.</li>
+                </ul>
+
+                <h2>FAQ</h2>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem;">What is BMR?</h3>
+                    <p>Basal Metabolic Rate (BMR) represents the minimum amount of energy (calories) your body requires to function while resting.</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem;">What is TDEE?</h3>
+                    <p>Total Daily Energy Expenditure (TDEE) is an estimation of how many calories you burn per day when exercise and physical activity are taken into account. It's calculated by multiplying your BMR by an activity multiplier.</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem;">How is BMR calculated?</h3>
+                    <p>This calculator uses the Mifflin-St Jeor equation, which is widely considered the most accurate formula for calculating BMR in modern populations.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 <a href="/">ijustwantto.live</a> &middot; A <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">GAB Ventures</a> property</p>
+        </footer>
+    </div>
+
+    <script>
+        const splitRatios = {
+            'balanced': { p: 0.30, c: 0.40, f: 0.30 },
+            'high-protein': { p: 0.40, c: 0.30, f: 0.30 },
+            'low-carb': { p: 0.40, c: 0.20, f: 0.40 },
+            'keto': { p: 0.20, c: 0.05, f: 0.75 }
+        };
+
+        document.getElementById('tdeeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const age = parseFloat(document.getElementById('age').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const activity = parseFloat(document.getElementById('activity').value);
+            const goal = document.querySelector('input[name="goal"]:checked').value;
+            const split = document.getElementById('split').value;
+
+            if (isNaN(age) || isNaN(weight) || isNaN(height)) {
+                return;
+            }
+
+            let bmr = 0;
+
+            // Mifflin-St Jeor
+            if (gender === 'male') {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            } else {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            }
+
+            const tdee = bmr * activity;
+
+            let targetCals = tdee;
+            if (goal === 'cutting') {
+                targetCals -= 500;
+            } else if (goal === 'bulking') {
+                targetCals += 500;
+            }
+
+            // Prevent negative or zero calories
+            if (targetCals < 500) {
+                targetCals = 500;
+            }
+
+            const ratios = splitRatios[split];
+
+            // Protein: 4 kcal/g
+            const proteinGrams = (targetCals * ratios.p) / 4;
+            // Carbs: 4 kcal/g
+            const carbsGrams = (targetCals * ratios.c) / 4;
+            // Fat: 9 kcal/g
+            const fatGrams = (targetCals * ratios.f) / 9;
+
+            document.getElementById('bmrValue').textContent = Math.round(bmr).toLocaleString();
+            document.getElementById('tdeeValue').textContent = Math.round(tdee).toLocaleString();
+            document.getElementById('targetCalories').textContent = Math.round(targetCals).toLocaleString();
+
+            document.getElementById('proteinValue').textContent = Math.round(proteinGrams).toLocaleString();
+            document.getElementById('proteinPercent').textContent = `${Math.round(ratios.p * 100)}% (4 kcal/g)`;
+
+            document.getElementById('carbsValue').textContent = Math.round(carbsGrams).toLocaleString();
+            document.getElementById('carbsPercent').textContent = `${Math.round(ratios.c * 100)}% (4 kcal/g)`;
+
+            document.getElementById('fatsValue').textContent = Math.round(fatGrams).toLocaleString();
+            document.getElementById('fatsPercent').textContent = `${Math.round(ratios.f * 100)}% (9 kcal/g)`;
+
+            document.getElementById('results').classList.add('active');
+        });
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+                if (!btn) return;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2DB89A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
