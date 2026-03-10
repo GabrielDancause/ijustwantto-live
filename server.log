@@ -1,0 +1,4 @@
+127.0.0.1 - - [10/Mar/2026 04:26:01] "GET /sleep-calculator.html HTTP/1.1" 200 -
+127.0.0.1 - - [10/Mar/2026 04:26:01] "GET /nav.js HTTP/1.1" 200 -
+127.0.0.1 - - [10/Mar/2026 04:27:26] "GET /sleep-calculator.html HTTP/1.1" 200 -
+127.0.0.1 - - [10/Mar/2026 04:27:26] "GET /nav.js HTTP/1.1" 200 -
